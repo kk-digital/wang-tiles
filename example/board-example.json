@@ -1,0 +1,30 @@
+{
+    "BoardXSize": 32,
+    "BoardYSize": 32,
+    "BoardID": 999999,
+    "BoardCreationDate": "7/24/2022 12:00:00 PM",
+    "BoardCreationDateUnixTime": 1658664000,
+
+    "BoardSlots": [{
+            "xPosition": 8,
+            "yPosition": 12,
+            "TileIsoType": 2,
+            "TileType": 5,
+            "Layer": 1,
+        },
+        {
+            "xPosition": 16,
+            "yPosition": 2,
+            "TileIsoType": 2,
+            "TileType": 5,
+            "Layer": 2,
+        },
+        {
+            "xPosition": 20,
+            "yPosition": 20,
+            "TileIsoType": 1,
+            "TileType": 3,
+            "Layer": 3,
+        },
+    ]
+}
