@@ -5,7 +5,7 @@ namespace wang
 
 
     // TODO(Mahdi): https://github.com/kk-digital/kcg/issues/562
-    public class EdgeTileSet
+    public partial class EdgeTileSet
     {
         public TileSize TileSize;
         public int VerticalColorsCount;
@@ -20,7 +20,7 @@ namespace wang
             // TODO(Mahdi): Implement
         }
 
-        
+
         public void AddTile(TileType tileType, int topColor, int bottomColor, int leftColor, int rightColor)
         {
             Debug.Assert(topColor >= -1 && topColor < HorizontalColorsCount);
