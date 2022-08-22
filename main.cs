@@ -9,5 +9,7 @@ class MainClass
 
         ColorPaleteMap palette = new ColorPaleteMap();
         palette.Initialize();
+
+        //palette.GetHorizontalColor(4);
     }
 }
