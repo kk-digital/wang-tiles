@@ -5,11 +5,15 @@ class MainClass
 {
     static void Main(string[] args)
     {
-<<<<<<< HEAD
         Console.Write("Main" + "\n");
+         Int64 id = Utils.CreateID(20, 10);
+        Int32 time = Utils.GetTimeFromID(id);
+        Int32 randomNumber = Utils.GetRandomNumberFromID(id);
 
-=======
->>>>>>> 7328cc359a415149928c312a32ce36ce43725f44
+        Console.Write(id + "\n");
+        Console.Write(time + "\n");
+        Console.Write(randomNumber + "\n");
+
         ColorPaleteMap palette = new ColorPaleteMap();
         palette.Initialize();
         string input;
@@ -29,13 +33,7 @@ entry:
             goto entry;
         }
 
-        Int64 id = Utils.CreateID(10, 20);
-        Int32 time = Utils.GetTimeFromID(id);
-        Int32 randomNumber = Utils.GetRandomNumberFromID(id);
-
-        Console.Write(id + "\n");
-        Console.Write(time + "\n");
-        Console.Write(randomNumber + "\n");
+    
 
 
         //palette.GetHorizontalColor(4);

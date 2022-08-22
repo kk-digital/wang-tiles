@@ -10,7 +10,7 @@ namespace wang
 
         public static Int64 CreateID(Int32 timeInSeconds, Int32 randomNumber)
         {
-            Int64 result = timeInSeconds << 32 + randomNumber;
+            Int64 result = ((Int64)timeInSeconds << 32) + (Int64)randomNumber;
 
             return result;
         }
