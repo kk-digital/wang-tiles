@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "b8193/wxfULUNe5aPiem2KfKtrxJQkQuIDksdZ1vMqfUjkJTx7bEubxzwCCzu+7QHVriKwFSZ7QSaXwi0Dai/Q==",
+  "dgSpecHash": "IJrBap5Z1E0wA+V7F4wM8TyI+exesI9X8unqKDNxkaxnTeuMZOKxb4qSYZgC9GaaKQ20d1Gu7uisi0qkk1w+5Q==",
   "success": true,
-  "projectFilePath": "C:\\workspace\\wang-tiles\\wang-tiles.csproj",
+  "projectFilePath": "D:\\Projects\\Github\\wang-tiles\\wang-tiles.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Aures\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+    "C:\\Users\\choi\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }
