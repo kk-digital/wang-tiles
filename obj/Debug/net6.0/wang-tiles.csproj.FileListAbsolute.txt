@@ -1,0 +1,17 @@
+C:\workspace\wang-tiles\bin\Debug\net6.0\wang-tiles.exe
+C:\workspace\wang-tiles\bin\Debug\net6.0\wang-tiles.deps.json
+C:\workspace\wang-tiles\bin\Debug\net6.0\wang-tiles.runtimeconfig.json
+C:\workspace\wang-tiles\bin\Debug\net6.0\wang-tiles.dll
+C:\workspace\wang-tiles\bin\Debug\net6.0\wang-tiles.pdb
+C:\workspace\wang-tiles\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.csproj.AssemblyReference.cache
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.GeneratedMSBuildEditorConfig.editorconfig
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.AssemblyInfoInputs.cache
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.AssemblyInfo.cs
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.csproj.CoreCompileInputs.cache
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.csproj.CopyComplete
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.dll
+C:\workspace\wang-tiles\obj\Debug\net6.0\refint\wang-tiles.dll
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.pdb
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.genruntimeconfig.cache
+C:\workspace\wang-tiles\obj\Debug\net6.0\ref\wang-tiles.dll
