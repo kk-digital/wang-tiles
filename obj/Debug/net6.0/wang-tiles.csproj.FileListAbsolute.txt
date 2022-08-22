@@ -28,3 +28,5 @@ D:\Projects\Github\wang-tiles\obj\Debug\net6.0\refint\wang-tiles.dll
 D:\Projects\Github\wang-tiles\obj\Debug\net6.0\wang-tiles.pdb
 D:\Projects\Github\wang-tiles\obj\Debug\net6.0\wang-tiles.genruntimeconfig.cache
 D:\Projects\Github\wang-tiles\obj\Debug\net6.0\ref\wang-tiles.dll
+C:\workspace\wang-tiles\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\workspace\wang-tiles\obj\Debug\net6.0\wang-tiles.csproj.CopyComplete

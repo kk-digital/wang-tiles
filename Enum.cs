@@ -1,4 +1,4 @@
-namespace wang
+namespace wang_tiles
 {
 
     public enum TileType
@@ -7,7 +7,7 @@ namespace wang
         TileTypeSquareTile,
         TileTypeBackground,
         TileTypeWang,
-        TileTypeFullIsotypeSet 
+        TileTypeFullIsotypeSet
     }
 
     public enum TileSize
@@ -20,10 +20,10 @@ namespace wang
     public enum TileIsoType
     {
         Error = 0,
-        
+
         // Empty Block
         EmptyBlock,
-        
+
         // FullBlock
         FullBlock,
 
@@ -32,13 +32,13 @@ namespace wang
         HB_R2,
         HB_R3,
         HB_R4,
-        
+
         //TriangleBlock
         TB_R1,
         TB_R2,
         TB_R3,
         TB_R4,
-        
+
         //LBlockTop
         LBT_R1,
         LBT_R2,
@@ -48,7 +48,7 @@ namespace wang
         LBT_R6,
         LBT_R7,
         LBT_R8,
-        
+
         //LBlockBottom
         LBB_R1,
         LBB_R2,

@@ -1,5 +1,4 @@
-
-namespace wang
+namespace wang_tiles
 {
     public struct PixelColor
     {

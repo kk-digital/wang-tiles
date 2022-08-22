@@ -1,4 +1,4 @@
-namespace wang
+namespace wang_tiles
 {
 
     public enum Layer

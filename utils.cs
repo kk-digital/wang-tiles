@@ -1,5 +1,4 @@
-
-namespace wang
+namespace wang_tiles
 {
     public static class Utils
     {
@@ -8,35 +7,35 @@ namespace wang
             return r << 24 + g << 16 + b << 8 + a;
         }
 
-        public static Int64 GenerateID()
+        public static long GenerateID()
         {
             DateTimeOffset dto = new DateTimeOffset();
             Random random = new Random();
 
-            Int32 timeInSeconds = (Int32)dto.ToUnixTimeSeconds();
-            Int32 randomNumber = (Int32)random.NextInt64();
+            int timeInSeconds = (int)dto.ToUnixTimeSeconds();
+            int randomNumber = (int)random.NextInt64();
 
             return CreateID(timeInSeconds, randomNumber);
         }
 
-        public static Int64 CreateID(Int32 timeInSeconds, Int32 randomNumber)
+        public static long CreateID(int timeInSeconds, int randomNumber)
         {
-            Int64 result = ((Int64)timeInSeconds << 32) + (Int64)randomNumber;
+            long result = ((long)timeInSeconds << 32) + randomNumber;
 
             return result;
         }
 
-        public static Int32 GetTimeFromID(Int64 id)
+        public static int GetTimeFromID(long id)
         {
-            return (Int32)(id >> 32);
+            return (int)(id >> 32);
         }
 
-        public static Int32 GetRandomNumberFromID(Int64 id)
+        public static int GetRandomNumberFromID(long id)
         {
-            return (Int32)((id << 32) >> 32);
+            return (int)(id << 32 >> 32);
         }
 
-        public static string IDToString(Int64 id)
+        public static string IDToString(long id)
         {
             //TODO(Mahdi): empty for now
             return "";

@@ -1,4 +1,6 @@
-namespace wang
+
+
+namespace wang_tiles
 {
 
 
@@ -6,7 +8,7 @@ namespace wang
     {
 
 
-        public void SaveJson(string filename, EdgeTileSet edgeTileSet)
+        public static void SaveJson(string filename, EdgeTileSet edgeTileSet)
         {
             //TODO(Mahdi): Implement
         }

@@ -1,5 +1,4 @@
-
-using wang;
+using wang_tiles;
 
 class MainClass
 {
@@ -13,6 +12,10 @@ class MainClass
         Console.Write(id + "\n");
         Console.Write(time + "\n");
         Console.Write(randomNumber + "\n");
+
+
+        TileBoard tileBoard = new TileBoard(2, 2);
+        TileBoardJson.SaveJson("board.json", tileBoard);
 
         ColorPaleteMap palette = new ColorPaleteMap();
         palette.Initialize();

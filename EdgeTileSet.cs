@@ -1,6 +1,7 @@
 using System.Diagnostics;
+using wang_tiles;
 
-namespace wang
+namespace wang_tiles
 {
 
 
