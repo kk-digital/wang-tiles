@@ -18,7 +18,7 @@ class MainClass
         Console.Write(randomNumber + "\n");
 
 
-        TileBoard tileBoard = new TileBoard(2, 2);
+        TileBoard tileBoard = new TileBoard(Utils.GenerateID(), 2, 2);
         TileBoardJson.SaveJson("board.json", tileBoard);
 
         ColorPaleteMap palette = new ColorPaleteMap();

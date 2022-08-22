@@ -9,7 +9,7 @@ namespace wang_tiles
 
         public static long GenerateID()
         {
-            DateTimeOffset dto = new DateTimeOffset();
+            DateTimeOffset dto = DateTimeOffset.Now;
             Random random = new Random();
 
             int timeInSeconds = (int)dto.ToUnixTimeSeconds();

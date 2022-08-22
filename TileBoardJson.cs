@@ -13,7 +13,10 @@ namespace wang_tiles
         {
             //TODO(Mahdi): Implement
 
-  
+            DateTimeOffset dto = DateTimeOffset.Now;
+
+            tileBoard.CreationDate = dto.ToString();
+            tileBoard.CreationDateUnixTime = (UInt64)dto.ToUnixTimeSeconds(); ;
             var json = JsonConvert.SerializeObject(tileBoard, Formatting.Indented);
 
             Console.WriteLine(json);
