@@ -1,11 +1,15 @@
+
 using wang_tiles;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 class MainClass
 {
     static void Main(string[] args)
     {
         Console.Write("Main" + "\n");
-         Int64 id = Utils.CreateID(20, 10);
+        Int64 id = Utils.CreateID(20, 10);
         Int32 time = Utils.GetTimeFromID(id);
         Int32 randomNumber = Utils.GetRandomNumberFromID(id);
 
@@ -22,11 +26,37 @@ class MainClass
         string input;
 
 entry:
-        Console.Write("Inputs: list tileset, list board, list scene, list pixelassignment, list outputscene\n");
+        Console.Write("Inputs: list tilesets, list boards, list scenes, list pixelassignments, list outputscenes, new tileset\n");
 
         input = Console.ReadLine();
 
-        if(input.ToLower() == "exit")
+        if(input.ToLower() == "new tileset")
+        {
+            string text = JsonSerializer.Serialize("TODO: Not implemented yet.");
+            File.WriteAllText("..//..//..//data//s00_Tileset//tileset.json", text);
+
+            Console.Clear();
+            Console.WriteLine("Tileset Created.");
+
+            goto entry;
+        }
+        else if(input.ToLower() == "list tilesets")
+        {
+            string[] files = Directory.GetFiles("..//..//..//data//s00_Tileset//");
+
+            for(int i = 0; i < files.Length; i++)
+            {
+                Console.WriteLine(i.ToString() + "  " + files[i] + "\n");
+            }
+
+            goto entry;
+        }
+        else if(input.ToLower() == "clear")
+        {
+            Console.Clear();
+            goto entry;
+        }
+        else if(input.ToLower() == "exit")
         {
             Environment.Exit(0);
         }
@@ -35,9 +65,6 @@ entry:
             Console.Clear();
             goto entry;
         }
-
-    
-
 
         //palette.GetHorizontalColor(4);
     }
