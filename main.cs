@@ -35,7 +35,7 @@ entry:
         if(input.ToLower() == "new tileset")
         {
             string text = JsonSerializer.Serialize("TODO: Not implemented yet.");
-            File.WriteAllText("..//..//..//data//s00_Tileset//tileset.json", text);
+            File.WriteAllText("data//s00_Tileset//tileset.json", text);
 
             Console.Clear();
             Console.WriteLine("Tileset Created.");
@@ -44,11 +44,80 @@ entry:
         }
         else if(input.ToLower() == "list tilesets")
         {
-            string[] files = Directory.GetFiles("..//..//..//data//s00_Tileset//");
+            string[] files = Directory.GetFiles("data//s00_Tileset//");
 
             for(int i = 0; i < files.Length; i++)
             {
                 Console.WriteLine(i.ToString() + "  " + files[i] + "\n");
+            }
+
+            if(files.Length <= 0)
+            {
+                Console.WriteLine("Folder Is Empty.");
+            }
+
+            goto entry;
+        }
+        else if(input.ToLower() == "list boards")
+        {
+            string[] files = Directory.GetFiles("data//s01_Board//");
+
+            for(int i = 0; i < files.Length; i++)
+            {
+                Console.WriteLine(i.ToString() + "  " + files[i] + "\n");
+            }
+            
+            if(files.Length <= 0)
+            {
+                Console.WriteLine("Folder Is Empty.");
+            }
+
+            goto entry;
+        }
+        else if(input.ToLower() == "list scenes")
+        {
+            string[] files = Directory.GetFiles("data//s02_Scene//");
+
+            for(int i = 0; i < files.Length; i++)
+            {
+                Console.WriteLine(i.ToString() + "  " + files[i] + "\n");
+            }
+            
+            if(files.Length <= 0)
+            {
+                Console.WriteLine("Folder Is Empty.");
+            }
+
+            goto entry;
+        }
+        else if(input.ToLower() == "list pixelassignments")
+        {
+            string[] files = Directory.GetFiles("data//s02_TilesetPixelAssignment//");
+
+            for(int i = 0; i < files.Length; i++)
+            {
+                Console.WriteLine(i.ToString() + "  " + files[i] + "\n");
+            }
+
+            if(files.Length <= 0)
+            {
+                Console.WriteLine("Folder Is Empty.");
+            }
+
+            goto entry;
+        }
+        else if(input.ToLower() == "list outputscenes")
+        {
+            string[] files = Directory.GetFiles("data//s03_OutputScene//");
+
+            for(int i = 0; i < files.Length; i++)
+            {
+                Console.WriteLine(i.ToString() + "  " + files[i] + "\n");
+            }
+
+            if(files.Length <= 0)
+            {
+                Console.WriteLine("Folder Is Empty.");
             }
 
             goto entry;
@@ -67,7 +136,5 @@ entry:
             Console.Clear();
             goto entry;
         }
-
-        //palette.GetHorizontalColor(4);
     }
 }
