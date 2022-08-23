@@ -12,9 +12,9 @@ namespace wang_tiles
 
     public enum TileSize
     {
-        Small, // 8x8
-        Medium, // 16x16
-        Big // 32x32
+        TileSize_8x8, // 8x8
+        TileSize_16x16, // 16x16
+        TileSize_32x32 // 32x32
     }
 
     public enum TileIsoType

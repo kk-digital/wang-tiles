@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using wang_tiles;
 using System.Linq;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 
 namespace wang_tiles
 {
@@ -12,18 +14,19 @@ namespace wang_tiles
     public partial class EdgeTileSet
     {
         public TileSetDescription Description;
+        [JsonConverter(typeof(StringEnumConverter))]
         public TileSize TileSize;
         public int VerticalColorsCount;
         public int HorizontalColorsCount;
         public TileInformation[] InformationArray;
-        public int TileIndex;
-        public int[] TileLookUpArray;
-
+         Dictionary<Int64, Entry> LookupMap;
 
 
 
         public TileSpriteInformation[] TileSpriteInformationArray;
         public UniquePixel[] UniquePixels;
+
+        public int TileCount = 0;
     
 
         
@@ -40,12 +43,25 @@ namespace wang_tiles
             Description = new TileSetDescription();
             Description.ID = Utils.GenerateID();
             Description.IDString = "" + Description.ID;
+
+            DateTimeOffset dto = DateTimeOffset.Now;
+
+            Description.CreationDate = dto.ToString();
+            Description.CreationDateUnixTime = (Int64)dto.ToUnixTimeSeconds();
+
+            TileCount = 0;
+
         }
 
 
         public void AddTile(TileType tileType, int topColor, int bottomColor, int leftColor, int rightColor)
         {
             // TODO(Mahdi): Implement
+
+            if (TileCount == InformationArray.Length)
+            {
+                System.Array.Resize(ref InformationArray, InformationArray.Length * 2);
+            }
 
             // Initialize Information Array
             TileInformation properties = new TileInformation
@@ -56,14 +72,23 @@ namespace wang_tiles
                 LeftColor = leftColor,
                 RightColor = rightColor
             };
-            InformationArray.Append(properties);
+            InformationArray[TileCount++] = properties;
         }
 
         public void FinalizeTileSet()
         {
             // TODO(Mahdi): Implement
 
-            TileLookUpArray = new int[HorizontalColorsCount * VerticalColorsCount];
+
+            TileInformation[] NewInformationArray = new TileInformation[TileCount];
+            for(int i = 0; i < InformationArray.Length; i++)
+            {
+                NewInformationArray[i] = InformationArray[i];
+            }
+
+            InformationArray = NewInformationArray;
+
+
 
             for(int i = 0; i < InformationArray.Length - 1; i++)
             {
@@ -79,19 +104,19 @@ namespace wang_tiles
                 }
             }
 
-            Dictionary<Int64, Entry> HashMap = new Dictionary<Int64, Entry>();
-
+            LookupMap = new Dictionary<Int64, Entry>();
             int CurrentVarientIndex = 0;
             int CurrentOffset = 0;
             int CurrentCount = 0;
 
             for(int k = 0; k < InformationArray.Length; k++) {
+                InformationArray[k].TileID = k;
                 if(InformationArray[k].VarientIndex(HorizontalColorsCount, VerticalColorsCount) == 
                 CurrentVarientIndex) {
                     CurrentCount++;
                 }
                 else {
-                    HashMap.Add(CurrentVarientIndex, new Entry(CurrentOffset, CurrentCount));
+                    LookupMap.Add(CurrentVarientIndex, new Entry(CurrentOffset, CurrentCount));
 
                     CurrentVarientIndex = InformationArray[k].VarientIndex(HorizontalColorsCount, VerticalColorsCount);
                     CurrentCount = 1;
@@ -100,8 +125,10 @@ namespace wang_tiles
             }
 
             if(CurrentCount > 1){
-                HashMap.Add(CurrentVarientIndex, new Entry(CurrentOffset, CurrentCount));
+                LookupMap.Add(CurrentVarientIndex, new Entry(CurrentOffset, CurrentCount));
             }
+
+            
 
         }
 

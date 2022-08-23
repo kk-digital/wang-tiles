@@ -25,7 +25,7 @@ namespace wang_tiles
                 }
                 else if (args[1] == "boards")
                 {
-                    ListFolder("ds01_Board//", ".json");
+                    ListFolder("s01_Board//", ".json");
                 }
                 else if (args[1] == "scenes")
                 {
@@ -36,6 +36,32 @@ namespace wang_tiles
                     ListFolder("s02_TilesetPixelAssignment//", ".json");
                 }
 
+            }
+            else if (args.Length >= 6 && args[0] == "new")
+            {
+                if (args[1] == "tileset")
+                {
+                    TileSize tileSize = TileSize.TileSize_16x16;
+                    if (args[2] == "8x8")
+                    {
+                        tileSize = TileSize.TileSize_8x8;
+                    }
+                    else if (args[2] == "16x16")
+                    {
+                        tileSize = TileSize.TileSize_16x16;
+                    }
+                    else if (args[3] == "32x32")
+                    {
+                        tileSize = TileSize.TileSize_32x32;
+                    }
+
+                    int verticalColorCount = Convert.ToInt32(args[3]);
+                    int horizontalColorCount = Convert.ToInt32(args[4]);
+                    int variant = Convert.ToInt32(args[5]);
+
+                    EdgeTileSet newTileSet = EdgeTileSet.MakeTileSet((TileSize)tileSize, verticalColorCount, horizontalColorCount, variant);
+                    EdgeTileSetJson.SaveJson("s00_Tileset\\tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
+                }
             }
         }
 
@@ -50,7 +76,7 @@ namespace wang_tiles
             Console.WriteLine("*list scenes");
             Console.WriteLine("*list pixelassignments");
             Console.WriteLine("****** new ***");
-            Console.WriteLine("*new tileset <tilesize>");
+            Console.WriteLine("*new tileset <tilesize> <vertical_color_count> <horizontal_color_count> <variant>");
         }
 
         public static void ListFolder(string folder, string extension)
