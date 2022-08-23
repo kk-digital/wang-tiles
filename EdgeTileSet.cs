@@ -68,7 +68,7 @@ namespace wang_tiles
             TileLookUpArray = new int[HorizontalColorsCount * VerticalColorsCount];
             
 
-            TileIndex = leftColor * (HorizontalColorsCount * VerticalColorsCount) + rightColor * (VerticalColorsCount * VerticalColorsCount) +
+            TileIndex = leftColor * (HorizontalColorsCount * VerticalColorsCount * VerticalColorsCount) + rightColor * (VerticalColorsCount * VerticalColorsCount) +
                             bottomColor * VerticalColorsCount + topColor;
 
             TileLookUpArray.Append(TileIndex);
