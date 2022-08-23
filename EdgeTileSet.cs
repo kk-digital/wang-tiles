@@ -18,6 +18,8 @@ namespace wang_tiles
         public TileInformation[] InformationArray;
         public int TileIndex;
         public int[] TileLookUpArray;
+
+        public UniquePixel[] UniquePixels;
     
 
         
