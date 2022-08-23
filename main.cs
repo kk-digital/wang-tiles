@@ -18,8 +18,10 @@ class MainClass
         Console.Write(randomNumber + "\n");
 
 
-        TileBoard tileBoard = new TileBoard(Utils.GenerateID(), 2, 2);
+        TileBoard tileBoard = TileBoardJson.FromJson("board.json");
         TileBoardJson.SaveJson("board.json", tileBoard);
+
+
 
         ColorPaleteMap palette = new ColorPaleteMap();
         palette.Initialize();

@@ -23,7 +23,15 @@ namespace wang_tiles
             File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
 
             Console.WriteLine(json);
+        }
 
+        public static TileBoard FromJson(string filename)
+        {
+            string json = File.ReadAllText(Constants.OutputPath + "\\" + filename);
+
+            TileBoard newBoard = JsonConvert.DeserializeObject < TileBoard >(json);
+
+            return newBoard;
         }
     }
 }
