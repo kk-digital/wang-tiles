@@ -16,6 +16,8 @@ class MainClass
 
         Console.WriteLine(json);
 
+        Scene scene = new Scene(Utils.GenerateID(), 5, 5);
+
 
 
         ColorPaleteMap palette = new ColorPaleteMap();
