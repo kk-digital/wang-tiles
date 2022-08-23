@@ -28,14 +28,14 @@ namespace wang_tiles
 
         
 
-        public void InitEdgeTileSet()
+        public void InitEdgeTileSet(int verticalColorCount, int horizontalColorCount)
         {
             // TODO(Mahdi): Implement
 
             // Create and Init Variables
             InformationArray = new TileInformation[16];
-            VerticalColorsCount = 0;
-            HorizontalColorsCount = 0;
+            HorizontalColorsCount = horizontalColorCount;
+            VerticalColorsCount = verticalColorCount;
             Description = new TileSetDescription();
             Description.ID = Utils.GenerateID();
             Description.IDString = "" + Description.ID;
@@ -44,14 +44,6 @@ namespace wang_tiles
 
         public void AddTile(TileType tileType, int topColor, int bottomColor, int leftColor, int rightColor)
         {
-            Debug.Assert(topColor >= -1 && topColor < HorizontalColorsCount);
-            Debug.Assert(bottomColor >= -1 && bottomColor < HorizontalColorsCount);
-            Debug.Assert(rightColor >= -1 && rightColor < VerticalColorsCount);
-            Debug.Assert(leftColor >= -1 && leftColor < VerticalColorsCount);
-
-            VerticalColorsCount++;
-            HorizontalColorsCount++;
-            
             // TODO(Mahdi): Implement
 
             // Initialize Information Array
@@ -64,22 +56,91 @@ namespace wang_tiles
                 RightColor = rightColor
             };
             InformationArray.Append(properties);
-
-            TileLookUpArray = new int[HorizontalColorsCount * VerticalColorsCount];
-            
-
-            TileIndex = leftColor * (HorizontalColorsCount * VerticalColorsCount * VerticalColorsCount) + rightColor * (VerticalColorsCount * VerticalColorsCount) +
-                            bottomColor * VerticalColorsCount + topColor;
-
-            TileLookUpArray.Append(TileIndex);
-
         }
 
         public void FinalizeTileSet()
         {
             // TODO(Mahdi): Implement
 
+            TileLookUpArray = new int[HorizontalColorsCount * VerticalColorsCount];
 
+            for(int i = 0; i < InformationArray.Length - 1; i++)
+            {
+                for(int j = i + 1; j < InformationArray.Length; j++)
+                {
+                    if (InformationArray[i].VarientIndex(HorizontalColorsCount, VerticalColorsCount) >
+                        InformationArray[j].VarientIndex(HorizontalColorsCount, VerticalColorsCount))
+                    {
+                        TileInformation temp = InformationArray[i];
+                        InformationArray[i] = InformationArray[j];
+                        InformationArray[j] = temp;
+                    }
+                }
+            }
+
+            Dictionary<Int64, Entry> HashMap = new Dictionary<Int64, Entry>();
+
+            int CurrentVarientIndex = 0;
+            int CurrentOffset = 0;
+            int CurrentCount = 0;
+
+            for(int k = 0; k < InformationArray.Length; k++) {
+                if(InformationArray[k].VarientIndex(HorizontalColorsCount, VerticalColorsCount) == 
+                CurrentVarientIndex) {
+                    CurrentCount++;
+                }
+                else {
+                    HashMap.Add(CurrentVarientIndex, new Entry(CurrentOffset, CurrentCount));
+
+                    CurrentVarientIndex = InformationArray[k].VarientIndex(HorizontalColorsCount, VerticalColorsCount);
+                    CurrentCount = 1;
+                    CurrentOffset = k;
+                }
+            }
+
+            if(CurrentCount > 1){
+                HashMap.Add(CurrentVarientIndex, new Entry(CurrentOffset, CurrentCount));
+            }
+
+        }
+
+        public int ColorScan(int leftColor, int rightColor, int bottomColor, int topColor)
+        {
+            for (int k = 0; k < InformationArray.Length; k++)
+            {
+                if(InformationArray[k].RightColor == InformationArray[k].LeftColor ||
+                    InformationArray[k].TopColor == InformationArray[k].BottomColor) {
+                    return k;
+                }
+            }
+            return 0;
+        }
+
+        public static EdgeTileSet MakeTileSet (int _verticalColorCount, int _horizontalColorCount, int variant) 
+        {
+            EdgeTileSet tileSet = new EdgeTileSet();
+            tileSet.InitEdgeTileSet(_verticalColorCount, _horizontalColorCount);
+
+            for(int i = 0; i < variant; i++)
+            {
+                for(int j = 0; j < _verticalColorCount; j++)
+                {
+                    for(int k = 0; k < _verticalColorCount; k++)
+                    {
+                        for(int x = 0; x < _horizontalColorCount; x++)
+                        {
+                            for(int y = 0; y < _horizontalColorCount; y++)
+                            {
+                                tileSet.AddTile(TileType.TileTypeWang, k, j, y, x);
+                            }
+                        }
+                    }
+                }
+            }
+
+            tileSet.FinalizeTileSet();
+
+            return tileSet;
         }
     }
 }
