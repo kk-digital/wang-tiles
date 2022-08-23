@@ -144,7 +144,7 @@ namespace wang_tiles
             return 0;
         }
 
-        public static EdgeTileSet MakeTileSet (TileSize tileSize, int verticalColorCount, int horizontalColorCount, int variant) 
+        public static EdgeTileSet NewWangCompleteTileset (TileSize tileSize, int verticalColorCount, int horizontalColorCount, int variant) 
         {
             EdgeTileSet tileSet = new EdgeTileSet();
             tileSet.InitEdgeTileSet(tileSize, verticalColorCount, horizontalColorCount);
@@ -166,6 +166,27 @@ namespace wang_tiles
                 }
             }
 
+            tileSet.FinalizeTileSet();
+
+            return tileSet;
+        }
+
+        public static EdgeTileSet NewWangRandomTileSet(TileSize tileSize, int numberOfTiles, int horizontalTilesCount, int verticalTilesCount) 
+        {
+            EdgeTileSet tileSet = new EdgeTileSet();
+            tileSet.InitEdgeTileSet(tileSize, verticalTilesCount, horizontalTilesCount);
+
+            Random random = new Random();
+            int topColor = random.Next(0,verticalTilesCount);
+            int bottomColor = random.Next(0, verticalTilesCount);
+            int rightColor = random.Next(0,horizontalTilesCount);
+            int leftColor = random.Next(0,horizontalTilesCount);
+
+            for(int i = 0; i < numberOfTiles; i++) {
+                tileSet.AddTile(TileType.TileTypeWang, topColor, bottomColor, leftColor, 
+                    rightColor);
+            }
+        
             tileSet.FinalizeTileSet();
 
             return tileSet;
