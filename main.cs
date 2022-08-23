@@ -18,16 +18,12 @@ class MainClass
         Console.Write(randomNumber + "\n");
 
         Scene scene = new Scene(Utils.GenerateID(), 5, 5);
-
-
-        TileBoard tileBoard = new TileBoard(Utils.GenerateID(), 2, 2);
-        TileBoardJson.SaveJson("board.json", tileBoard);
+        
 
         ColorPaleteMap palette = new ColorPaleteMap();
         palette.Initialize();
         string input;
 
-<<<<<<< HEAD
 
         CommandLine.ExecuteCommand(args);
 
