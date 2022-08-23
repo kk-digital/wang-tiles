@@ -8,18 +8,13 @@ class MainClass
 {
     static void Main(string[] args)
     {
-        Console.Write("Main" + "\n");
-        Int64 id = Utils.CreateID(20, 10);
-        Int32 time = Utils.GetTimeFromID(id);
-        Int32 randomNumber = Utils.GetRandomNumberFromID(id);
 
-        Console.Write(id + "\n");
-        Console.Write(time + "\n");
-        Console.Write(randomNumber + "\n");
-
-
-        TileBoard tileBoard = TileBoardJson.FromJson("board.json");
+        TileBoard tileBoard = new TileBoard(Utils.GenerateID(), 2, 2);
         TileBoardJson.SaveJson("board.json", tileBoard);
+        tileBoard = TileBoardJson.FromJson("board.json");
+        var json = TileBoardJson.SaveJson("board.json", tileBoard);
+
+        Console.WriteLine(json);
 
 
 

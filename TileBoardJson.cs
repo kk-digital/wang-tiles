@@ -10,7 +10,7 @@ namespace wang_tiles
     {
 
 
-        public static void SaveJson(string filename, TileBoard tileBoard)
+        public static string SaveJson(string filename, TileBoard tileBoard)
         {
             //TODO(Mahdi): Implement
 
@@ -22,7 +22,7 @@ namespace wang_tiles
 
             File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
 
-            Console.WriteLine(json);
+            return json;
         }
 
         public static TileBoard FromJson(string filename)

@@ -11,6 +11,7 @@ namespace wang_tiles
     // TODO(Mahdi): https://github.com/kk-digital/kcg/issues/562
     public partial class EdgeTileSet
     {
+        public TileSetDescription Description;
         public TileSize TileSize;
         public int VerticalColorsCount;
         public int HorizontalColorsCount;
@@ -29,6 +30,9 @@ namespace wang_tiles
             InformationArray = new TileInformation[16];
             VerticalColorsCount = 0;
             HorizontalColorsCount = 0;
+            Description = new TileSetDescription();
+            Description.ID = Utils.GenerateID();
+            Description.IDString = "" + Description.ID;
         }
 
 

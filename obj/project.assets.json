@@ -52,24 +52,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\choi\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Aures\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Github\\wang-tiles\\wang-tiles.csproj",
+      "projectUniqueName": "C:\\workspace\\wang-tiles\\wang-tiles.csproj",
       "projectName": "wang-tiles",
-      "projectPath": "D:\\Projects\\Github\\wang-tiles\\wang-tiles.csproj",
-      "packagesPath": "C:\\Users\\choi\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\Github\\wang-tiles\\obj\\",
+      "projectPath": "C:\\workspace\\wang-tiles\\wang-tiles.csproj",
+      "packagesPath": "C:\\Users\\Aures\\.nuget\\packages\\",
+      "outputPath": "C:\\workspace\\wang-tiles\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\choi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Aures\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

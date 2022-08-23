@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "ID": 7134704319590822979,
-=======
-  "ID": 7134728015530188874,
->>>>>>> 89e03c909f644c3dba8b6182b52539aed806f5ee
+  "ID": 7134968310908239520,
   "SizeX": 2,
   "SizeY": 2,
   "BoardSlots": [
@@ -36,11 +32,6 @@
       "Layer": "LayerBack"
     }
   ],
-<<<<<<< HEAD
-  "CreationDate": "23/08/2022 07:53:42 +01:00",
-  "CreationDateUnixTime": 1661237622
-=======
-  "CreationDate": "8/22/2022 6:48:36 PM +03:00",
-  "CreationDateUnixTime": 1661183316
->>>>>>> 89e03c909f644c3dba8b6182b52539aed806f5ee
+  "CreationDate": "23/08/2022 08:21:04 +01:00",
+  "CreationDateUnixTime": 1661239264
 }
