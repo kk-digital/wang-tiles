@@ -24,7 +24,10 @@ class MainClass
         palette.Initialize();
         string input;
 
-entry:
+
+        CommandLine.ExecuteCommand(args);
+
+/*entry:
         Console.Write("Inputs: list tilesets, list boards, list scenes, list pixelassignments, list outputscenes, new tileset\n");
 
         input = Console.ReadLine();
@@ -132,6 +135,6 @@ entry:
         {
             Console.Clear();
             goto entry;
-        }
+        }*/
     }
 }
