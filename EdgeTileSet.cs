@@ -28,11 +28,12 @@ namespace wang_tiles
 
         
 
-        public void InitEdgeTileSet(int verticalColorCount, int horizontalColorCount)
+        public void InitEdgeTileSet(TileSize tileSize, int verticalColorCount, int horizontalColorCount)
         {
             // TODO(Mahdi): Implement
 
             // Create and Init Variables
+            TileSize = tileSize;
             InformationArray = new TileInformation[16];
             HorizontalColorsCount = horizontalColorCount;
             VerticalColorsCount = verticalColorCount;
@@ -116,20 +117,20 @@ namespace wang_tiles
             return 0;
         }
 
-        public static EdgeTileSet MakeTileSet (int _verticalColorCount, int _horizontalColorCount, int variant) 
+        public static EdgeTileSet MakeTileSet (TileSize tileSize, int verticalColorCount, int horizontalColorCount, int variant) 
         {
             EdgeTileSet tileSet = new EdgeTileSet();
-            tileSet.InitEdgeTileSet(_verticalColorCount, _horizontalColorCount);
+            tileSet.InitEdgeTileSet(tileSize, verticalColorCount, horizontalColorCount);
 
             for(int i = 0; i < variant; i++)
             {
-                for(int j = 0; j < _verticalColorCount; j++)
+                for(int j = 0; j < verticalColorCount; j++)
                 {
-                    for(int k = 0; k < _verticalColorCount; k++)
+                    for(int k = 0; k < verticalColorCount; k++)
                     {
-                        for(int x = 0; x < _horizontalColorCount; x++)
+                        for(int x = 0; x < horizontalColorCount; x++)
                         {
-                            for(int y = 0; y < _horizontalColorCount; y++)
+                            for(int y = 0; y < horizontalColorCount; y++)
                             {
                                 tileSet.AddTile(TileType.TileTypeWang, k, j, y, x);
                             }
