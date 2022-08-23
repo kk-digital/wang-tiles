@@ -10,21 +10,24 @@ namespace wang_tiles
         public SceneTile[][] SceneTiles;
 
         public EdgeTileSet[] TileSets;
+        public int TileSetsCount;
 
         public string CreationDate;
         public UInt64 CreationDateUnixTime;
 
 
 
-        
+
         public Scene(Int64 id, int sizeX, int sizeY)
         {
             ID = id;
             SizeX = sizeX;
             SizeY = sizeY;
+            TileSetsCount = 0;
 
            
             SceneTiles = new SceneTile[LayerCount][];
+            TileSets = new EdgeTileSet[128];
            
 
             for(int layer = 0; layer < LayerCount; layer++)
@@ -47,9 +50,26 @@ namespace wang_tiles
             }
         }
 
-        public void AddTileSet(EdgeTileSet edgeTileSet)
+        public int AddTileSet(EdgeTileSet edgeTileSet)
         {
             //TODO(Mahdi): Implement
+            if (TileSetsCount == TileSets.Length)
+            {
+                TileSetsCount = TileSetsCount * 2;
+                Array.Resize(ref TileSets, TileSetsCount);
+            }
+
+            TileSets[TileSetsCount] = edgeTileSet;
+            int index = TileSetsCount;
+            TileSetsCount++;
+
+            return index;
+        }
+
+        public void SetTile(int x, int y, SceneTile sceneTile)
+        {
+            //TODO(Mahdi): Implement
+
         }
     }
 }
