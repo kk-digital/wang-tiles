@@ -115,5 +115,32 @@ namespace wang_tiles
             }
             return 0;
         }
+
+        public static EdgeTileSet MakeTileSet (int _verticalColorCount, int _horizontalColorCount, int variant) 
+        {
+            EdgeTileSet tileSet = new EdgeTileSet();
+            tileSet.InitEdgeTileSet(_verticalColorCount, _horizontalColorCount);
+
+            for(int i = 0; i < variant; i++)
+            {
+                for(int j = 0; j < _verticalColorCount; j++)
+                {
+                    for(int k = 0; k < _verticalColorCount; k++)
+                    {
+                        for(int x = 0; x < _horizontalColorCount; x++)
+                        {
+                            for(int y = 0; y < _horizontalColorCount; y++)
+                            {
+                                tileSet.AddTile(TileType.TileTypeWang, k, j, y, x);
+                            }
+                        }
+                    }
+                }
+            }
+
+            tileSet.FinalizeTileSet();
+
+            return tileSet;
+        }
     }
 }
