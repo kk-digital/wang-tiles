@@ -65,7 +65,7 @@ namespace Wang
                     EdgeTileSetJson.SaveJson("s00_Tileset\\tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
                 }
             }
-            else if (args[0] == "Board")
+            else if (args.Length >= 5 && args[0] == "Board")
             {
                 if (args[1] == "Generate")
                 {

@@ -40,13 +40,33 @@ namespace Wang
 
         public static TileBoard MakeRadial(int sizeX, int sizeY)
         {
+            // Todo(Joao): Implement this.
+            // Different distance in each row and collum.
+            // How smooth should it be?
+
             TileBoard tileBoard = new TileBoard(Utils.GenerateID(), sizeX, sizeY); //Note(Joao) : should we use generateID for tileboard?
 
-            Random rand = new Random();
-            int x = rand.Next(sizeX);
-            int y = rand.Next(sizeY);
+            int centerX = sizeX / 2;
+            int centerY = sizeY / 2;
 
+            Random rand = new Random(); // Note(joao): Use perlin noise instead.
+            int radius = rand.Next(Math.Min(sizeX / 2, sizeY / 2));
 
+            for (int i = 0; i < tileBoard.BoardSlots.Length; i++)
+            {
+                int distance = (int)MathW.Distance.EuclidianDistance(tileBoard.BoardSlots[i].xPosition, tileBoard.BoardSlots[i].yPosition, centerX, centerY);
+                int diff = distance - radius;
+
+                tileBoard.BoardSlots[i].TileIsoType = TileIsoType.FullBlock;
+                if (diff >= 0)
+                {
+                    tileBoard.BoardSlots[i].Layer = Layer.LayerFront;
+                }
+                else
+                {
+                    tileBoard.BoardSlots[i].Layer = Layer.LayerBack;
+                }
+            }
 
             return tileBoard;
         }
