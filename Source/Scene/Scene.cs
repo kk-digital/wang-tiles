@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Wang.SceneW
 {
-    public class Scene
+    public partial class Scene
     {
         public static int LayerCount = Enum.GetNames(typeof(Layer)).Length;
         public Int64 ID;
@@ -73,7 +73,7 @@ namespace Wang.SceneW
         public void SetTile(int x, int y, Layer layer, SceneTile sceneTile)
         {
             Debug.Assert(x >= 0 && x < SizeX && y >= 0 && y < SizeY);
-            
+
             SceneTiles[(int)layer][y * SizeX + x] = sceneTile;
         }
     }
