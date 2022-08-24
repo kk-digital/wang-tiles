@@ -1,4 +1,4 @@
-namespace wang_tiles
+namespace Wang
 {
 
     public static class Constants

@@ -1,8 +1,7 @@
 using Newtonsoft.Json;
 
-namespace wang_tiles
+namespace Wang
 {
-
 
     public class EdgeTileSetJson
     {
@@ -11,7 +10,7 @@ namespace wang_tiles
         public static string SaveJson(string filename, EdgeTileSet edgeTileSet)
         {
             //TODO(Mahdi): Implement
-            
+
             var json = JsonConvert.SerializeObject(edgeTileSet, Formatting.Indented);
 
             File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
@@ -23,7 +22,7 @@ namespace wang_tiles
         {
             string json = File.ReadAllText(Constants.OutputPath + "\\" + filename);
 
-            EdgeTileSet newBoard = JsonConvert.DeserializeObject < EdgeTileSet >(json);
+            EdgeTileSet newBoard = JsonConvert.DeserializeObject<EdgeTileSet>(json);
 
             return newBoard;
         }

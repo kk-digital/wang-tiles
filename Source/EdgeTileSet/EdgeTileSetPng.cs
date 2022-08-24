@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Drawing;
 
-namespace wang_tiles
+namespace Wang
 {
 
 
@@ -47,7 +47,7 @@ namespace wang_tiles
 
             for(int tileIndex = 0; tileIndex < InformationArray.Length; tileIndex++)
             {
-                TileInformation tile = InformationArray[tileIndex];
+                EdgeTileInformation tile = InformationArray[tileIndex];
                 int xPosition = tileIndex % tilesPerRow;
                 int yPosition = tileIndex / tilesPerRow;
 

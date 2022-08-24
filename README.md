@@ -28,3 +28,7 @@
 #### example
 
 *wang_tiles new tileset 8x8 4 4 2
+
+#### Board Generation
+
+*wang_tiles Board Generate <Board Type> <sizeX> <<sizeY>>  ///// <Board Type> ---> Radial flat FloatingIsland

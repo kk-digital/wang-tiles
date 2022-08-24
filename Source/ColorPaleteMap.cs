@@ -1,7 +1,7 @@
 
 using System.Security.Cryptography;
 
-namespace wang_tiles
+namespace Wang
 {
     public class ColorPaleteMap
     {

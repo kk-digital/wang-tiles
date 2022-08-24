@@ -1,4 +1,6 @@
-namespace wang_tiles
+using Wang;
+
+namespace Wang
 {
     public class Scene
     {

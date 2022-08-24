@@ -1,4 +1,4 @@
-namespace wang_tiles
+namespace Wang
 {
 
 
@@ -6,7 +6,7 @@ namespace wang_tiles
     {
         int PixelID; // 
         int TileID; // which tile this belongs to
-        Int64 TileSetID;
+        long TileSetID;
         int PixelOffsetX;
         int PixelOffsetY;
 

@@ -1,8 +1,6 @@
-namespace wang_tiles
+namespace Wang
 {
-
-
-    public struct TileSetDescription
+    public struct EdgeTileSetDescription
     {
         public Int64 ID;
         public string IDString;

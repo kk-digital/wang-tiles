@@ -1,33 +1,42 @@
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
-using wang_tiles;
 using System.Linq;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 
-namespace wang_tiles
+namespace Wang
 {
+    public struct Entry
+    {
+        public Entry(int lVarientIndex, int lCount)
+        {
+            VarientIndex = lVarientIndex;
+            Count = lCount;
+        }
+        public int VarientIndex;
+        public int Count;
+    };
 
 
     // TODO(Mahdi): https://github.com/kk-digital/kcg/issues/562
     public partial class EdgeTileSet
     {
-        public TileSetDescription Description;
+        public EdgeTileSetDescription Description;
         [JsonConverter(typeof(StringEnumConverter))]
         public TileSize TileSize;
         public int VerticalColorsCount;
         public int HorizontalColorsCount;
-        public TileInformation[] InformationArray;
-         Dictionary<Int64, Entry> LookupMap;
+        public EdgeTileInformation[] InformationArray;
+        Dictionary<Int64, Entry> LookupMap;
 
 
 
        /* public TileSpriteInformation[] TileSpriteInformationArray;
         public UniquePixel[] UniquePixels;*/
 
+
         public int TileCount = 0;
-    
 
         
 
@@ -37,10 +46,10 @@ namespace wang_tiles
 
             // Create and Init Variables
             TileSize = tileSize;
-            InformationArray = new TileInformation[16];
+            InformationArray = new EdgeTileInformation[16];
             HorizontalColorsCount = horizontalColorCount;
             VerticalColorsCount = verticalColorCount;
-            Description = new TileSetDescription();
+            Description = new EdgeTileSetDescription();
             Description.ID = Utils.GenerateID();
             Description.IDString = "" + Description.ID;
 
@@ -64,7 +73,7 @@ namespace wang_tiles
             }
 
             // Initialize Information Array
-            TileInformation properties = new TileInformation
+            EdgeTileInformation properties = new EdgeTileInformation
             {
                 TileID = -1,
                 TopColor = topColor,
@@ -80,7 +89,7 @@ namespace wang_tiles
             // TODO(Mahdi): Implement
 
 
-            TileInformation[] NewInformationArray = new TileInformation[TileCount];
+            EdgeTileInformation[] NewInformationArray = new EdgeTileInformation[TileCount];
             for(int i = 0; i < InformationArray.Length; i++)
             {
                 NewInformationArray[i] = InformationArray[i];
@@ -97,7 +106,7 @@ namespace wang_tiles
                     if (InformationArray[i].VarientIndex(HorizontalColorsCount, VerticalColorsCount) >
                         InformationArray[j].VarientIndex(HorizontalColorsCount, VerticalColorsCount))
                     {
-                        TileInformation temp = InformationArray[i];
+                        EdgeTileInformation temp = InformationArray[i];
                         InformationArray[i] = InformationArray[j];
                         InformationArray[j] = temp;
                     }

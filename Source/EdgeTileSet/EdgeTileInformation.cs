@@ -1,10 +1,10 @@
 using System.Diagnostics;
 
-namespace wang_tiles
+namespace Wang
 {
 
 
-    public struct TileInformation
+    public struct EdgeTileInformation
     {
         public int TileID;
         public int TopColor;
