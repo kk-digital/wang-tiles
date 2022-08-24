@@ -1,24 +1,24 @@
-            wang-tiles
+# wang-tiles
 
 #### usage
 
-*wang_tiles help
+```wang_tiles help```
 
 #### list tilesets
 
-*wang_tiles list tilesets 
+```wang_tiles list tilesets ```
 
 #### list boards
 
-*wang_tiles list boards 
+```wang_tiles list boards ```
 
 #### list  scenes
 
-*wang_tiles list scenes 
+```wang_tiles list scenes```
 
 #### list pixelassignments
 
-*wang_tiles list pixelassignments
+```wang_tiles list pixelassignments```
 
 
 #### create new tileset
@@ -27,8 +27,12 @@
 
 #### example
 
-*wang_tiles new tileset 8x8 4 4 2
+```wang_tiles new tileset 8x8 4 4 2```
 
 #### Board Generation
 
-*wang_tiles Board Generate <Board Type> <sizeX> <<sizeY>>  ///// <Board Type> ---> Radial flat FloatingIsland
+*wang_tiles Board Generate <Board Type> <size X> <size Y>  ///// <Board Type> ---> Radial flat FloatingIsland
+
+#### example
+
+```wang_tiles  Board Generate Radial 16 16```
