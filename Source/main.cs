@@ -22,8 +22,19 @@ class MainClass
         Console.Write(randomNumber + "\n");
 
         Scene scene = new Scene(Utils.GenerateID(), 5, 5);
-        EdgeTileSet newTileSet = EdgeTileSet.NewWangRandomTileSet(TileSize.TileSize_16x16, 16, 16, 64);
-        newTileSet.SavePNG("..\\Output.png");
+        EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(TileSize.TileSize_16x16, 2, 2, 1);
+        scene.AddTileSet(newTileSet);
+
+        for(int y = 0; y < 5; y++)
+        {
+            for(int x = 0; x < 5; x++)
+            {
+                scene.SetTile(x, y, Layer.LayerFront, new SceneTile(0, 0, 0, 0, TileIsoType.FullBlock, TileType.TileTypeWang));
+            }
+        }
+
+        scene.SavePNG("Output.png");
+        
 
         
 

@@ -12,7 +12,7 @@ namespace Wang.SceneW
     {
 
 
-        public void SavePNG(string filename, int tilesPerRow = 8)
+        public void SavePNG(string filename)
         {
             // TODO(Mahdi): Implement
 
@@ -25,7 +25,7 @@ namespace Wang.SceneW
             int numberOfRows = SizeX;
 
 
-            Bitmap bmp = new Bitmap(tileSizeInPixels * tilesPerRow, tileSizeInPixels * numberOfRows);
+            Bitmap bmp = new Bitmap(tileSizeInPixels * SizeX, tileSizeInPixels * SizeY);
             Graphics g = Graphics.FromImage(bmp);
 
             
@@ -36,8 +36,8 @@ namespace Wang.SceneW
                 SceneTile sceneTile = SceneTiles[(int)Layer.LayerFront][tileIndex];
                 EdgeTileInformation tile = TileSets[sceneTile.TileSetID].InformationArray[sceneTile.TileID];
 
-                int xPosition = tileIndex % tilesPerRow;
-                int yPosition = tileIndex / tilesPerRow;
+                int xPosition = tileIndex % SizeX;
+                int yPosition = tileIndex / SizeX;
 
                 int xPixelPosition = xPosition * tileSizeInPixels;
                 int yPixelPosition = (numberOfRows - yPosition - 1) * tileSizeInPixels;

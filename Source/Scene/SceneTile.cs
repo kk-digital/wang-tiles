@@ -14,5 +14,16 @@ namespace Wang.SceneW
         public TileIsoType TileIsoType;
         [JsonConverter(typeof(StringEnumConverter))]
         public TileType TileType;
+
+
+        public SceneTile(int x, int y, int tileId, int tileSetID, TileIsoType isoType, TileType type)
+        {
+            xPosition = x;
+            yPosition = y;
+            TileID = tileId;
+            TileSetID = tileSetID;
+            TileIsoType = isoType;
+            TileType = type;
+        }
     }
 }
