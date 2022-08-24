@@ -62,7 +62,7 @@ namespace Wang.EdgeTile
             }
 
             g.Dispose();
-            bmp.Save(filename, System.Drawing.Imaging.ImageFormat.Png);
+            bmp.Save(Constants.OutputPath + "\\" + filename, System.Drawing.Imaging.ImageFormat.Png);
             bmp.Dispose();
 
 

@@ -23,7 +23,8 @@
 
 #### create new tileset
 
-*wang_tiles new tileset <tilesize> <vertical_color_count> <horizontal_color_count> <variant_count> ///// <tilesize> ---> 8x8 16x16 32x32
+*wang_tiles new tileset <tilesize> <vertical_color_count> <horizontal_color_count> <variant_count> <tilesPerRow> ///// <tilesize> ---> 8x8 16x16 32x32
+new tileset 16x16 2 2 1 6
 
 #### example
 

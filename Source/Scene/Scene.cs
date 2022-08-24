@@ -1,5 +1,6 @@
 using Wang;
 using Wang.EdgeTile;
+using System.Diagnostics;
 
 namespace Wang.SceneW
 {
@@ -69,10 +70,11 @@ namespace Wang.SceneW
             return index;
         }
 
-        public void SetTile(int x, int y, SceneTile sceneTile)
+        public void SetTile(int x, int y, Layer layer, SceneTile sceneTile)
         {
-            //TODO(Mahdi): Implement
-
+            Debug.Assert(x >= 0 && x < SizeX && y >= 0 && y < SizeY);
+            
+            SceneTiles[(int)layer][y * SizeX + x] = sceneTile;
         }
     }
 }

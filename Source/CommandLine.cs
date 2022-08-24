@@ -34,7 +34,7 @@ namespace Wang.CLI
                 }
 
             }
-            else if (args.Length >= 6 && args[0] == "new")
+            else if (args.Length >= 7 && args[0] == "new")
             {
                 if (args[1] == "tileset")
                 {
@@ -55,9 +55,11 @@ namespace Wang.CLI
                     int verticalColorCount = Convert.ToInt32(args[3]);
                     int horizontalColorCount = Convert.ToInt32(args[4]);
                     int variant = Convert.ToInt32(args[5]);
+                    int tilesPerRow = Convert.ToInt32(args[6]);
 
                     EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(tileSize, verticalColorCount, horizontalColorCount, variant);
                     EdgeTileSetJson.SaveJson("s00_Tileset\\tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
+                    newTileSet.SavePNG("s00_Tileset_Image\\tileset_" + newTileSet.Description.IDString + ".png", tilesPerRow);
                 }
             }
             else if (args.Length >= 5 && args[0] == "Board")
@@ -102,7 +104,7 @@ namespace Wang.CLI
             Console.WriteLine("*list scenes");
             Console.WriteLine("*list pixelassignments");
             Console.WriteLine("****** new ***");
-            Console.WriteLine("*new tileset <tilesize> <vertical_color_count> <horizontal_color_count> <variant>");
+            Console.WriteLine("*new tileset <tilesize> <vertical_color_count> <horizontal_color_count> <variant> <tilesPerRow>");
             Console.WriteLine("****** Board Generate ***");
             Console.WriteLine("Board Generate flat <xSize> <ySize>");
             Console.WriteLine("Board Generate Radial  <xSize> <ySize>");
