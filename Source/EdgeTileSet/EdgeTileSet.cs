@@ -33,8 +33,9 @@ namespace Wang.EdgeTile
 
 
 
-        public EdgeTileSpriteInformation[] TileSpriteInformationArray;
-        public UniquePixel[] UniquePixels;
+       /* public TileSpriteInformation[] TileSpriteInformationArray;
+        public UniquePixel[] UniquePixels;*/
+
 
         public int TileCount = 0;
 
@@ -156,6 +157,7 @@ namespace Wang.EdgeTile
         public static EdgeTileSet NewWangCompleteTileset (TileSize tileSize, int verticalColorCount, int horizontalColorCount, int variant) 
         {
             EdgeTileSet tileSet = new EdgeTileSet();
+            int nbOfTiles = variant * verticalColorCount * verticalColorCount * horizontalColorCount * horizontalColorCount;
             tileSet.InitEdgeTileSet(tileSize, verticalColorCount, horizontalColorCount);
 
             for(int i = 0; i < variant; i++)
@@ -183,6 +185,7 @@ namespace Wang.EdgeTile
         public static EdgeTileSet NewWangRandomTileSet(TileSize tileSize, int numberOfTiles, int horizontalTilesCount, int verticalTilesCount) 
         {
             EdgeTileSet tileSet = new EdgeTileSet();
+
             tileSet.InitEdgeTileSet(tileSize, verticalTilesCount, horizontalTilesCount);
 
             Random random = new Random();

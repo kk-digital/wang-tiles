@@ -10,17 +10,11 @@ namespace Wang
 
         public PixelColor GetHorizontalColor(int index)
         {
-            if (index <= 0)
-                throw new ArgumentOutOfRangeException("Out Of Range");
-
             return HorizontalEdgeColors[index];
         }
 
         public PixelColor GetVerticalColor(int index)
         {
-            if (index <= 0)
-                throw new ArgumentOutOfRangeException("Out Of Range");
-
             return VerticalEdgeColors[index];
         }
 

@@ -4,7 +4,7 @@ namespace Wang.Other
     {
         public static int ToRGBA8(char r, char g, char b, char a)
         {
-            return r << 24 + g << 16 + b << 8 + a;
+            return (((int)r) << 24) + (((int)g) << 16) + (((int)b) << 8) + (int)a;
         }
 
         public static long GenerateID()
