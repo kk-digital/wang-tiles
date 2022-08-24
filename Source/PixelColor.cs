@@ -1,9 +1,30 @@
+using Wang.Other;
+
 namespace Wang
 {
     public struct PixelColor
     {
-        int Color;
+        public int Color;
 
+        public int Red()
+        {
+            return (Color >> 24) & 0xff;
+        }
+
+        public int Green()
+        {
+            return (Color >> 16) & 0xff;
+        }
+
+        public int Blue()
+        {
+            return (Color >> 8) & 0xff;
+        }
+
+        public int Alpha()
+        {
+            return Color & 0xff;
+        }
 
         public static PixelColor MakePixelColor(int r, int g, int b, int a)
         {
@@ -16,5 +37,10 @@ namespace Wang
         {
             return MakePixelColor(r, g, b, 255);
         }
+
+
+
+
+
     }
 }

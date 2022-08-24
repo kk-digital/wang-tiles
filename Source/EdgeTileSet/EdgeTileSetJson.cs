@@ -1,6 +1,10 @@
+using System.Text.Json;
+using System;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
+using Wang;
 
-namespace Wang
+namespace Wang.EdgeTile
 {
 
     public class EdgeTileSetJson
@@ -11,6 +15,10 @@ namespace Wang
         {
             //TODO(Mahdi): Implement
 
+            DateTimeOffset dto = DateTimeOffset.Now;
+
+            edgeTileSet.Description.CreationDate = dto.ToString();
+            edgeTileSet.Description.CreationDateUnixTime = (UInt64)dto.ToUnixTimeSeconds(); ;
             var json = JsonConvert.SerializeObject(edgeTileSet, Formatting.Indented);
 
             File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
@@ -22,9 +30,9 @@ namespace Wang
         {
             string json = File.ReadAllText(Constants.OutputPath + "\\" + filename);
 
-            EdgeTileSet newBoard = JsonConvert.DeserializeObject<EdgeTileSet>(json);
+            EdgeTileSet newObject = JsonConvert.DeserializeObject<EdgeTileSet>(json);
 
-            return newBoard;
+            return newObject;
         }
     }
 }

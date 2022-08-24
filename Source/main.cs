@@ -1,5 +1,10 @@
 
 using Wang;
+using Wang.Other;
+using Wang.SceneW;
+using Wang.Board;
+using Wang.CLI;
+using Wang.EdgeTile;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -17,6 +22,12 @@ class MainClass
         Console.Write(randomNumber + "\n");
 
         Scene scene = new Scene(Utils.GenerateID(), 5, 5);
+        EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(TileSize.TileSize_16x16, 2, 2, 1);
+
+        newTileSet.SavePNG("tileset.png", 8);
+        scene.AddTileSet(newTileSet);
+        
+
         
 
         ColorPaleteMap palette = new ColorPaleteMap();

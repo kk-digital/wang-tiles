@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Source",
+    "\\Source\\EdgeTileSet"
   ],
-  "SelectedNode": "\\EdgeTileSet.cs",
+  "SelectedNode": "\\wang-tiles.csproj",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,126 @@
+{
+  "Description": {
+    "ID": 7135374904641998514,
+    "IDString": "7135374904641998514",
+    "CreationDate": "24/08/2022 10:38:52 +01:00",
+    "CreationDateUnixTime": 1661333932
+  },
+  "TileSize": "TileSize_8x8",
+  "VerticalColorsCount": 2,
+  "HorizontalColorsCount": 2,
+  "InformationArray": [
+    {
+      "TileID": 0,
+      "TopColor": 0,
+      "BottomColor": 0,
+      "LeftColor": 0,
+      "RightColor": 0
+    },
+    {
+      "TileID": 1,
+      "TopColor": 1,
+      "BottomColor": 0,
+      "LeftColor": 0,
+      "RightColor": 0
+    },
+    {
+      "TileID": 2,
+      "TopColor": 0,
+      "BottomColor": 1,
+      "LeftColor": 0,
+      "RightColor": 0
+    },
+    {
+      "TileID": 3,
+      "TopColor": 1,
+      "BottomColor": 1,
+      "LeftColor": 0,
+      "RightColor": 0
+    },
+    {
+      "TileID": 4,
+      "TopColor": 0,
+      "BottomColor": 0,
+      "LeftColor": 0,
+      "RightColor": 1
+    },
+    {
+      "TileID": 5,
+      "TopColor": 1,
+      "BottomColor": 0,
+      "LeftColor": 0,
+      "RightColor": 1
+    },
+    {
+      "TileID": 6,
+      "TopColor": 0,
+      "BottomColor": 1,
+      "LeftColor": 0,
+      "RightColor": 1
+    },
+    {
+      "TileID": 7,
+      "TopColor": 1,
+      "BottomColor": 1,
+      "LeftColor": 0,
+      "RightColor": 1
+    },
+    {
+      "TileID": 8,
+      "TopColor": 0,
+      "BottomColor": 0,
+      "LeftColor": 1,
+      "RightColor": 0
+    },
+    {
+      "TileID": 9,
+      "TopColor": 1,
+      "BottomColor": 0,
+      "LeftColor": 1,
+      "RightColor": 0
+    },
+    {
+      "TileID": 10,
+      "TopColor": 0,
+      "BottomColor": 1,
+      "LeftColor": 1,
+      "RightColor": 0
+    },
+    {
+      "TileID": 11,
+      "TopColor": 1,
+      "BottomColor": 1,
+      "LeftColor": 1,
+      "RightColor": 0
+    },
+    {
+      "TileID": 12,
+      "TopColor": 0,
+      "BottomColor": 0,
+      "LeftColor": 1,
+      "RightColor": 1
+    },
+    {
+      "TileID": 13,
+      "TopColor": 1,
+      "BottomColor": 0,
+      "LeftColor": 1,
+      "RightColor": 1
+    },
+    {
+      "TileID": 14,
+      "TopColor": 0,
+      "BottomColor": 1,
+      "LeftColor": 1,
+      "RightColor": 1
+    },
+    {
+      "TileID": 15,
+      "TopColor": 1,
+      "BottomColor": 1,
+      "LeftColor": 1,
+      "RightColor": 1
+    }
+  ],
+  "TileCount": 16
+}

@@ -1,8 +1,13 @@
 using Wang;
+using Wang.EdgeTile;
+using System.Diagnostics;
+using System.Text.Json;
+using System;
+using Newtonsoft.Json;
 
-namespace Wang
+namespace Wang.SceneW
 {
-    public class Scene
+    public partial class Scene
     {
         public static int LayerCount = Enum.GetNames(typeof(Layer)).Length;
         public Int64 ID;
@@ -29,7 +34,12 @@ namespace Wang
 
            
             SceneTiles = new SceneTile[LayerCount][];
-            TileSets = new EdgeTileSet[128];
+            TileSets = new EdgeTileSet[1];
+
+            DateTimeOffset dto = DateTimeOffset.Now;
+
+            CreationDate = dto.ToString();
+            CreationDateUnixTime = (UInt64)dto.ToUnixTimeSeconds();
            
 
             for(int layer = 0; layer < LayerCount; layer++)
@@ -57,8 +67,7 @@ namespace Wang
             //TODO(Mahdi): Implement
             if (TileSetsCount == TileSets.Length)
             {
-                TileSetsCount = TileSetsCount * 2;
-                Array.Resize(ref TileSets, TileSetsCount);
+                Array.Resize(ref TileSets, TileSetsCount + 1);
             }
 
             TileSets[TileSetsCount] = edgeTileSet;
@@ -68,10 +77,60 @@ namespace Wang
             return index;
         }
 
-        public void SetTile(int x, int y, SceneTile sceneTile)
+        public void SetTile(int x, int y, Layer layer, SceneTile sceneTile)
         {
-            //TODO(Mahdi): Implement
+            Debug.Assert(x >= 0 && x < SizeX && y >= 0 && y < SizeY);
 
+            SceneTiles[(int)layer][y * SizeX + x] = sceneTile;
+        }
+
+
+        public string SaveJson(string filename)
+        {
+
+            var json = JsonConvert.SerializeObject(this, Formatting.Indented);
+
+            File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
+
+            return json;
+        }
+
+        public SceneTile[] FindMatchingCorners(TileSize tileSize, int topColor, int bottomColor, int rightColor, 
+            int leftColor) 
+        {
+            SceneTile[] tileSet = new SceneTile[LayerCount];
+            Random rnd = new Random();
+
+            for(int i = 0; i < tileSet.Length; i++)
+            {
+                SceneTile sceneTile = SceneTiles[(int)Layer.LayerFront][rnd.Next(-5000, 5000) + rnd.Next(-5000, 5000) * SizeX];
+
+                EdgeTileInformation tile = TileSets[sceneTile.TileSetID].InformationArray[sceneTile.TileID];
+
+                if(tile.TileID == -1) 
+                {
+                    if(tile.TopColor == topColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                    else if(tile.BottomColor == bottomColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                    else if(tile.RightColor == rightColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                    else if(tile.LeftColor == leftColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                }
+            }
+
+            if(tileSet.Length <= 0)
+            {
+                //return -2
+                // No Matching Found
+            }
+            else if (tileSet.Length > 0) 
+            {
+                SceneTile randomTile = tileSet[rnd.Next(0, tileSet.Length)];
+            }
+
+            return tileSet;
         }
     }
 }

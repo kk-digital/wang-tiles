@@ -1,6 +1,7 @@
 using Wang;
+using Wang.Other;
 
-namespace Wang
+namespace Wang.Board
 {
     public class TileBoard
     {
