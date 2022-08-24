@@ -3,7 +3,7 @@
     
 using System;
 
-namespace KMath.Random {
+namespace wang {
     class Mt19937 {
         public const int N = 624;
         public const int M = 397;
