@@ -32,7 +32,6 @@ class MainClass
             for(int x = 0; x < 5; x++)
             {
                 scene.SetTile(x, y, Layer.LayerFront, new SceneTile(x, y, x, y, TileIsoType.FullBlock, TileType.TileTypeWang));
-                scene.FindMatchingCorners(TileSize.TileSize_16x16, )
             }
         }
 
