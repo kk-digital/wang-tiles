@@ -60,6 +60,7 @@ namespace Wang.CLI
                     EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(tileSize, verticalColorCount, horizontalColorCount, variant);
                     EdgeTileSetJson.SaveJson("s00_Tileset\\tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
                     newTileSet.SavePNG("s00_Tileset_Image\\tileset_" + newTileSet.Description.IDString + ".png", tilesPerRow);
+                    Console.WriteLine("EdgeTileSet generated");
                 }
             }
             else if (args.Length >= 5 && args[0] == "Board")
@@ -88,7 +89,8 @@ namespace Wang.CLI
                             return;
                     }
 
-                    TileBoardJson.SaveJson("s01_Board\\board" + tileBoard.ID.ToString(), tileBoard);
+                    TileBoardJson.SaveJson("s01_Board\\board_" + tileBoard.ID.ToString() + ".json", tileBoard);
+                    Console.WriteLine("board generated");
                 }
             }
         }

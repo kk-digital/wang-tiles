@@ -57,7 +57,7 @@ namespace Wang.EdgeTile
             DateTimeOffset dto = DateTimeOffset.Now;
 
             Description.CreationDate = dto.ToString();
-            Description.CreationDateUnixTime = (Int64)dto.ToUnixTimeSeconds();
+            Description.CreationDateUnixTime = (UInt64)dto.ToUnixTimeSeconds();
 
             TileCount = 0;
 

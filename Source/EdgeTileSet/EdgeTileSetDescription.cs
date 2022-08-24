@@ -5,6 +5,6 @@ namespace Wang.EdgeTile
         public Int64 ID;
         public string IDString;
         public string CreationDate;
-        public Int64 CreationDateUnixTime;
+        public UInt64 CreationDateUnixTime;
     }
 }

@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "2AlzAl+YvfLVHZK7DgBIVShLNUCvpdbGVxkvhEBAHf0vt+nvRrUNZlySuL8QYt4BoBvDBFZsGBuoG+8cDj7UIA==",
+  "dgSpecHash": "K4YbDyNB9QlLENS0Vc6EgGskzbpxENkwiYCBWotZ5NQlGbydC+g6YFWrc82Hj4bzbPJaw0ojVx9NPe3r6KMT6Q==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\Github\\wang-tiles\\wang-tiles.csproj",
+  "projectFilePath": "C:\\workspace\\wang-tiles\\wang-tiles.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\choi\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "C:\\Users\\choi\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
-    "C:\\Users\\choi\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512"
+    "C:\\Users\\Aures\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\Aures\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Aures\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -21,19 +21,6 @@ namespace Wang.SceneW
 
             int tileSizeInPixels = 16;
 
-            if (TileSize == TileSize.TileSize_8x8)
-            {
-                tileSizeInPixels = 8;
-            }
-            else if (TileSize == TileSize.TileSize_16x16)
-            {
-                tileSizeInPixels = 16;
-            }
-            else if (TileSize == TileSize.TileSize_32x32)
-            {
-                tileSizeInPixels = 32;
-            }
-
             int tileCount = SizeX * SizeY;
             int numberOfRows = SizeX;
 
