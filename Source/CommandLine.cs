@@ -93,6 +93,91 @@ namespace Wang.CLI
                     Console.WriteLine("board generated");
                 }
             }
+            else if (args.Length >= 1 && args[0] == "test-scene-output-random")
+            {
+                List<string> listOfTilesets = new List<string>();
+                int width = 4;
+                int height = 4;
+                Int64 newId = Other.Utils.GenerateID();
+                string outputPath = "scene_" + newId;
+                string arg = "";
+                for(int i = 1; i < args.Length; i++)
+                {
+                    if (args[i] == "-ts")
+                    {
+                        arg = "-ts";
+                    }
+                    else if (args[i] == "-width")
+                    {
+                        arg = "-width";
+                    }
+                    else if (args[i] == "-height")
+                    {
+                        arg = "-height";
+                    }
+                    else if (args[i] == "-out")
+                    {
+                        arg = "-out";
+                    }
+                    else
+                    {
+                        if (arg == "-ts")
+                        {
+                            listOfTilesets.Add(args[i]);
+                            arg = "";
+                        }
+                        else if (arg == "-width")
+                        {
+                            width = Convert.ToInt32(args[i]);
+                            arg = "";
+                        }
+                        else if (arg == "-height")
+                        {
+                            height = Convert.ToInt32(args[i]);
+                            arg = "";
+                        }
+                        else if (arg == "-out")
+                        {
+                            outputPath = args[i];
+                            arg = "";
+                        }
+                    }
+                }
+
+                if (listOfTilesets.Count == 0)
+                {
+                    Console.WriteLine("no tilesets chosen !!");
+                    return ;
+                }
+
+                SceneW.Scene scene = new SceneW.Scene(newId, width, height);
+                foreach(var tilesetPath in listOfTilesets)
+                {
+                    EdgeTileSet tileset = EdgeTileSetJson.FromJson("s00_Tileset\\" + tilesetPath);
+                    scene.AddTileSet(tileset);
+                }
+
+                DateTimeOffset dto = DateTimeOffset.Now;
+                Mt19937.init_genrand((ulong)dto.ToUnixTimeSeconds());
+
+                for(int y = 0; y < height; y++)
+                {
+                    for(int x = 0; x < width; x++)
+                    {
+                        int randomTileSetID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSetsCount);
+                        int randomID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSets[randomTileSetID].InformationArray.Length);
+
+                        EdgeTileInformation tileInfo = scene.TileSets[randomTileSetID].InformationArray[randomID];
+
+                        scene.SetTile(x, y, Layer.LayerFront, new SceneW.SceneTile(x, y, randomID, randomTileSetID, TileIsoType.FullBlock, TileType.TileTypeWang));
+                    }
+                }
+
+
+                scene.SaveJson("s03_OutputScene\\" + outputPath + ".json");
+                scene.SavePNG("s03_OutputScene\\" + outputPath + ".png");
+                Console.WriteLine("test scene generated");
+            }
         }
 
 
