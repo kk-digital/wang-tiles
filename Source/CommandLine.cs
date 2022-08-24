@@ -1,4 +1,6 @@
-namespace wang_tiles
+using Wang;
+
+namespace Wang
 {
 
 
@@ -59,8 +61,37 @@ namespace wang_tiles
                     int horizontalColorCount = Convert.ToInt32(args[4]);
                     int variant = Convert.ToInt32(args[5]);
 
-                    EdgeTileSet newTileSet = EdgeTileSet.MakeTileSet((TileSize)tileSize, verticalColorCount, horizontalColorCount, variant);
+                    EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(tileSize, verticalColorCount, horizontalColorCount, variant);
                     EdgeTileSetJson.SaveJson("s00_Tileset\\tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
+                }
+            }
+            else if (args[0] == "Board")
+            {
+                if (args[1] == "Generate")
+                {
+                    TileBoard tileBoard;
+                     
+                    int x = Convert.ToInt32(args[3]);
+                    int y = Convert.ToInt32(args[4]);
+
+
+                    switch (args[2])
+                    {
+                        case "flat":
+                            tileBoard = TileBoard.MakeFlat(x, y);
+                            break;
+                        case "Radial":
+                            tileBoard = TileBoard.MakeRadial(x, y);
+                            break;
+                        case "FloatingIsland":
+                            tileBoard = TileBoard.MakeFloatingIsland3x3();
+                            break;
+                        default:
+                            Console.WriteLine("Error: Not valid Generate function."); // (Todo(Joao) do help when not valid arguments?)
+                            return;
+                    }
+
+                    TileBoardJson.SaveJson("s01_Board\\board" + tileBoard.ID.ToString(), tileBoard);
                 }
             }
         }
@@ -77,6 +108,10 @@ namespace wang_tiles
             Console.WriteLine("*list pixelassignments");
             Console.WriteLine("****** new ***");
             Console.WriteLine("*new tileset <tilesize> <vertical_color_count> <horizontal_color_count> <variant>");
+            Console.WriteLine("****** Board Generate ***");
+            Console.WriteLine("Board Generate flat <xSize> <ySize>");
+            Console.WriteLine("Board Generate Radial  <xSize> <ySize>");
+            Console.WriteLine("Board Generate FloatingIsland 3x3");
         }
 
         public static void ListFolder(string folder, string extension)
@@ -84,12 +119,12 @@ namespace wang_tiles
             string[] files = Directory.GetFiles(Constants.OutputPath + "\\" + folder);
 
             int numberOfFiles = files.Length;
-            for(int i = 0; i < files.Length; i++)
+            for (int i = 0; i < files.Length; i++)
             {
                 Console.WriteLine(i.ToString() + "  " + files[i] + "\n");
             }
 
-            if(numberOfFiles == 0)
+            if (numberOfFiles == 0)
             {
                 Console.WriteLine("Folder Is Empty.");
             }

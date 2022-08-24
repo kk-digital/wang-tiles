@@ -2,8 +2,9 @@ using System.Text.Json;
 using System;
 using Newtonsoft.Json;
 using static System.Net.Mime.MediaTypeNames;
+using Wang;
 
-namespace wang_tiles
+namespace Wang
 {
 
     public class TileBoardJson
@@ -17,7 +18,7 @@ namespace wang_tiles
             DateTimeOffset dto = DateTimeOffset.Now;
 
             tileBoard.CreationDate = dto.ToString();
-            tileBoard.CreationDateUnixTime = (UInt64)dto.ToUnixTimeSeconds(); ;
+            tileBoard.CreationDateUnixTime = (ulong)dto.ToUnixTimeSeconds(); ;
             var json = JsonConvert.SerializeObject(tileBoard, Formatting.Indented);
 
             File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
@@ -29,7 +30,7 @@ namespace wang_tiles
         {
             string json = File.ReadAllText(Constants.OutputPath + "\\" + filename);
 
-            TileBoard newBoard = JsonConvert.DeserializeObject < TileBoard >(json);
+            TileBoard newBoard = JsonConvert.DeserializeObject<TileBoard>(json);
 
             return newBoard;
         }

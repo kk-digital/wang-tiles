@@ -1,8 +1,7 @@
 
-using wang_tiles;
+using Wang;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
 
 class MainClass
 {
@@ -22,8 +21,6 @@ class MainClass
 
         ColorPaleteMap palette = new ColorPaleteMap();
         palette.Initialize();
-        string input;
-
 
         CommandLine.ExecuteCommand(args);
 

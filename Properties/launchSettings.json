@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "wang-tiles": {
+      "commandName": "Project",
+      "commandLineArgs": "new tileset 8x8"
+    }
+  }
+}

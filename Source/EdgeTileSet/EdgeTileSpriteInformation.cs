@@ -1,7 +1,7 @@
-namespace wang_tiles
+namespace Wang
 {
 
-    public struct TileSpriteInformation
+    public struct EdgeTileSpriteInformation
     {
         int TileID;
         int PixelOffsetX;

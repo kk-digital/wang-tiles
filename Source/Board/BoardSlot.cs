@@ -1,17 +1,18 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Wang;
 
-namespace wang_tiles
+namespace Wang
 {
-    public struct SceneTile
+    public struct BoardSlot
     {
         public int xPosition;
         public int yPosition;
-        public int TileID;
-        public int TileSetID;
         [JsonConverter(typeof(StringEnumConverter))]
         public TileIsoType TileIsoType;
         [JsonConverter(typeof(StringEnumConverter))]
         public TileType TileType;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public Layer Layer;
     }
 }
