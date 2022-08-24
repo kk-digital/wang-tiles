@@ -190,16 +190,10 @@ namespace Wang.EdgeTile
 
             for(int i = 0; i < numberOfTiles; i++) {
 
-                // ulong topColor = Mt19937.genrand_int32() % (ulong)verticalTilesCount;
-                // ulong bottomColor = Mt19937.genrand_int32() % (ulong)verticalTilesCount;
-                // ulong rightColor = Mt19937.genrand_int32() % (ulong)horizontalTilesCount;
-                // ulong leftColor = Mt19937.genrand_int32() % (ulong)horizontalTilesCount;
-
-                Random random = new Random();
-                int topColor = random.Next(0, verticalTilesCount);
-                int bottomColor = random.Next(0, verticalTilesCount);
-                int rightColor = random.Next(0, horizontalTilesCount);
-                int leftColor = random.Next(0, horizontalTilesCount);          
+                ulong topColor = Mt19937.genrand_int32() % (ulong)verticalTilesCount;
+                ulong bottomColor = Mt19937.genrand_int32() % (ulong)verticalTilesCount;
+                ulong rightColor = Mt19937.genrand_int32() % (ulong)horizontalTilesCount;
+                ulong leftColor = Mt19937.genrand_int32() % (ulong)horizontalTilesCount;    
 
                 tileSet.AddTile(TileType.TileTypeWang, (int)topColor, (int)bottomColor, (int)leftColor, 
                     (int)rightColor);
