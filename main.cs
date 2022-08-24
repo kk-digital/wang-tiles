@@ -18,6 +18,9 @@ class MainClass
         Console.Write(randomNumber + "\n");
 
         Scene scene = new Scene(Utils.GenerateID(), 5, 5);
+        EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(TileSize.TileSize_16x16, 4, 4, 1);
+        newTileSet.SavePNG("png.png");
+
         
 
         ColorPaleteMap palette = new ColorPaleteMap();

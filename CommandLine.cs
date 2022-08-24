@@ -59,7 +59,7 @@ namespace wang_tiles
                     int horizontalColorCount = Convert.ToInt32(args[4]);
                     int variant = Convert.ToInt32(args[5]);
 
-                    EdgeTileSet newTileSet = EdgeTileSet.MakeTileSet((TileSize)tileSize, verticalColorCount, horizontalColorCount, variant);
+                    EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset((TileSize)tileSize, verticalColorCount, horizontalColorCount, variant);
                     EdgeTileSetJson.SaveJson("s00_Tileset\\tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
                 }
             }
