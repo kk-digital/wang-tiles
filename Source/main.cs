@@ -26,16 +26,6 @@ class MainClass
 
         newTileSet.SavePNG("tileset.png", 8);
         scene.AddTileSet(newTileSet);
-
-        for(int y = 0; y < 5; y++)
-        {
-            for(int x = 0; x < 5; x++)
-            {
-                scene.SetTile(x, y, Layer.LayerFront, new SceneTile(0, 0, 0, 0, TileIsoType.FullBlock, TileType.TileTypeWang));
-            }
-        }
-
-        scene.SavePNG("Output.png");
         
 
         
