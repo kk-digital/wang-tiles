@@ -67,8 +67,7 @@ namespace Wang.SceneW
             //TODO(Mahdi): Implement
             if (TileSetsCount == TileSets.Length)
             {
-                TileSetsCount = TileSetsCount + 1;
-                Array.Resize(ref TileSets, TileSetsCount);
+                Array.Resize(ref TileSets, TileSetsCount + 1);
             }
 
             TileSets[TileSetsCount] = edgeTileSet;

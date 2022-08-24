@@ -47,7 +47,7 @@ namespace Wang.CLI
                     {
                         tileSize = TileSize.TileSize_16x16;
                     }
-                    else if (args[3] == "32x32")
+                    else if (args[2] == "32x32")
                     {
                         tileSize = TileSize.TileSize_32x32;
                     }
@@ -196,6 +196,8 @@ namespace Wang.CLI
             Console.WriteLine("Board Generate flat <xSize> <ySize>");
             Console.WriteLine("Board Generate Radial  <xSize> <ySize>");
             Console.WriteLine("Board Generate FloatingIsland 3x3");
+            Console.WriteLine("****** Scene ******");
+            Console.WriteLine("test-scene-output-random -ts <tileset_name1> -ts <tileset_name2> -width <sizeX> -height <sizeY> -out <outpath>");
         }
 
         public static void ListFolder(string folder, string extension)
