@@ -52,7 +52,7 @@ namespace Wang.EdgeTile
                 int yPosition = tileIndex / tilesPerRow;
 
                 int xPixelPosition = xPosition * tileSizeInPixels;
-                int yPixelPosition = (numberOfRows - yPosition - 1) * tileSizeInPixels;
+                int yPixelPosition = yPosition * tileSizeInPixels;
 
                 DrawTileBorder(g, xPixelPosition, yPixelPosition, tileSizeInPixels);
                 DrawHorizontalEdge(g, colorPaleteMap, tile.BottomColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 3, tileSizeInPixels);
