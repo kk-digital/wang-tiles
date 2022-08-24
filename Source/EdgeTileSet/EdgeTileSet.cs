@@ -182,21 +182,27 @@ namespace Wang.EdgeTile
             return tileSet;
         }
 
-        public static EdgeTileSet NewWangRandomTileSet(TileSize tileSize, int numberOfTiles, int horizontalTilesCount, int verticalTilesCount) 
+        public static EdgeTileSet NewWangRandomTileSet(TileSize tileSize, int horizontalTilesCount, int verticalTilesCount, int numberOfTiles) 
         {
             EdgeTileSet tileSet = new EdgeTileSet();
 
             tileSet.InitEdgeTileSet(tileSize, verticalTilesCount, horizontalTilesCount);
 
-            Random random = new Random();
-            int topColor = random.Next(0,verticalTilesCount);
-            int bottomColor = random.Next(0, verticalTilesCount);
-            int rightColor = random.Next(0,horizontalTilesCount);
-            int leftColor = random.Next(0,horizontalTilesCount);
-
             for(int i = 0; i < numberOfTiles; i++) {
-                tileSet.AddTile(TileType.TileTypeWang, topColor, bottomColor, leftColor, 
-                    rightColor);
+
+                // ulong topColor = Mt19937.genrand_int32() % (ulong)verticalTilesCount;
+                // ulong bottomColor = Mt19937.genrand_int32() % (ulong)verticalTilesCount;
+                // ulong rightColor = Mt19937.genrand_int32() % (ulong)horizontalTilesCount;
+                // ulong leftColor = Mt19937.genrand_int32() % (ulong)horizontalTilesCount;
+
+                Random random = new Random();
+                int topColor = random.Next(0, verticalTilesCount);
+                int bottomColor = random.Next(0, verticalTilesCount);
+                int rightColor = random.Next(0, horizontalTilesCount);
+                int leftColor = random.Next(0, horizontalTilesCount);          
+
+                tileSet.AddTile(TileType.TileTypeWang, (int)topColor, (int)bottomColor, (int)leftColor, 
+                    (int)rightColor);
             }
         
             tileSet.FinalizeTileSet();
