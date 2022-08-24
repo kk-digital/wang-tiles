@@ -33,3 +33,8 @@ new tileset 16x16 2 2 1 6
 #### Board Generation
 
 *wang_tiles Board Generate <Board Type> <sizeX> <<sizeY>>  ///// <Board Type> ---> Radial flat FloatingIsland
+
+### random scene
+test-scene-output-random -ts <tileset_1> -ts <tileset_2> -width <sizeX> -height <sizeY> -out <outfilename>
+example: test-scene-output-random -ts tileset_7135374712056073458.json -out abc
+example: test-scene-output-random -ts tileset_7135374712056073458.json -width 4 -height 4 -out abc
