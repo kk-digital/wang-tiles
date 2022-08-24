@@ -76,5 +76,44 @@ namespace Wang.SceneW
 
             SceneTiles[(int)layer][y * SizeX + x] = sceneTile;
         }
+
+
+        public SceneTile[] FindMatchingCorners(TileSize tileSize, int topColor, int bottomColor, int rightColor, 
+            int leftColor) 
+        {
+            SceneTile[] tileSet = new SceneTile[LayerCount];
+            Random rnd = new Random();
+
+            for(int i = 0; i < tileSet.Length; i++)
+            {
+                SceneTile sceneTile = SceneTiles[(int)Layer.LayerFront][rnd.Next(-5000, 5000) + rnd.Next(-5000, 5000) * SizeX];
+
+                EdgeTileInformation tile = TileSets[sceneTile.TileSetID].InformationArray[sceneTile.TileID];
+
+                if(tile.TileID == -1) 
+                {
+                    if(tile.TopColor == topColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                    else if(tile.BottomColor == bottomColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                    else if(tile.RightColor == rightColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                    else if(tile.LeftColor == leftColor)
+                        tileSet.Append<SceneTile>(sceneTile);
+                }
+            }
+
+            if(tileSet.Length <= 0)
+            {
+                //return -2
+                // No Matching Found
+            }
+            else if (tileSet.Length > 0) 
+            {
+                SceneTile randomTile = tileSet[rnd.Next(0, tileSet.Length)];
+            }
+
+            return tileSet;
+        }
     }
 }
