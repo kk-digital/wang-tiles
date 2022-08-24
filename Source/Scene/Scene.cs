@@ -1,6 +1,7 @@
 using Wang;
+using Wang.EdgeTile;
 
-namespace Wang
+namespace Wang.SceneW
 {
     public class Scene
     {

@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using static System.Net.Mime.MediaTypeNames;
 using Wang;
 
-namespace Wang
+namespace Wang.Board
 {
 
     public class TileBoardJson

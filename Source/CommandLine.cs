@@ -1,16 +1,11 @@
 using Wang;
+using Wang.Board;
+using Wang.EdgeTile;
 
-namespace Wang
+namespace Wang.CLI
 {
-
-
-
-
     public static class CommandLine
     {
-
-
-
         public static void ExecuteCommand(string[] args)
         {
 

@@ -1,4 +1,4 @@
-namespace Wang
+namespace Wang.Other
 {
     public static class Utils
     {

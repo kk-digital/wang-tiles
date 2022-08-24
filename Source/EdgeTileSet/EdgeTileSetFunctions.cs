@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Wang
+namespace Wang.EdgeTile
 {
 
 

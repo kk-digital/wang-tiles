@@ -1,4 +1,4 @@
-namespace Wang
+namespace Wang.EdgeTile
 {
     public struct EdgeTileSetDescription
     {

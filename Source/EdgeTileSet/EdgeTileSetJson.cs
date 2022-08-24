@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Wang
+namespace Wang.EdgeTile
 {
 
     public class EdgeTileSetJson

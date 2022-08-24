@@ -1,3 +1,5 @@
+using Wang.Other;
+
 namespace Wang
 {
     public struct PixelColor

@@ -1,7 +1,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Wang;
 
-namespace Wang
+namespace Wang.SceneW
 {
     public struct SceneTile
     {

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
+using Wang.Other;
 
-namespace Wang
+namespace Wang.EdgeTile
 {
     public struct Entry
     {
