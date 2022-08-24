@@ -37,4 +37,6 @@
 *wang_tiles
 test-scene-output-random -ts <tileset_name1> -ts <tileset_name2> -width <sizeX> -height <sizeY> -out <outpath>
 --example--
-test-scene-output-random -ts tileset_7135462500629519505.json -width 4 -height 6 -out abc
+example: test-scene-output-random -ts tileset_7135462500629519505.json -width 4 -height 6 -out abc
+example: test-scene-output-random -ts tileset_7135374712056073458.json -out abc
+example: test-scene-output-random -ts tileset_7135374712056073458.json -width 4 -height 4 -out abc
