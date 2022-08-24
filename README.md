@@ -33,7 +33,7 @@
 *wang_tiles Board Generate [Board Type] [sizeX] [sizeY]  ///// [Board Type> ---> Radial flat FloatingIsland
 
 
-### Random Test Scene
+### Random Test Scene (/data/s03_OutputScene/)
 *wang_tiles test-scene-output-random -ts [tileset_name1] -ts [tileset_name2] -width [sizeX] -height [sizeY> -out [outpath]
 ##### --example--
 ###### *wang_tiles test-scene-output-random -ts tileset_7135462500629519505.json -width 4 -height 6 -out abc
