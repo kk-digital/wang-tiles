@@ -21,14 +21,14 @@ namespace Wang.Board
             tileBoard.CreationDateUnixTime = (ulong)dto.ToUnixTimeSeconds(); ;
             var json = JsonConvert.SerializeObject(tileBoard, Formatting.Indented);
 
-            File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
+            File.WriteAllText(Constants.OutputPath + "/" + filename, json);
 
             return json;
         }
 
         public static TileBoard FromJson(string filename)
         {
-            string json = File.ReadAllText(Constants.OutputPath + "\\" + filename);
+            string json = File.ReadAllText(Constants.OutputPath + "/" + filename);
 
             TileBoard newBoard = JsonConvert.DeserializeObject<TileBoard>(json);
 

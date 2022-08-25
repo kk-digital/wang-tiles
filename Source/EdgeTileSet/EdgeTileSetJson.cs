@@ -21,14 +21,14 @@ namespace Wang.EdgeTile
             edgeTileSet.Description.CreationDateUnixTime = (UInt64)dto.ToUnixTimeSeconds(); ;
             var json = JsonConvert.SerializeObject(edgeTileSet, Formatting.Indented);
 
-            File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
+            File.WriteAllText(Constants.OutputPath + "/" + filename, json);
 
             return json;
         }
 
         public static EdgeTileSet FromJson(string filename)
         {
-            string json = File.ReadAllText(Constants.OutputPath + "\\" + filename);
+            string json = File.ReadAllText(Constants.OutputPath + "/" + filename);
 
             EdgeTileSet newObject = JsonConvert.DeserializeObject<EdgeTileSet>(json);
 

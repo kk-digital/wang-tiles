@@ -40,7 +40,8 @@ namespace Wang
 
 
 
-
+        public static PixelColor Gray = MakePixelColor(128, 128, 128, 255);
+        public static PixelColor White = MakePixelColor(255, 255, 255, 255);
 
     }
 }

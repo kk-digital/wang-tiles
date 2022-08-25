@@ -6,6 +6,6 @@ namespace Wang.EdgeTile
     {
         int TileID;
         int PixelOffsetX;
-        int PixelOFfsetY;
+        int PixelOffsetY;
     }
 }

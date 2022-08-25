@@ -90,7 +90,7 @@ namespace Wang.SceneW
 
             var json = JsonConvert.SerializeObject(this, Formatting.Indented);
 
-            File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
+            File.WriteAllText(Constants.OutputPath + "/" + filename, json);
 
             return json;
         }

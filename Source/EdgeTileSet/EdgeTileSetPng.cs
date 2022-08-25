@@ -38,12 +38,9 @@ namespace Wang.EdgeTile
                 numberOfRows++;
             }
 
-
-            Bitmap bmp = new Bitmap(tileSizeInPixels * tilesPerRow, tileSizeInPixels * numberOfRows);
-            Graphics g = Graphics.FromImage(bmp);
-
             
-            
+            var builder = BigGustave.PngBuilder.Create(tileSizeInPixels * tilesPerRow, tileSizeInPixels * numberOfRows, true);
+
 
             for(int tileIndex = 0; tileIndex < InformationArray.Length; tileIndex++)
             {
@@ -54,50 +51,44 @@ namespace Wang.EdgeTile
                 int xPixelPosition = xPosition * tileSizeInPixels;
                 int yPixelPosition = yPosition * tileSizeInPixels;
 
-                DrawTileBorder(g, xPixelPosition, yPixelPosition, tileSizeInPixels);
-                DrawHorizontalEdge(g, colorPaleteMap, tile.BottomColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 3, tileSizeInPixels);
-                DrawVerticalEdge(g, colorPaleteMap, tile.RightColor, xPixelPosition + tileSizeInPixels - 3, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
-                DrawHorizontalEdge(g, colorPaleteMap, tile.TopColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + 1, tileSizeInPixels);
-                DrawVerticalEdge(g, colorPaleteMap, tile.LeftColor, xPixelPosition + 1, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+                DrawTileBorder(builder, xPixelPosition, yPixelPosition, tileSizeInPixels);
+                DrawHorizontalEdge(builder, colorPaleteMap, tile.BottomColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 3, tileSizeInPixels);
+                DrawVerticalEdge(builder, colorPaleteMap, tile.RightColor, xPixelPosition + tileSizeInPixels - 3, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+                DrawHorizontalEdge(builder, colorPaleteMap, tile.TopColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + 1, tileSizeInPixels);
+                DrawVerticalEdge(builder, colorPaleteMap, tile.LeftColor, xPixelPosition + 1, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
             }
 
-            g.Dispose();
-            bmp.Save(Constants.OutputPath + "\\" + filename, System.Drawing.Imaging.ImageFormat.Png);
-            bmp.Dispose();
+            using (FileStream fs = File.OpenWrite(Constants.OutputPath + "/" + filename))
+            {
+                builder.Save(fs);
+            }
 
 
         }
 
 
-        public void DrawTileBorder(Graphics g, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
+        public void DrawTileBorder(BigGustave.PngBuilder builder, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
         {
-            g.FillRectangle(Brushes.Gray, xPixelPosition, yPixelPosition,
-             1, tileSizeInPixels);
-
-             g.FillRectangle(Brushes.Gray, xPixelPosition, yPixelPosition,
-             tileSizeInPixels, 1);
-
-             g.FillRectangle(Brushes.Gray, xPixelPosition + tileSizeInPixels - 1, yPixelPosition,
-             1, tileSizeInPixels);
-
-             g.FillRectangle(Brushes.Gray, xPixelPosition, yPixelPosition + tileSizeInPixels - 1,
-             tileSizeInPixels, 1);
+            Other.Utils.FillRectangle(builder, xPixelPosition, yPixelPosition, 1, tileSizeInPixels, PixelColor.Gray);
+            Other.Utils.FillRectangle(builder, xPixelPosition, yPixelPosition, tileSizeInPixels, 1, PixelColor.Gray);
+            Other.Utils.FillRectangle(builder, xPixelPosition + tileSizeInPixels - 1, yPixelPosition, 1, tileSizeInPixels, PixelColor.Gray);
+            Other.Utils.FillRectangle(builder, xPixelPosition, yPixelPosition + tileSizeInPixels - 1, tileSizeInPixels, 1, PixelColor.Gray);
         }
 
-        public void DrawVerticalEdge(Graphics g, ColorPaleteMap colorPaleteMap, 
+        public void DrawVerticalEdge(BigGustave.PngBuilder builder, ColorPaleteMap colorPaleteMap, 
         int colorIndex, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
         {
             PixelColor colorPixel = colorPaleteMap.GetVerticalColor(colorIndex);
-            SolidBrush brush = new SolidBrush(Color.FromArgb(colorPixel.Alpha(), colorPixel.Red(), colorPixel.Green(), colorPixel.Blue()));
-            g.FillRectangle(brush, xPixelPosition, yPixelPosition, 2, 4);
+            Other.Utils.FillRectangle(builder, xPixelPosition, yPixelPosition, 2, 4, 
+            PixelColor.MakePixelColor(colorPixel.Red(), colorPixel.Green(), colorPixel.Blue(), colorPixel.Alpha()));
         }
 
-        public void DrawHorizontalEdge(Graphics g, ColorPaleteMap colorPaleteMap, 
+        public void DrawHorizontalEdge(BigGustave.PngBuilder builder, ColorPaleteMap colorPaleteMap, 
         int colorIndex, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
         {
             PixelColor colorPixel = colorPaleteMap.GetHorizontalColor(colorIndex);
-            SolidBrush brush = new SolidBrush(Color.FromArgb(colorPixel.Alpha(), colorPixel.Red(), colorPixel.Green(), colorPixel.Blue()));
-            g.FillRectangle(brush, xPixelPosition, yPixelPosition, 4, 2);
+            Other.Utils.FillRectangle(builder, xPixelPosition, yPixelPosition, 4, 2, 
+            PixelColor.MakePixelColor(colorPixel.Red(), colorPixel.Green(), colorPixel.Blue(), colorPixel.Alpha()));
         }
     }
 }

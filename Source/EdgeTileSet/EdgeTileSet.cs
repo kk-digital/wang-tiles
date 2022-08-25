@@ -87,7 +87,7 @@ namespace Wang.EdgeTile
 
 
             EdgeTileInformation[] NewInformationArray = new EdgeTileInformation[TileCount];
-            for(int i = 0; i < InformationArray.Length; i++)
+            for(int i = 0; i < TileCount; i++)
             {
                 NewInformationArray[i] = InformationArray[i];
             }

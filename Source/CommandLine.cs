@@ -19,19 +19,19 @@ namespace Wang.CLI
             {
                 if (args[1] == "tilesets")
                 {
-                    ListFolder("s00_Tileset\\", ".json");
+                    ListFolder("s00_Tileset/", ".json");
                 }
                 else if (args[1] == "boards")
                 {
-                    ListFolder("s01_Board//", ".json");
+                    ListFolder("s01_Board/", ".json");
                 }
                 else if (args[1] == "scenes")
                 {
-                    ListFolder("s02_Scene//", ".json");
+                    ListFolder("s02_Scene/", ".json");
                 }
                 else if (args[1] == "pixelassignments")
                 {
-                    ListFolder("s02_TilesetPixelAssignment//", ".json");
+                    ListFolder("s02_TilesetPixelAssignment/", ".json");
                 }
 
             }
@@ -59,8 +59,8 @@ namespace Wang.CLI
                     int tilesPerRow = Convert.ToInt32(args[6]);
 
                     EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(tileSize, verticalColorCount, horizontalColorCount, variant);
-                    EdgeTileSetJson.SaveJson("s00_Tileset\\tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
-                    newTileSet.SavePNG("s00_Tileset_Image\\tileset_" + newTileSet.Description.IDString + ".png", tilesPerRow);
+                    EdgeTileSetJson.SaveJson("s00_Tileset/tileset_" + newTileSet.Description.IDString + ".json", newTileSet);
+                    newTileSet.SavePNG("s00_Tileset_Image/tileset_" + newTileSet.Description.IDString + ".png", tilesPerRow);
                     Console.WriteLine("EdgeTileSet generated");
                 }
             }
@@ -90,8 +90,8 @@ namespace Wang.CLI
                             return;
                     }
 
-                    TileBoardJson.SaveJson("s01_Board\\board_" + tileBoard.ID.ToString() + ".json", tileBoard);
-                    Console.WriteLine("board  " + "s01_Board\\board_" + tileBoard.ID.ToString() + ".json" + " generated");
+                    TileBoardJson.SaveJson("s01_Board/board_" + tileBoard.ID.ToString() + ".json", tileBoard);
+                    Console.WriteLine("board  " + "s01_Board/board_" + tileBoard.ID.ToString() + ".json" + " generated");
                 }
             }
             else if (args.Length >= 1 && args[0] == "create-scene")
@@ -122,12 +122,12 @@ namespace Wang.CLI
 
                 if (boardname != "" && listOfTilesets.Count > 0)
                 {
-                    Board.TileBoard board = Board.TileBoardJson.FromJson("s01_Board//" + boardname);
+                    Board.TileBoard board = Board.TileBoardJson.FromJson("s01_Board/" + boardname);
                     SceneW.Scene scene = new SceneW.Scene(id, board.SizeX, board.SizeY);
 
                     foreach(var tilesetPath in listOfTilesets)
                     {
-                        EdgeTileSet tileset = EdgeTileSetJson.FromJson("s00_Tileset\\" + tilesetPath);
+                        EdgeTileSet tileset = EdgeTileSetJson.FromJson("s00_Tileset/" + tilesetPath);
                         scene.AddTileSet(tileset);
                     }
 
@@ -153,11 +153,11 @@ namespace Wang.CLI
                     }
 
 
-                    scene.SaveJson("s03_OutputScene\\" + "scene_" + id + ".json");
-                    scene.SavePNG("s03_OutputScene\\" + "scene_" + id + ".png");
+                    scene.SaveJson("s03_OutputScene/" + "scene_" + id + ".json");
+                    scene.SavePNG("s03_OutputScene/" + "scene_" + id + ".png");
                     Console.WriteLine("test scene generated");
 
-                    Console.WriteLine("scene  " + "s03_OutputScene\\" + "scene_" + id + ".json" + "  created !");
+                    Console.WriteLine("scene  " + "s03_OutputScene/" + "scene_" + id + ".json" + "  created !");
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace Wang.CLI
                 SceneW.Scene scene = new SceneW.Scene(newId, width, height);
                 foreach(var tilesetPath in listOfTilesets)
                 {
-                    EdgeTileSet tileset = EdgeTileSetJson.FromJson("s00_Tileset\\" + tilesetPath);
+                    EdgeTileSet tileset = EdgeTileSetJson.FromJson("s00_Tileset/" + tilesetPath);
                     scene.AddTileSet(tileset);
                 }
 
@@ -245,9 +245,9 @@ namespace Wang.CLI
                 }
 
 
-                scene.SaveJson("s03_OutputScene\\" + outputPath + ".json");
-                scene.SavePNG("s03_OutputScene\\" + outputPath + ".png");
-                Console.WriteLine("test scene " + "s03_OutputScene\\" + outputPath + ".json" + " generated");
+                scene.SaveJson("s03_OutputScene/" + outputPath + ".json");
+                scene.SavePNG("s03_OutputScene/" + outputPath + ".png");
+                Console.WriteLine("test scene " + "s03_OutputScene/" + outputPath + ".json" + " generated");
             }
         }
 
@@ -274,7 +274,7 @@ namespace Wang.CLI
 
         public static void ListFolder(string folder, string extension)
         {
-            string[] files = Directory.GetFiles(Constants.OutputPath + "\\" + folder);
+            string[] files = Directory.GetFiles(Constants.OutputPath + "/" + folder);
 
             int numberOfFiles = files.Length;
             for (int i = 0; i < files.Length; i++)
