@@ -1,6 +1,5 @@
 namespace Wang
 {
-
     public enum Layer
     {
         LayerFront,
