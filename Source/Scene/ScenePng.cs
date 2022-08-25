@@ -34,19 +34,33 @@ namespace Wang.SceneW
             for(int tileIndex = 0; tileIndex < SceneTiles[(int)Layer.LayerFront].Length; tileIndex++)
             {
                 SceneTile sceneTile = SceneTiles[(int)Layer.LayerFront][tileIndex];
-                EdgeTileInformation tile = TileSets[sceneTile.TileSetID].InformationArray[sceneTile.TileID];
 
-                int xPosition = tileIndex % SizeX;
-                int yPosition = tileIndex / SizeX;
+                if (sceneTile.TileSetID != -1 && sceneTile.TileID != -1)
+                {
+                    EdgeTileInformation tile = TileSets[sceneTile.TileSetID].InformationArray[sceneTile.TileID];
 
-                int xPixelPosition = xPosition * tileSizeInPixels;
-                int yPixelPosition = yPosition * tileSizeInPixels;
+                    int xPosition = tileIndex % SizeX;
+                    int yPosition = tileIndex / SizeX;
 
-                DrawTileBorder(g, xPixelPosition, yPixelPosition, tileSizeInPixels);
-                DrawHorizontalEdge(g, colorPaleteMap, tile.BottomColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 3, tileSizeInPixels);
-                DrawVerticalEdge(g, colorPaleteMap, tile.RightColor, xPixelPosition + tileSizeInPixels - 3, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
-                DrawHorizontalEdge(g, colorPaleteMap, tile.TopColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + 1, tileSizeInPixels);
-                DrawVerticalEdge(g, colorPaleteMap, tile.LeftColor, xPixelPosition + 1, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+                    int xPixelPosition = xPosition * tileSizeInPixels;
+                    int yPixelPosition = yPosition * tileSizeInPixels;
+
+                    DrawTileBorder(g, xPixelPosition, yPixelPosition, tileSizeInPixels);
+                    DrawHorizontalEdge(g, colorPaleteMap, tile.BottomColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 3, tileSizeInPixels);
+                    DrawVerticalEdge(g, colorPaleteMap, tile.RightColor, xPixelPosition + tileSizeInPixels - 3, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+                    DrawHorizontalEdge(g, colorPaleteMap, tile.TopColor, xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + 1, tileSizeInPixels);
+                    DrawVerticalEdge(g, colorPaleteMap, tile.LeftColor, xPixelPosition + 1, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+                }
+                else
+                {
+                    int xPosition = tileIndex % SizeX;
+                    int yPosition = tileIndex / SizeX;
+
+                    int xPixelPosition = xPosition * tileSizeInPixels;
+                    int yPixelPosition = yPosition * tileSizeInPixels;
+
+                    g.FillRectangle(Brushes.White, xPixelPosition, yPixelPosition, tileSizeInPixels, tileSizeInPixels);
+                }
             }
 
             g.Dispose();

@@ -1,6 +1,9 @@
 using Wang;
 using Wang.EdgeTile;
 using System.Diagnostics;
+using System.Text.Json;
+using System;
+using Newtonsoft.Json;
 
 namespace Wang.SceneW
 {
@@ -31,7 +34,12 @@ namespace Wang.SceneW
 
            
             SceneTiles = new SceneTile[LayerCount][];
-            TileSets = new EdgeTileSet[128];
+            TileSets = new EdgeTileSet[1];
+
+            DateTimeOffset dto = DateTimeOffset.Now;
+
+            CreationDate = dto.ToString();
+            CreationDateUnixTime = (UInt64)dto.ToUnixTimeSeconds();
            
 
             for(int layer = 0; layer < LayerCount; layer++)
@@ -59,8 +67,7 @@ namespace Wang.SceneW
             //TODO(Mahdi): Implement
             if (TileSetsCount == TileSets.Length)
             {
-                TileSetsCount = TileSetsCount * 2;
-                Array.Resize(ref TileSets, TileSetsCount);
+                Array.Resize(ref TileSets, TileSetsCount + 1);
             }
 
             TileSets[TileSetsCount] = edgeTileSet;
@@ -77,6 +84,16 @@ namespace Wang.SceneW
             SceneTiles[(int)layer][y * SizeX + x] = sceneTile;
         }
 
+
+        public string SaveJson(string filename)
+        {
+
+            var json = JsonConvert.SerializeObject(this, Formatting.Indented);
+
+            File.WriteAllText(Constants.OutputPath + "\\" + filename, json);
+
+            return json;
+        }
 
         public SceneTile[] FindMatchingCorners(TileSize tileSize, int topColor, int bottomColor, int rightColor, 
             int leftColor) 
