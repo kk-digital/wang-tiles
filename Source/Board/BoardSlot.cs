@@ -6,6 +6,7 @@ namespace Wang.Board
 {
     public struct BoardSlot
     {
+        public int TileSetID;
         public int xPosition;
         public int yPosition;
         [JsonConverter(typeof(StringEnumConverter))]

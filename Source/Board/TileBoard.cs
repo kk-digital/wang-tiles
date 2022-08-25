@@ -8,6 +8,7 @@ namespace Wang.Board
         public long ID;
         public int SizeX;
         public int SizeY;
+        public int TileSetCount;
 
         public BoardSlot[] BoardSlots;
 
@@ -19,6 +20,7 @@ namespace Wang.Board
             ID = id;
             SizeX = sizeX;
             SizeY = sizeY;
+            TileSetCount = 1;
 
             BoardSlots = new BoardSlot[SizeX * SizeY];
 
@@ -27,6 +29,7 @@ namespace Wang.Board
                 for (int x = 0; x < SizeX; x++)
                 {
                     BoardSlot slot = new BoardSlot();
+                    slot.TileSetID = 0;
                     slot.xPosition = x;
                     slot.yPosition = y;
                     slot.TileIsoType = TileIsoType.FullBlock;
@@ -53,6 +56,7 @@ namespace Wang.Board
             for (int i = 0; i < tileBoard.BoardSlots.Length; i++)
             {
                 tileBoard.BoardSlots[i].Layer = Layer.LayerBack;
+                tileBoard.BoardSlots[i].TileSetID = 0;
                 if (tileBoard.BoardSlots[i].yPosition > cutoffZ[i])
                     tileBoard.BoardSlots[i].TileIsoType = TileIsoType.EmptyBlock;
                 else
@@ -102,6 +106,7 @@ namespace Wang.Board
                     int index = (x + y * sizeX);
 
                     tileBoard.BoardSlots[index].TileIsoType = TileIsoType.FullBlock;
+                    tileBoard.BoardSlots[index].TileSetID = 0;
 
                     float diff = distance[index] - sample;
                     
@@ -132,6 +137,7 @@ namespace Wang.Board
                     int index = (x + y * sizeX);
 
                     tileBoard.BoardSlots[index].TileIsoType = TileIsoType.FullBlock;
+                    tileBoard.BoardSlots[index].TileSetID = 0;
 
                     float diff = distance[index] - sample;
 
@@ -163,6 +169,7 @@ namespace Wang.Board
             for (int i = 0; i < tileBoard.BoardSlots.Length; i++)
             {
                 tileBoard.BoardSlots[i].Layer = Layer.LayerFront;
+                tileBoard.BoardSlots[i].TileSetID = 0;
                 if (tileBoard.BoardSlots[i].yPosition < cutOffY)
                     tileBoard.BoardSlots[i].TileIsoType = TileIsoType.FullBlock;
                 else
@@ -179,6 +186,7 @@ namespace Wang.Board
             for (int i = 0; i < tileBoard.BoardSlots.Length; i++)
             {
                 tileBoard.BoardSlots[i].Layer = Layer.LayerFront;
+                tileBoard.BoardSlots[i].TileSetID = 0;
                 if (tileBoard.BoardSlots[i].yPosition >= 1 && tileBoard.BoardSlots[i].yPosition <= 3
                     && tileBoard.BoardSlots[i].xPosition >= 1 && tileBoard.BoardSlots[i].xPosition <= 3)
                     tileBoard.BoardSlots[i].TileIsoType = TileIsoType.FullBlock;
