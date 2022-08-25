@@ -4,10 +4,10 @@ namespace Wang.Other
     {
         public static int ToRGBA8(char r, char g, char b, char a)
         {
-            return (((int)r) << 24) + (((int)g) << 16) + (((int)b) << 8) + (int)a;
+            return (r << 24) + (g << 16) + (b << 8) + a;
         }
 
-        public static long GenerateID()
+    public static long GenerateID()
         {
             DateTimeOffset dto = DateTimeOffset.Now;
             Random random = new Random();

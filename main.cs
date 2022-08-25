@@ -1,12 +1,12 @@
 
 using Wang;
-using Wang.Other;
 using Wang.SceneW;
 using Wang.Board;
 using Wang.CLI;
 using Wang.EdgeTile;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Wang.Other;
 
 class MainClass
 {
