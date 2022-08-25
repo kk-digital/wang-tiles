@@ -1,0 +1,184 @@
+{
+  "ID": 7135725032426616030,
+  "SizeX": 5,
+  "SizeY": 5,
+  "BoardSlots": [
+    {
+      "xPosition": 0,
+      "yPosition": 0,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 0,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 0,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 0,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 0,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 1,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 1,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 2,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 2,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 3,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 3,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 4,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 4,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 4,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 4,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 4,
+      "TileIsoType": "EmptyBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    }
+  ],
+  "CreationDate": "8/25/2022 9:17:32 AM +01:00",
+  "CreationDateUnixTime": 1661415452
+}
