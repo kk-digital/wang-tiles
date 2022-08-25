@@ -90,7 +90,72 @@ namespace Wang.CLI
                     }
 
                     TileBoardJson.SaveJson("s01_Board\\board_" + tileBoard.ID.ToString() + ".json", tileBoard);
-                    Console.WriteLine("board generated");
+                    Console.WriteLine("board  " + "s01_Board\\board_" + tileBoard.ID.ToString() + ".json" + " generated");
+                }
+            }
+            else if (args.Length >= 0 && args[0] == "create-scene")
+            {
+                List<string> listOfTilesets = new List<string>();
+                string boardname = "";
+                string arg = "";
+                Int64 id = Other.Utils.GenerateID();
+                for(int i = 1; i < args.Length; i++)
+                {
+                    if (args[i] == "-b" ||
+                    args[i] == "-ts")
+                    {
+                        arg = args[i];
+                    }
+                    else
+                    {
+                        if (arg == "-b")
+                        {
+                            boardname = args[i];
+                        }
+                        else if (arg == "-ts")
+                        {
+                            listOfTilesets.Add(args[i]);
+                        }
+                    }
+                }
+
+                if (boardname != "" && listOfTilesets.Count > 0)
+                {
+                    Board.TileBoard board = Board.TileBoardJson.FromJson("s01_Board//" + boardname);
+                    SceneW.Scene scene = new SceneW.Scene(id, board.SizeX, board.SizeY);
+
+                    foreach(var tilesetPath in listOfTilesets)
+                    {
+                        EdgeTileSet tileset = EdgeTileSetJson.FromJson("s00_Tileset\\" + tilesetPath);
+                        scene.AddTileSet(tileset);
+                    }
+
+                    DateTimeOffset dto = DateTimeOffset.Now;
+                    Mt19937.init_genrand((ulong)dto.ToUnixTimeSeconds());
+
+                    for(int y = 0; y < board.SizeY; y++)
+                    {
+                        for(int x = 0; x < board.SizeX; x++)
+                        {
+                            int randomTileSetID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSetsCount);
+                            int randomID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSets[randomTileSetID].InformationArray.Length);
+
+                            EdgeTileInformation tileInfo = scene.TileSets[randomTileSetID].InformationArray[randomID];
+
+                            scene.SetTile(x, y, Layer.LayerFront, new SceneW.SceneTile(x, y, randomID, randomTileSetID, TileIsoType.FullBlock, TileType.TileTypeWang));
+                        }
+                    }
+
+
+                    scene.SaveJson("s03_OutputScene\\" + "scene_" + id + ".json");
+                    scene.SavePNG("s03_OutputScene\\" + "scene_" + id + ".png");
+                    Console.WriteLine("test scene generated");
+
+                    Console.WriteLine("scene  " + "s03_OutputScene\\" + "scene_" + id + ".json" + "  created !");
+                }
+                else
+                {
+                    Console.WriteLine("invalid parameters!");
                 }
             }
             else if (args.Length >= 1 && args[0] == "test-scene-output-random")
@@ -176,7 +241,7 @@ namespace Wang.CLI
 
                 scene.SaveJson("s03_OutputScene\\" + outputPath + ".json");
                 scene.SavePNG("s03_OutputScene\\" + outputPath + ".png");
-                Console.WriteLine("test scene generated");
+                Console.WriteLine("test scene " + "s03_OutputScene\\" + outputPath + ".json" + " generated");
             }
         }
 
@@ -197,6 +262,7 @@ namespace Wang.CLI
             Console.WriteLine("Board Generate Radial  <xSize> <ySize>");
             Console.WriteLine("Board Generate FloatingIsland 3x3");
             Console.WriteLine("****** Scene ******");
+            Console.WriteLine("test-scene -b <board> -ts <tileset1> -ts <tileset2>");
             Console.WriteLine("test-scene-output-random -ts <tileset_name1> -ts <tileset_name2> -width <sizeX> -height <sizeY> -out <outpath>");
         }
 

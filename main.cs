@@ -12,15 +12,6 @@ class MainClass
 {
     static void Main(string[] args)
     {
-        Console.Write("Main" + "\n");
-        Int64 id = Utils.CreateID(20, 10);
-        Int32 time = Utils.GetTimeFromID(id);
-        Int32 randomNumber = Utils.GetRandomNumberFromID(id);
-
-        Console.Write(id + "\n");
-        Console.Write(time + "\n");
-        Console.Write(randomNumber + "\n");
-
         Scene scene = new Scene(Utils.GenerateID(), 5, 5);
         EdgeTileSet newTileSet = EdgeTileSet.NewWangCompleteTileset(TileSize.TileSize_16x16, 2, 2, 1);
 
