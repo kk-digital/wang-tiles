@@ -59,6 +59,8 @@ namespace Wang.Board
                     tileBoard.BoardSlots[i].TileIsoType = TileIsoType.FullBlock;
             }
 
+            return tileBoard;
+
         }
 
 

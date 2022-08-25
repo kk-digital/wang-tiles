@@ -138,12 +138,17 @@ namespace Wang.CLI
                     {
                         for(int x = 0; x < board.SizeX; x++)
                         {
-                            int randomTileSetID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSetsCount);
-                            int randomID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSets[randomTileSetID].InformationArray.Length);
+                            Board.BoardSlot slot = board.BoardSlots[x + y * board.SizeX];
 
-                            EdgeTileInformation tileInfo = scene.TileSets[randomTileSetID].InformationArray[randomID];
+                            if (slot.TileType != TileType.None && slot.TileIsoType != TileIsoType.EmptyBlock)
+                            {
+                                int randomTileSetID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSetsCount);
+                                int randomID = Math.Abs((int)Mt19937.genrand_int32() % scene.TileSets[randomTileSetID].InformationArray.Length);
 
-                            scene.SetTile(x, y, Layer.LayerFront, new SceneW.SceneTile(x, y, randomID, randomTileSetID, TileIsoType.FullBlock, TileType.TileTypeWang));
+                                EdgeTileInformation tileInfo = scene.TileSets[randomTileSetID].InformationArray[randomID];
+
+                                scene.SetTile(x, y, Layer.LayerFront, new SceneW.SceneTile(x, y, randomID, randomTileSetID, TileIsoType.FullBlock, TileType.TileTypeWang));
+                            }
                         }
                     }
 

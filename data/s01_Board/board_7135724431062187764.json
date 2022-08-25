@@ -1,0 +1,352 @@
+{
+  "ID": 7135724431062187764,
+  "SizeX": 7,
+  "SizeY": 7,
+  "BoardSlots": [
+    {
+      "xPosition": 0,
+      "yPosition": 0,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 0,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 0,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 0,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 0,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 5,
+      "yPosition": 0,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 6,
+      "yPosition": 0,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 5,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 6,
+      "yPosition": 1,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 5,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 6,
+      "yPosition": 2,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 5,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 6,
+      "yPosition": 3,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 4,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 4,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 4,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 4,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 4,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 5,
+      "yPosition": 4,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 6,
+      "yPosition": 4,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 5,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 5,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 5,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 5,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 5,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 5,
+      "yPosition": 5,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 6,
+      "yPosition": 5,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 0,
+      "yPosition": 6,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 1,
+      "yPosition": 6,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 2,
+      "yPosition": 6,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerBack"
+    },
+    {
+      "xPosition": 3,
+      "yPosition": 6,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 4,
+      "yPosition": 6,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 5,
+      "yPosition": 6,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    },
+    {
+      "xPosition": 6,
+      "yPosition": 6,
+      "TileIsoType": "FullBlock",
+      "TileType": "TileTypeSquareTile",
+      "Layer": "LayerFront"
+    }
+  ],
+  "CreationDate": "8/25/2022 9:15:12 AM +01:00",
+  "CreationDateUnixTime": 1661415312
+}
