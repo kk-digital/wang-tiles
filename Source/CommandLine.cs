@@ -94,7 +94,7 @@ namespace Wang.CLI
                     Console.WriteLine("board  " + "s01_Board\\board_" + tileBoard.ID.ToString() + ".json" + " generated");
                 }
             }
-            else if (args.Length >= 0 && args[0] == "create-scene")
+            else if (args.Length >= 1 && args[0] == "create-scene")
             {
                 List<string> listOfTilesets = new List<string>();
                 string boardname = "";
