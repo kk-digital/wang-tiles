@@ -1,6 +1,7 @@
 using Wang;
 using Wang.Board;
 using Wang.EdgeTile;
+using Wang.Other;
 
 namespace Wang.CLI
 {
@@ -163,7 +164,7 @@ namespace Wang.CLI
                 List<string> listOfTilesets = new List<string>();
                 int width = 4;
                 int height = 4;
-                Int64 newId = Other.Utils.GenerateID();
+                Int64 newId = Utils.GenerateID();
                 string outputPath = "scene_" + newId;
                 string arg = "";
                 for(int i = 1; i < args.Length; i++)
