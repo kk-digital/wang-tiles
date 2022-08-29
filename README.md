@@ -27,6 +27,7 @@
 
 ##### --example--
 ```new tileset 16x16 2 2 1 6 ```
+
 ```new tileset 8x8 4 4 2 8 ```
 
 ### Board Generation
@@ -43,7 +44,9 @@
 
 ##### --example--
 ``` test-scene-output-random -ts tileset_7135462500629519505.json -width 4 -height 6 -out abc ```
+
 ``` test-scene-output-random -ts tileset_7135374712056073458.json -out abc ```
+
 ``` test-scene-output-random -ts tileset_7135374712056073458.json -width 4 -height 4 -out abc ```
 
 
@@ -53,7 +56,9 @@
 
 ##### --example--
 ``` test-scene-output-algorithm1 -ts tileset_7135462500629519505.json -width 4 -height 6 -out abc ```
+
 ``` test-scene-output-algorithm1 -ts tileset_7135374712056073458.json -out abc ```
+
 ``` test-scene-output-algorithm1 -ts tileset_7135374712056073458.json -width 4 -height 4 -out abc ```
 
 ### Scene From Board (/data/s03_OutputScene/)
