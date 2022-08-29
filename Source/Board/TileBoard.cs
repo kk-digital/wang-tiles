@@ -5,6 +5,7 @@ namespace Wang.Board
 {
     public class TileBoard
     {
+        public string Type = "Board";
         public long ID;
         public int SizeX;
         public int SizeY;

@@ -19,6 +19,8 @@ namespace Wang.EdgeTile
     // TODO(Mahdi): https://github.com/kk-digital/kcg/issues/562
     public partial class EdgeTileSet
     {
+        public string Type = "EdgeTileSet";
+
         public EdgeTileSetDescription Description;
         [JsonConverter(typeof(StringEnumConverter))]
         public TileSize TileSize;

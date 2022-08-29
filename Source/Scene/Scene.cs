@@ -9,6 +9,8 @@ namespace Wang.SceneW
 {
     public partial class Scene
     {
+        public string Type = "Scene";
+
         public static int LayerCount = Enum.GetNames(typeof(Layer)).Length;
         public Int64 ID;
         public int SizeX;
