@@ -158,6 +158,7 @@ namespace Wang.CLI
                     Console.WriteLine("test scene generated");
 
                     Console.WriteLine("scene  " + "s03_OutputScene/" + "scene_" + id + ".json" + "  created !");
+                    Console.WriteLine("scene  " + "s03_OutputScene/" + "scene_" + id + ".png" + "  created !");
                 }
                 else
                 {
@@ -248,6 +249,80 @@ namespace Wang.CLI
                 scene.SaveJson("s03_OutputScene/" + outputPath + ".json");
                 scene.SavePNG("s03_OutputScene/" + outputPath + ".png");
                 Console.WriteLine("test scene " + "s03_OutputScene/" + outputPath + ".json" + " generated");
+                Console.WriteLine("test scene " + "s03_OutputScene/" + outputPath + ".png" + " generated");
+            }
+             else if (args.Length >= 1 && args[0] == "test-scene-output-algorithm1")
+            {
+                List<string> listOfTilesets = new List<string>();
+                int width = 4;
+                int height = 4;
+                Int64 newId = Utils.GenerateID();
+                string outputPath = "scene_" + newId;
+                string arg = "";
+                for(int i = 1; i < args.Length; i++)
+                {
+                    if (args[i] == "-ts")
+                    {
+                        arg = "-ts";
+                    }
+                    else if (args[i] == "-width")
+                    {
+                        arg = "-width";
+                    }
+                    else if (args[i] == "-height")
+                    {
+                        arg = "-height";
+                    }
+                    else if (args[i] == "-out")
+                    {
+                        arg = "-out";
+                    }
+                    else
+                    {
+                        if (arg == "-ts")
+                        {
+                            listOfTilesets.Add(args[i]);
+                            arg = "";
+                        }
+                        else if (arg == "-width")
+                        {
+                            width = Convert.ToInt32(args[i]);
+                            arg = "";
+                        }
+                        else if (arg == "-height")
+                        {
+                            height = Convert.ToInt32(args[i]);
+                            arg = "";
+                        }
+                        else if (arg == "-out")
+                        {
+                            outputPath = args[i];
+                            arg = "";
+                        }
+                    }
+                }
+
+                if (listOfTilesets.Count == 0)
+                {
+                    Console.WriteLine("no tilesets chosen !!");
+                    return ;
+                }
+
+                SceneW.Scene scene = new SceneW.Scene(newId, width, height);
+                foreach(var tilesetPath in listOfTilesets)
+                {
+                    EdgeTileSet tileset = EdgeTileSetJson.FromJson("s00_Tileset/" + tilesetPath);
+                    scene.AddTileSet(tileset);
+                }
+
+
+                scene.Algorithm1();
+
+
+                scene.SaveJson("s03_OutputScene/" + outputPath + ".json");
+                scene.SavePNG("s03_OutputScene/" + outputPath + ".png");
+                Console.WriteLine("test scene " + "s03_OutputScene/" + outputPath + ".json" + " generated");
+                Console.WriteLine("test scene " + "s03_OutputScene/" + outputPath + ".png" + " generated");
             }
         }
 
@@ -270,6 +345,7 @@ namespace Wang.CLI
             Console.WriteLine("****** Scene ******");
             Console.WriteLine("test-scene -b <board> -ts <tileset1> -ts <tileset2>");
             Console.WriteLine("test-scene-output-random -ts <tileset_name1> -ts <tileset_name2> -width <sizeX> -height <sizeY> -out <outpath>");
+            Console.WriteLine("test-scene-output-algorithm1 -ts <tileset_name1> -ts <tileset_name2> -width <sizeX> -height <sizeY> -out <outpath>");
         }
 
         public static void ListFolder(string folder, string extension)
