@@ -324,6 +324,10 @@ namespace Wang.CLI
                 Console.WriteLine("test scene " + "s03_OutputScene/" + outputPath + ".json" + " generated");
                 Console.WriteLine("test scene " + "s03_OutputScene/" + outputPath + ".png" + " generated");
             }
+            else
+            {
+                Console.WriteLine("Invalid Command! type help for command syntax");
+            }
         }
 
 
