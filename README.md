@@ -32,7 +32,7 @@
 
 ### Board Generation
 
-```Board Generate [Board Type] [sizeX] [sizeY] ```  ///// [Board Type> ---> Radial flat FloatingIsland
+```Board Generate [Board Type] [sizeX] [sizeY] ```  ///// [Board Type] ---> Background Radial flat FloatingIsland
 
 #### example
 
