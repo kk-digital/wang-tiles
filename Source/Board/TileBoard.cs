@@ -1,4 +1,7 @@
+using System;
+using System.Reflection;
 using Wang;
+using Wang.MathW;
 using Wang.Other;
 
 namespace Wang.Board
@@ -45,43 +48,50 @@ namespace Wang.Board
 
         public static TileBoard MakeBackground(int sizeX, int sizeY)
         {
-            TileBoard tileBoard = new TileBoard(Utils.GenerateID(), sizeX, sizeY); // Note(Joao) : should we use generateID for tileboard?
-            Random rand = new Random();
+            TileBoard tileBoard = new TileBoard(Utils.GenerateID(), sizeX, sizeY);
+            Random random = new Random();
+            MathW.Perlin1D perlin = new MathW.Perlin1D(
+                seed: random.Next(), 
+                samplingRate: 8, 
+                octaves: 1);
             float[] cutoffZ = new float[sizeX];
 
             for (int i = 0; i < sizeX; i++)
             {
-                cutoffZ[i] = rand.Next(); // (Todo) 1D perlin instead.
+                cutoffZ[i] = perlin.GetNoise(i);
             }
 
             for (int i = 0; i < tileBoard.BoardSlots.Length; i++)
             {
+                tileBoard.BoardSlots[i].TileIsoType = TileIsoType.FullBlock;
                 tileBoard.BoardSlots[i].Layer = Layer.LayerBack;
                 tileBoard.BoardSlots[i].TileSetID = 0;
-                if (tileBoard.BoardSlots[i].yPosition > cutoffZ[i])
+                if ((tileBoard.BoardSlots[i].yPosition / (float)sizeY - cutoffZ[tileBoard.BoardSlots[i].xPosition]) > - 0.05f)
                     tileBoard.BoardSlots[i].TileIsoType = TileIsoType.EmptyBlock;
-                else
-                    tileBoard.BoardSlots[i].TileIsoType = TileIsoType.FullBlock;
             }
 
             return tileBoard;
 
         }
 
-
+        /// <summary>
+        ///  Polar Perlin Noise Loops
+        /// </summary>
         public static TileBoard MakeRadial(int sizeX, int sizeY)
         {
 
             TileBoard tileBoard = new TileBoard(Utils.GenerateID(), sizeX, sizeY);
+            Random random = new Random();
+            MathW.PerlinField2D perlinNoise = new MathW.PerlinField2D(
+                seed: random.Next(),
+                samplingRate: 1,
+                octaves: 1);
 
-            MathW.PerlinNoise perlinNoise = new MathW.PerlinNoise();
-            perlinNoise.init(sizeX, sizeY);
+            float[] distances = new float[sizeX * sizeY];
+            float[] samples = new float[sizeX * sizeY];
 
-            // Create linear gradient function. Note(Joao) (Beta cdf are better here (Todo?))
-            float[] distance = new float[sizeX * sizeY];
-            int k = 2; // Coefiecient used to tune gradient. 
-
-            for (int y = 0; y < sizeY; y++)
+            float max = float.MinValue;
+            for (int y = 0, index = 0; y < sizeY; y++)
             {
                 for (int x = 0; x < sizeX; x++)
                 {
@@ -90,72 +100,30 @@ namespace Wang.Board
                     float posX = (x + 0.5f) / sizeX;
                     float posY = (y + 0.5f) / sizeY;
 
-                    distance[(x + y * sizeX)] = k *  MathW.Distance.EuclidianDistance(posX, posY, 0.5f, 0.5f);
+                    distances[index] = MathW.Distance.EuclidianDistance(posX, posY, 0.5f, 0.5f);
+                    float angles = MathF.Atan2(posY - 0.5f, posX - 0.5f);
+
+                    if (distances[index] > max)
+                        max = distances[index];
+
+                    const int RADIOUS = 6; // Perlin noise loop radious
+                    samples[index] = perlinNoise.GetNoise(MathF.Cos(angles) + 1 * RADIOUS, MathF.Sin(angles) + 1 * RADIOUS); // Add +1 to keep x,y > 0.
+                    samples[index] = (samples[index] + 1f) / 2f; // Normalize.
+                    index++;
                 }
             }
 
-
-            // Start from the center.
-            // First half. 
-            int maxY = sizeY;
-            for (int x= sizeX / 2; x < sizeX; x++)
+            for (int i = 0; i < distances.Length; i++)
             {
-                for (int y = sizeY / 2; y < maxY; y++)
-                {
-                    float sample = perlinNoise.noise(x, y);
+                // Normalize distance.
+                distances[i] /= max;
 
-                    int index = (x + y * sizeX);
+                // Todo: Add incomplete beta function.
 
-                    tileBoard.BoardSlots[index].TileIsoType = TileIsoType.FullBlock;
-                    tileBoard.BoardSlots[index].TileSetID = 0;
-
-                    float diff = distance[index] - sample;
-                    
-                    if (diff >= 0)
-                    {
-                        // fill all cell after this tile.
-                        for (int i = x; i < sizeX; i++)
-                        {
-                            for (int j = y; j < sizeY; j++)
-                            {
-                                index = i + j * sizeX;
-                                tileBoard.BoardSlots[index].Layer = Layer.LayerFront;
-                            }
-                            maxY = y;
-                        }
-                    }
-                }
-            }
-
-            // Second half.
-            int minY = 0;
-            for (int x = - 1 + sizeX / 2; x >= 0; x--)
-            {
-                for (int y = -1 + sizeY / 2; y >= minY; y--)
-                {
-                    float sample = perlinNoise.noise(x, y); // Not working (Todo: Fix this.)
-
-                    int index = (x + y * sizeX);
-
-                    tileBoard.BoardSlots[index].TileIsoType = TileIsoType.FullBlock;
-                    tileBoard.BoardSlots[index].TileSetID = 0;
-
-                    float diff = distance[index] - sample;
-
-                    if (diff >= 0)
-                    {
-                        // fill all cell after this tile.
-                        for (int i = x; i >= 0; i--)
-                        {
-                            for (int j = y; j >= 0; j--)
-                            {
-                                index = i + j * sizeX;
-                                tileBoard.BoardSlots[index].Layer = Layer.LayerFront;
-                            }
-                            minY = y;
-                        }
-                    }
-                }
+                if (distances[i] > samples[i])
+                    tileBoard.BoardSlots[i].Layer = Layer.LayerFront;
+                else
+                    tileBoard.BoardSlots[i].Layer = Layer.LayerBack;
             }
 
             return tileBoard;

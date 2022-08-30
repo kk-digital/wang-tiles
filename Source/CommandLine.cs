@@ -64,14 +64,19 @@ namespace Wang.CLI
                     Console.WriteLine("EdgeTileSet generated");
                 }
             }
-            else if (args.Length >= 5 && args[0] == "Board")
+            else if (args.Length >=- 3 && args[0] == "Board")
             {
                 if (args[1] == "Generate")
                 {
                     TileBoard tileBoard;
-                     
-                    int x = Convert.ToInt32(args[3]);
-                    int y = Convert.ToInt32(args[4]);
+
+                    int x = 16;
+                    int y = 16;
+                    if (args.Length >= 5)
+                    {
+                        x = Convert.ToInt32(args[3]);
+                        y = Convert.ToInt32(args[4]);
+                    }
 
 
                     switch (args[2])
@@ -84,6 +89,9 @@ namespace Wang.CLI
                             break;
                         case "FloatingIsland":
                             tileBoard = TileBoard.MakeFloatingIsland3x3();
+                            break;
+                        case "Background":
+                            tileBoard = TileBoard.MakeBackground(x, y);
                             break;
                         default:
                             Console.WriteLine("Error: Not valid Generate function."); // (Todo(Joao) do help when not valid arguments?)
@@ -345,6 +353,7 @@ namespace Wang.CLI
             Console.WriteLine("****** Board Generate ***");
             Console.WriteLine("Board Generate flat <xSize> <ySize>");
             Console.WriteLine("Board Generate Radial  <xSize> <ySize>");
+            Console.WriteLine("Board Generate Background <xSize> <ySize>");
             Console.WriteLine("Board Generate FloatingIsland 3x3");
             Console.WriteLine("****** Scene ******");
             Console.WriteLine("test-scene -b <board> -ts <tileset1> -ts <tileset2>");
