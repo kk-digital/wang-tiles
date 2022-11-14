@@ -13,25 +13,33 @@ namespace Wang
     {
       // TODO: Should be changed so that
       // length will not be hard coded.
-      Tiles = new WangCornerTile[99];
+      Tiles = new WangCornerTile[999];
     }
 
     /* Methods of WangCornerTileSet */
-    public void CreateTile(TileGeometry geometry, Color colorNW, Color colorNE, Color colorSE, Color colorSW)
+    public WangCornerTile CreateTile(TileGeometry geometry, Color colorNW, Color colorNE, Color colorSE, Color colorSW)
     {
       WangCornerTile newTile = new WangCornerTile(geometry,colorNW,colorNE,colorSE,colorSW);  
       Tiles=Tiles.Append(newTile).ToArray();
 
       //  Update ColorCountMap
-      Globals.ColorCountMap[colorNW]=Globals.ColorCountMap[colorNW]++;
-      Globals.ColorCountMap[colorNE]=Globals.ColorCountMap[colorNE]++;
-      Globals.ColorCountMap[colorSE]=Globals.ColorCountMap[colorSE]++;
-      Globals.ColorCountMap[colorSW]=Globals.ColorCountMap[colorSW]++;
+      // Globals.ColorCountMap[colorNW]=Globals.ColorCountMap[colorNW]++;
+      // Globals.ColorCountMap[colorNE]=Globals.ColorCountMap[colorNE]++;
+      // Globals.ColorCountMap[colorSE]=Globals.ColorCountMap[colorSE]++;
+      // Globals.ColorCountMap[colorSW]=Globals.ColorCountMap[colorSW]++;
+
+      return newTile;
     }
 
-    public void GenerateTileSet(int numberOfColors)
+   // numberOfVariants is the number of 
+   // variants per color combination.
+   // numberOfColors is the number of 
+   // colors available to make a combination.
+    public WangCornerTileSet GenerateTileSet(int numberOfColors, int numberOfVariants)
     {
       int NW, NE, SE, SW;
+      int count=0;
+      WangCornerTileSet tileSet = new WangCornerTileSet();
 
       // +2 because colors in our enum starts with 2
       // 0 and 1 are special cases
@@ -39,19 +47,23 @@ namespace Wang
       for (NW = 2; NW < numberOfColors; NW++) {
          for (NE = 2; NE < numberOfColors; NE++) {
             for (SE = 2; SE < numberOfColors; SE++) {
-               for (SW = 0; SW < numberOfColors; SW++) {
-                  CreateTile(TileGeometry.FP,(Color)NW,(Color)NE,(Color)SE,(Color)SW);
+               for (SW = 2; SW < numberOfColors; SW++) {
+                  WangCornerTile newTile=CreateTile(TileGeometry.FP,(Color)NW,(Color)NE,(Color)SE,(Color)SW);
+                  tileSet.Tiles[count]=newTile;
+                  count++;
                }
             }
          }
 	   } 
+
+      return tileSet;
     }
 
-    public WangCornerTile[] ReturnMatches(Color colorNW, Color colorNE, Color colorSE, Color colorSW)
+    public WangCornerTile[] ReturnMatches(WangCornerTile[] Tiles,Color colorNW, Color colorNE, Color colorSE, Color colorSW)
     {
       // TODO: Should be changed so that
       // length will not be hard coded.
-      WangCornerTile[] tileMatches=new WangCornerTile[99];
+      WangCornerTile[] tileMatches=new WangCornerTile[999];
 
       // 1 - north
       // 2 - east
@@ -68,7 +80,8 @@ namespace Wang
          whichDirection = 4;
       }
 
-      for (int i =1; i<Tiles.Length;i++){
+   // TilesLength
+      for (int i =1; i<15;i++){
          switch (whichDirection){
             case 1:
                // then find matches north of the tile
