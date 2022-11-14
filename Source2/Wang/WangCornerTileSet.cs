@@ -31,7 +31,20 @@ namespace Wang
 
     public void GenerateTileSet(int numberOfColors)
     {
-      
+      int NW, NE, SE, SW;
+
+      // +2 because colors in our enum starts with 2
+      // 0 and 1 are special cases
+      numberOfColors=numberOfColors+2; 
+      for (NW = 2; NW < numberOfColors; NW++) {
+         for (NE = 2; NE < numberOfColors; NE++) {
+            for (SE = 2; SE < numberOfColors; SE++) {
+               for (SW = 0; SW < numberOfColors; SW++) {
+                  CreateTile(TileGeometry.FP,(Color)NW,(Color)NE,(Color)SE,(Color)SW);
+               }
+            }
+         }
+	   } 
     }
 
     public WangCornerTile[] ReturnMatches(Color colorNW, Color colorNE, Color colorSE, Color colorSW)

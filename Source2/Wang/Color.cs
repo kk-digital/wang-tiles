@@ -8,6 +8,8 @@ namespace Wang
         Red,
         Green,
         Blue,
+        Yellow,
+        
     }
 
 }
