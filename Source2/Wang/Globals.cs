@@ -8,6 +8,11 @@ namespace Wang
         // 
         // if color count is 0, we remove 
         // it from the dictionary.
-        public static Dictionary < string, int > ColorCountMap = new Dictionary < string, int > ();
+        public static Dictionary < Color, int > ColorCountMap = new Dictionary < Color, int > ();
+
+        public static int GetColorCount(Color color)
+        {
+            return ColorCountMap[color];
+        }
     }
 }
