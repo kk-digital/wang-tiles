@@ -6,13 +6,13 @@ namespace Wang
         /* Properties of WangCornerTile */
         public int TileID;
         public TileGeometry TileGeometry;
-        public int CornerColorNW;
-        public int CornerColorNE;
-        public int CornerColorSE;
-        public int CornerColorSW;
+        public Color CornerColorNW;
+        public Color CornerColorNE;
+        public Color CornerColorSE;
+        public Color CornerColorSW;
 
         /* Constructor for WangCornerTile */
-        public WangCornerTile(TileGeometry tileGeometry, int cornerColorNW, int cornerColorNE, int cornerColorSE, int cornerColorSW)
+        public WangCornerTile(TileGeometry tileGeometry, Color cornerColorNW, Color cornerColorNE, Color cornerColorSE, Color cornerColorSW)
         {
             TileGeometry = tileGeometry;
             CornerColorNW = cornerColorNW;
