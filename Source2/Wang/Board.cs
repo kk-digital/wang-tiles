@@ -3,15 +3,15 @@ namespace Wang
     class Board
     {
         public BoardTileSlots[] TileSlots;
-        public int Length;
+        public int Height;
         public int Width;
         public WangCornerTileSet[] TileSet;
 
         // Constructor
-        public Board(int length, int width)
+        public Board(int height, int width)
         {
-            TileSlots = new BoardTileSlots[length*width];
-            Length = length;
+            TileSlots = new BoardTileSlots[height*width];
+            Height = height;
             Width = width;
 
             TileSet=new WangCornerTileSet[99];
