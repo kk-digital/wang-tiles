@@ -6,6 +6,7 @@ namespace Wang
         {
             return (r << 24) + (g << 16) + (b << 8) + a;
         }
+        
         public static void FillRectangle(BigGustave.PngBuilder builder, int x, int y, int w, int h, PixelColor color)
         {
             for(int j = y; j < y + h; j++)
@@ -15,6 +16,15 @@ namespace Wang
                     builder.SetPixel((byte)color.Red(), (byte)color.Green(), (byte)color.Blue(), i, j);
                 }
             }
+        }
+
+        public static (int x,int y) GetRandomPosition(int width, int height)
+        {
+            Random rand = new Random();
+            int randX = rand.Next(0,width);
+            int randY = rand.Next(0,height);
+
+            return (x:randX, y:randY);
         }
     }
 }

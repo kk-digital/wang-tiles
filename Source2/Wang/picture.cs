@@ -6,15 +6,18 @@ namespace Wang
         public void SavePNG(Board board,string filename)
         {
             ColorMap colorMap = new ColorMap();
-            int tileSizeInPixels = 16;
+            int tileSizeInPixels = WangConstants.TileSizeInPixels;
             int numberOfRows = board.Height;
             int tilesPerRow =board.Width;
             
             var builder = BigGustave.PngBuilder.Create(tileSizeInPixels * tilesPerRow, tileSizeInPixels * numberOfRows, true);
 
+            for(int tileIndex = 0; tileIndex < board.TileSlots.Length; tileIndex++)
+            {   
+                if (board.TileSlots[tileIndex].Tile==null){
+                    continue;
+                }
 
-            for(int tileIndex = 0; tileIndex < 2; tileIndex++)
-            {
                 int xPosition = tileIndex % tilesPerRow;
                 int yPosition = tileIndex / tilesPerRow;
 

@@ -67,22 +67,22 @@ namespace Wang
         {
             PixelColors = new PixelColor[16];
 
-            PixelColors[0] = PixelColor.MakePixelColor(0, 255, 100, 255);
-            PixelColors[1] = PixelColor.MakePixelColor(255, 255, 100, 255);
-            PixelColors[2] = PixelColor.MakePixelColor(255, 0, 0, 255);
-            PixelColors[3] = PixelColor.MakePixelColor(255, 50, 0, 255);
-            PixelColors[4] = PixelColor.MakePixelColor(45, 10, 250, 255);
-            PixelColors[5] = PixelColor.MakePixelColor(0, 0, 50, 255);
-            PixelColors[6] = PixelColor.MakePixelColor(0, 255, 100, 255);
-            PixelColors[7] = PixelColor.MakePixelColor(0, 20, 0, 255);
-            PixelColors[8] = PixelColor.MakePixelColor(0, 10, 10, 255);
-            PixelColors[9] = PixelColor.MakePixelColor(50, 150, 10, 255);
-            PixelColors[10] = PixelColor.MakePixelColor(10, 0, 50, 255);
-            PixelColors[11] = PixelColor.MakePixelColor(0, 64, 40, 255);
-            PixelColors[12] = PixelColor.MakePixelColor(80, 32, 10, 255);
-            PixelColors[13] = PixelColor.MakePixelColor(20, 229, 98, 255);
-            PixelColors[14] = PixelColor.MakePixelColor(135, 148, 192, 255);
-            PixelColors[15] = PixelColor.MakePixelColor(0, 89, 100, 250);
+            PixelColors[0] = PixelColor.MakePixelColor(255,0,0, 255);
+            PixelColors[1] = PixelColor.MakePixelColor(0,255,0, 255);
+            PixelColors[2] = PixelColor.MakePixelColor(128,128,0, 255);
+            PixelColors[3] = PixelColor.MakePixelColor(255,255,0, 255);
+            PixelColors[4] = PixelColor.MakePixelColor(0,255,255, 255);
+            PixelColors[5] = PixelColor.MakePixelColor(255,0,255, 255);
+            PixelColors[6] = PixelColor.MakePixelColor(138,43,226, 255);
+            PixelColors[7] = PixelColor.MakePixelColor(0,128,0, 255);
+            PixelColors[8] = PixelColor.MakePixelColor(128,0,128, 255);
+            PixelColors[9] = PixelColor.MakePixelColor(0,128,128, 255);
+            PixelColors[10] = PixelColor.MakePixelColor(0,0,128, 255);
+            PixelColors[11] = PixelColor.MakePixelColor(255,140,0, 255);
+            PixelColors[12] = PixelColor.MakePixelColor(255,228,196, 255);
+            PixelColors[13] = PixelColor.MakePixelColor(0,0,205, 255);
+            PixelColors[14] = PixelColor.MakePixelColor(255,20,147, 255);
+            PixelColors[15] = PixelColor.MakePixelColor(0,0,255, 250);
         }
     }
 
