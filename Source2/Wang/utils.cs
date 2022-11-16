@@ -7,24 +7,29 @@ namespace Wang
             return (r << 24) + (g << 16) + (b << 8) + a;
         }
         
-        public static void FillRectangle(BigGustave.PngBuilder builder, int x, int y, int w, int h, PixelColor color)
+        public static void FillRectangle(BigGustave.PngBuilder builder, int col, int row, int w, int h, PixelColor color)
         {
-            for(int j = y; j < y + h; j++)
+            for(int j = row; j < row + h; j++)
             {
-                for(int i = x; i < x + w; i++)
+                for(int i = col; i < col + w; i++)
                 {
                     builder.SetPixel((byte)color.Red(), (byte)color.Green(), (byte)color.Blue(), i, j);
                 }
             }
         }
 
-        public static (int x,int y) GetRandomPosition(int width, int height)
+        public static (int col,int row) GetRandomPosition(int width, int height)
         {
             Random rand = new Random();
             int randX = rand.Next(0,width);
             int randY = rand.Next(0,height);
 
-            return (x:randX, y:randY);
+            return (col:randX, row:randY);
+        }
+
+        public static int GetBoardSlotIndex(int Width, int col, int row)
+        {
+            return (Width*col)+row;
         }
     }
 }

@@ -1,11 +1,11 @@
 namespace Wang
 {
     class Generator {
-        public void PlacementAlgo_V1()
+        public void PlacementAlgo_V1(int width, int height, int numOfColors,string outputName)
         {
             Board newBoard = new Board(10,10);
             WangCornerTileSet newTileSet = new WangCornerTileSet();
-            WangCornerTileSet tileSet= newTileSet.GenerateTileSet(4,1);
+            WangCornerTileSet tileSet= newTileSet.GenerateTileSet(numOfColors,1);
             newBoard.AddTileSet(tileSet);
           
 
@@ -15,33 +15,48 @@ namespace Wang
             WangCornerTile tile=newBoard.TileSet[0].Tiles[randIndex];
 
             // place the random tile on the board slot
-            (int x,int y) randomPos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
-            newBoard.PlaceTile(tile,randomPos.x,randomPos.y);
+            (int col,int row) randomPos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
+            newBoard.PlaceTile(tile,randomPos.col,randomPos.row);
             
-            // temporarily putting one by one instead of looping this for testing
-            (WangCornerTile newTile, int x, int y) val=newBoard.AddTileToAdjacent(tile,randomPos.x,randomPos.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-            val=newBoard.AddTileToAdjacent(val.newTile,val.x,val.y);
-         
-       
-            
+            (int col, int row) val= (randomPos.col,randomPos.row);
+            for (int i=1;i<newBoard.TileSlots.Length;i++){
+                val=newBoard.AddTileToAdjacent(val.col,val.row);
+            }
+  
             // Generate and Save PNG
             Picture newPic = new Picture();
-            newPic.SavePNG(newBoard, "PlacementAlgo_V1.png");
+            newPic.SavePNG(newBoard, outputName+".png");
+
+        }
+
+        public void PlacementAlgo_V2(int width, int height, int numOfColors,string outputName)
+        {   
+            // Create board
+            Board newBoard = new Board(10,10);
+
+            // Generate tile set
+            WangCornerTileSet newTileSet = new WangCornerTileSet();
+            WangCornerTileSet tileSet= newTileSet.GenerateTileSet(numOfColors,1);
+
+            // Add tile set to board
+            newBoard.AddTileSet(tileSet);
+          
+            // Get Random tile to put
+            Random random = new Random();
+            int randIndex = random.Next(0,newBoard.TileSet[0].Tiles.Length);
+            WangCornerTile tile=newBoard.TileSet[0].Tiles[randIndex];
+
+            // Put first slot at upper left
+            (int col, int row) val = (0,0);
+            newBoard.PlaceTile(tile,val.col,val.row);
+       
+            for (int i=1;i<newBoard.TileSlots.Length;i++){
+                val=newBoard.AddTileToNextSlot(val.col,val.row);
+            }
+  
+            // Generate and Save PNG
+            Picture newPic = new Picture();
+            newPic.SavePNG(newBoard, outputName+".png");
 
         }
     }
