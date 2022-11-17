@@ -15,10 +15,10 @@ class MainClass
         {
         };
 
-        var generateCommand = new Command("generate")
+        var placementAlgoCommand = new Command("placement-algo")
         {
             new Option<int>(
-                name:"--placement-algo",
+                name:"--version",
                 description:"(int) The version of Placement Algo to run (1 or 2)."),
             new Option<int>(
                 name: "--width",
@@ -35,10 +35,10 @@ class MainClass
         };
 
 
-       generateCommand.Handler = CommandHandler.Create<int,int,int,int,string>((placementAlgo,width,height,colors,outputName) =>
+       placementAlgoCommand.Handler = CommandHandler.Create<int,int,int,int,string>((version,width,height,colors,outputName) =>
         {
             Generator newGeneratedBoard= new Generator();
-            switch (placementAlgo){
+            switch (version){
                 case 1:
                     newGeneratedBoard.PlacementAlgo_V1(width,height,colors,outputName);
                 break;
@@ -49,7 +49,33 @@ class MainClass
             
         });
 
-        root.AddCommand(generateCommand);
+        var schoningsAlgoCommand = new Command("schonings-algo")
+        {
+            new Option<int>(
+                name:"--version",
+                description:"(int) The version of Schonings Algo to run (1)."),
+            new Option<int>(
+                name: "--width",
+                description:"(int) The width of the board to be made."),
+            new Option<int>(
+                name:"--height",
+                description:"(int) The height of the board to be made."),
+            new Option<int>(
+                name:"--colors",
+                description:"(int) The number of colors used to generate the tile set."),
+            new Option<string>(
+                name:"--output-name",
+                description:"(string) The filename of the resulting picture (default directory is ./data)."),
+        };
+
+        schoningsAlgoCommand.Handler = CommandHandler.Create<int,int,int,int,string>((version,width,height,colors,outputName) =>
+        {
+            Generator newGeneratedBoard= new Generator();
+            newGeneratedBoard.SchoningsAlgo(width,height,colors,outputName);
+        });
+
+        root.AddCommand(placementAlgoCommand);
+        root.AddCommand(schoningsAlgoCommand);
 
         root.Invoke(args);
     }

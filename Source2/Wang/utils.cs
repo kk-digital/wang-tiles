@@ -21,10 +21,10 @@ namespace Wang
         public static (int col,int row) GetRandomPosition(int width, int height)
         {
             Random rand = new Random();
-            int randX = rand.Next(0,width);
-            int randY = rand.Next(0,height);
+            int randCol = rand.Next(0,height);
+            int randRow = rand.Next(0,width);
 
-            return (col:randX, row:randY);
+            return (col:randCol, row:randRow);
         }
 
         public static int GetBoardSlotIndex(int Width, int col, int row)

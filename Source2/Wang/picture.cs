@@ -14,7 +14,7 @@ namespace Wang
 
             for(int tileIndex = 0; tileIndex < board.TileSlots.Length; tileIndex++)
             {   
-                if (board.TileSlots[tileIndex].Tile==null){
+                if (board.TileSlots[tileIndex].TileID==null){
                     continue;
                 }
 
@@ -24,7 +24,12 @@ namespace Wang
                 int xPixelPosition = xPosition * tileSizeInPixels;
                 int yPixelPosition = yPosition * tileSizeInPixels;
 
-                DrawTile(builder, colorMap, board.TileSlots[tileIndex].Tile,xPixelPosition, yPixelPosition, tileSizeInPixels);
+                // get tileset
+                int tileSetID=(int)board.TileSlots[tileIndex].TileSetID;
+                int tileID=(int)board.TileSlots[tileIndex].TileID;
+                WangCornerTile tile = board.TileSet[tileSetID].Tiles[tileID];
+
+                DrawTile(builder, colorMap, tile,xPixelPosition, yPixelPosition, tileSizeInPixels);
             }
 
             using (FileStream fs = File.OpenWrite(@"././data" + "/" + filename))

@@ -66,4 +66,53 @@ namespace Wang
         FP_R3,
         
     }
+
+    public enum TileCorner{
+        NW,
+        NE,
+        SE,
+        SW,
+    }
+
+    public enum TileOffset{
+        C0,
+        C1,
+        C2,
+        C3,
+        C4,
+        C5,
+        C6,
+        C7,
+        C8,
+    }
+
+    // 0:NW : 0:NW, 8:NE, 1:SE, 2:SW
+    // 0:NE : 0:NE, 2:SE, 3:SW, 4:NW
+    // 0:SE : 0:SE, 4:SW, 5:NW, 6:NE
+    // 0:SW : 0:SW, 6:NW, 7:NE, 8:SE
+    public enum TileOffsetCorner {
+    // 0:NW : 0:NW, 8:NE, 1:SE, 2:SW
+    C0_NW,
+    C8_NE,
+    C1_SE,
+    C2_SW,
+
+    // 0:NE : 0:NE, 2:SE, 3:SW, 4:NW
+    C0_NE,
+    C2_SE,
+    C3_SW,
+    C4_NW,
+
+    // 0:SE : 0:SE, 4:SW, 5:NW, 6:NE
+    C0_SE,
+    C4_SW,
+    C5_NW,
+    C6_NE,
+    
+    // 0:SW : 0:SW, 6:NW, 7:NE, 8:SE
+    C0_SW, 
+    C6_NW,
+    C7_NE,
+    C8_SE, 
+    }
 }
