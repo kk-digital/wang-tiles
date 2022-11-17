@@ -15,19 +15,54 @@ for macos x
 ```./bin/Debug/net6.0/wang-tiles```
 
 Sample usage
-```./bin/Debug/net6.0/wang-tiles -- generate --placement-algo 2 --width 12 --height 12 --colors 5 --output-name "TestV2"```
+```./bin/Debug/net6.0/wang-tiles -- schonings-algo --version 1 --width 3 --height 3 --colors 3 --output-name "TestSchonings_V1```
 
+Usage for wang-tiles
 ```
-Usage: wang-tiles generate [options]
+Description:
+  Wang Tile Generator
+
+Usage:
+  wang-tiles [command] [options]
 
 Options:
-  --placement-algo <placement-algo>  (int) The version of Placement Algo to run (1 or 2).
-  --width <width>                    (int) The width of the board to be made.
-  --height <height>                  (int) The height of the board to be made.
-  --colors <colors>                  (int) The number of colors used to generate the tile set.
-  --output-name <output-name>        (string) The filename of the resulting picture (default directory is ./data)
+  --version       Show version information
+  -?, -h, --help  Show help and usage information
+
+Commands:
+  placement-algo
+  schonings-algo
+```
+
+Usage for wang-tiles placement-algo
+```
+Usage:
+  wang-tiles placement-algo [options]
+
+Options:
+  --version <version>          (int) The version of Placement Algo to run (1 or 2).
+  --width <width>              (int) The width of the board to be made.
+  --height <height>            (int) The height of the board to be made.
+  --colors <colors>            (int) The number of colors used to generate the tile set.
+  --output-name <output-name>  (string) The filename of the resulting picture (default directory is ./data).
+  -?, -h, --help               Show help and usage information
+```
+
+Usage for wang-tiles schonings-algo
+```
+Usage:
+  wang-tiles schonings-algo [options]
+
+Options:
+  --version <version>          (int) The version of Schonings Algo to run (1).
+  --width <width>              (int) The width of the board to be made.
+  --height <height>            (int) The height of the board to be made.
+  --colors <colors>            (int) The number of colors used to generate the tile set.
+  --output-name <output-name>  (string) The filename of the resulting picture (default directory is ./data).
+  -?, -h, --help               Show help and usage information
 ```
 
 For more information, run
 ```./bin/Debug/net6.0/wang-tiles -- -h```
-```./bin/Debug/net6.0/wang-tiles -- generate -h```
+```./bin/Debug/net6.0/wang-tiles placement-algo -- -h```
+```./bin/Debug/net6.0/wang-tiles schonings-algo -- -h```
