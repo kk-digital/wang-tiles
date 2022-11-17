@@ -4,17 +4,21 @@ This repository is a generator based on wang-tile model in creating aperiodic an
 
 ### Usage
 Compile using 
+
 ```dotnet build```
 
 Run using the binary created from building
 
 for windows
+
 ```./bin/Debug/net6.0/wang-tiles.exe```
 
 for macos x
+
 ```./bin/Debug/net6.0/wang-tiles```
 
 Sample usage
+
 ```./bin/Debug/net6.0/wang-tiles -- schonings-algo --version 1 --width 3 --height 3 --colors 3 --output-name "TestSchonings_V1```
 
 Usage for wang-tiles
@@ -64,5 +68,7 @@ Options:
 
 For more information, run
 ```./bin/Debug/net6.0/wang-tiles -- -h```
+
 ```./bin/Debug/net6.0/wang-tiles placement-algo -- -h```
+
 ```./bin/Debug/net6.0/wang-tiles schonings-algo -- -h```
