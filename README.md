@@ -21,7 +21,7 @@ Sample usage
 
 ```./bin/Debug/net6.0/wang-tiles -- schonings-algo --version 1 --width 3 --height 3 --colors 3 --output-name "TestSchonings_V1```
 
-Usage for wang-tiles
+Usage for ```wang-tiles```
 ```
 Description:
   Wang Tile Generator
@@ -38,7 +38,7 @@ Commands:
   schonings-algo
 ```
 
-Usage for wang-tiles placement-algo
+Usage for ```wang-tiles placement-algo```
 ```
 Usage:
   wang-tiles placement-algo [options]
@@ -52,7 +52,7 @@ Options:
   -?, -h, --help               Show help and usage information
 ```
 
-Usage for wang-tiles schonings-algo
+Usage for ```wang-tiles schonings-algo```
 ```
 Usage:
   wang-tiles schonings-algo [options]
@@ -66,7 +66,9 @@ Options:
   -?, -h, --help               Show help and usage information
 ```
 
+
 For more information, run
+
 ```./bin/Debug/net6.0/wang-tiles -- -h```
 
 ```./bin/Debug/net6.0/wang-tiles placement-algo -- -h```
