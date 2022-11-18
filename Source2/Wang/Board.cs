@@ -33,6 +33,13 @@ namespace Wang
             this.TileSlots[index].TileID=tileID;
         }
 
+        public void RemoveTile(int col, int row)
+        {
+            int index = Utils.GetBoardSlotIndex(this.Width,col,row);
+            this.TileSlots[index].TileSetID = null;
+            this.TileSlots[index].TileID=null;
+        }
+
         // numberOfVariants is the number of 
         // variants per color combination.
         // numberOfColors is the number of 
@@ -42,22 +49,15 @@ namespace Wang
         int NW, NE, SE, SW;
         WangCornerTileSet tileSet = new WangCornerTileSet();
 
-        // +2 because colors in our enum starts with 2
-        // 0 and 1 are special cases
-        numberOfColors=numberOfColors+2; 
-        for (NW = 2; NW < numberOfColors; NW++) {
-            for (NE = 2; NE < numberOfColors; NE++) {
-                for (SE = 2; SE < numberOfColors; SE++) {
-                for (SW = 2; SW < numberOfColors; SW++) {
-                    WangCornerTile newTile=tileSet.CreateTile(TileGeometry.FP,(Color)NW,(Color)NE,(Color)SE,(Color)SW);
+        for (NW = 0; NW < numberOfColors; NW++) {
+            for (NE = 0; NE < numberOfColors; NE++) {
+                for (SE = 0; SE < numberOfColors; SE++) {
+                    for (SW = 0; SW < numberOfColors; SW++) {
 
-                    if (tileSet.Tiles==null){
-                        tileSet.Tiles=new WangCornerTile[1];
-                        tileSet.Tiles[0]=newTile;
-                    } else {
-                        tileSet.Tiles=tileSet.Tiles.Append(newTile).ToArray();
+                        // +2 because colors in our enum starts with 2
+                        // 0 and 1 are special cases
+                        WangCornerTile newTile=tileSet.CreateTile(TileGeometry.FP,(Color)NW+2,(Color)NE+2,(Color)SE+2,(Color)SW+2);
                     }
-                }
                 }
             }
         } 
@@ -565,6 +565,91 @@ namespace Wang
             
             return true;
         }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////// Weighted-Probability Algo Methods ////////////////////////////////
+        public float[] GetProbabilityVector(int col,int row, int tileSetID){
+            int numberOfMismatch = 0;
+            int tileID = 0;
+            float k = 100f;
+            int maxEnergy = 24;
+            float gamma = 2f;
+            float epsilon = 0.0625f; // 1/16
+            int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
+            float maxEnergyPowerGamma = (float)Math.Pow((double)maxEnergy,gamma);
+
+            float epsilonMulInverseOfNumOfTiles = epsilon *(1.0f/numberOfTiles);
+
+            float[] weight = new float[numberOfTiles];
+            for (int i=0;i<numberOfTiles;i++){
+                // Place Ith tile to the position
+                tileID = i;
+                this.PlaceTile(tileSetID, tileID, col,row);
+
+                // Get error(i) or the number of mismatches using Ith tile
+                numberOfMismatch = this.GetNumberOfMismatch(col,row);
+
+                // Weight[i] = (k * ((max energy - error(i))^gamma) / (max_energy^gamma) ) + epsilon* (1.0 / number-of-tiles)
+                float term1= k * (((float)Math.Pow((double)(maxEnergy-numberOfMismatch),gamma)/maxEnergyPowerGamma));
+                float term2= epsilonMulInverseOfNumOfTiles;
+                weight[i] =  term1+term2; 
+
+                // Console.WriteLine("tileID= "+i+", weight= "+weight[i].ToString("0.000")+$", # of mismatches={numberOfMismatch}"+$", term1= "+term1.ToString("0.000")+$", term2= "+term2.ToString("0.000"));
+                // Console.WriteLine("--------------------------");
+            }
+
+            this.RemoveTile(col,row);
+
+            return weight;
+        }
+
+        public float[] GetNormalizedProbabilityVector(float[] probabilityVector){
+            float sum = 0f;
+            for (int i = 0;i < probabilityVector.Length;i++){
+                sum += probabilityVector[i];
+            }
+
+            float[] normalizedVector = new float[probabilityVector.Length];
+            for (int i = 0;i < probabilityVector.Length;i++){
+                normalizedVector[i] = probabilityVector[i]/sum;
+            }
+
+            return normalizedVector;
+        }
+
+        public float[] GetCumulativeProbabilityVector(float[] probabilityVector){
+            float[] CV = probabilityVector;
+
+            float sum = 0;
+            for (int i = 0;i < CV.Length;i++){
+                sum = sum + CV[i];
+                CV[i]=sum;
+
+                // Console.WriteLine("CumulativeProbability= "+CV[i]);
+            }
+            
+            // Console.WriteLine("-------------------------------------");
+            return CV;
+        }
+
+        public int ChooseTileIndexFromCumulativeProbabilityVector(float[] CumulativeProbabilityVector){
+            Random rand = new Random();
+            int randomInt = rand.Next(0,100);
+            float randomFloat = (float)randomInt / 100f;
+                
+            for (int i=0;i<CumulativeProbabilityVector.Length;i++){
+                if (CumulativeProbabilityVector[i]>randomFloat){
+                    return i;
+                }
+            }
+
+            return 0;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
 
     struct BoardTileSlot
