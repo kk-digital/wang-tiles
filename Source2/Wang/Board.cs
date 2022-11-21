@@ -91,7 +91,7 @@ namespace Wang
         }
 
         public (int col,int row) AddTileToNextSlot(int col,int row){
-            var pos = getNextTileSlot(col,row);
+            var pos = GetNextTileSlot(col,row);
 
             var adjacentColors=getTileAdjacentColors(pos.col,pos.row);
             var matchTiles=this.TileSet[0].ReturnMatches(this.TileSet[0].Tiles,adjacentColors.colorNW,adjacentColors.colorNE,adjacentColors.colorSE,adjacentColors.colorSW);
@@ -290,6 +290,45 @@ namespace Wang
             return numberOfMismatch;
         }
 
+        public int GetNumberOfMismatch_TestAlgo_V4(int col, int row){
+            int numberOfMismatch=0;
+            Color[] cornerColors = GetTileCornerColorValues(col,row);
+  
+            // check if tile is unassigned
+            // if unassigned then atleast 4 mismatch
+            if (cornerColors[(int)TileOffsetCorner.C0_NW]==Color.MatchAll &&
+                cornerColors[(int)TileOffsetCorner.C0_NE]==Color.MatchAll &&
+                cornerColors[(int)TileOffsetCorner.C0_SE]==Color.MatchAll &&
+                cornerColors[(int)TileOffsetCorner.C0_SW]==Color.MatchAll){
+
+                // then atleast 4 mismatches
+                return 4;
+            }
+
+            // North west
+            if (countMismatchOnCorner(cornerColors, TileOffsetCorner.C0_NW, TileOffsetCorner.C8_NE, TileOffsetCorner.C1_SE, TileOffsetCorner.C2_SW)>0){
+                numberOfMismatch++;
+            }
+      
+            // North east
+            if (countMismatchOnCorner(cornerColors, TileOffsetCorner.C4_NW, TileOffsetCorner.C0_NE, TileOffsetCorner.C2_SE, TileOffsetCorner.C3_SW)>0){
+                numberOfMismatch++;
+            }
+  
+            // South east
+            if (countMismatchOnCorner(cornerColors, TileOffsetCorner.C5_NW, TileOffsetCorner.C6_NE, TileOffsetCorner.C0_SE, TileOffsetCorner.C4_SW)>0){
+                numberOfMismatch++;
+            }
+
+            // South west
+            if (countMismatchOnCorner(cornerColors, TileOffsetCorner.C6_NW, TileOffsetCorner.C7_NE, TileOffsetCorner.C8_SE, TileOffsetCorner.C0_SW)>0){
+                numberOfMismatch++;
+            }
+    
+            return numberOfMismatch;
+        }
+
+
         public int GetBoardTotalMismatch(){
             int col= this.Height;
             int row=this.Width;
@@ -387,7 +426,7 @@ namespace Wang
             return (col:coord.col,row:coord.row); 
         }
 
-        (int col, int row) getNextTileSlot(int col, int row){
+        public (int col, int row) GetNextTileSlot(int col, int row){
             if (row==this.Width-1){
                 return (col:col+1,row:0);
             } else {
@@ -572,10 +611,10 @@ namespace Wang
         public float[] GetProbabilityVector(int col,int row, int tileSetID){
             int numberOfMismatch = 0;
             int tileID = 0;
-            float k = 100f;
+            float k = 1f;
             int maxEnergy = 24;
-            float gamma = 2f;
-            float epsilon = 0.0625f; // 1/16
+            float gamma = 2.0f;
+            float epsilon = 0f; // 1/16
             int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
             float maxEnergyPowerGamma = (float)Math.Pow((double)maxEnergy,gamma);
 
@@ -590,11 +629,54 @@ namespace Wang
                 // Get error(i) or the number of mismatches using Ith tile
                 numberOfMismatch = this.GetNumberOfMismatch(col,row);
 
+                if (numberOfMismatch>24){
+                    Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
+                }
                 // Weight[i] = (k * ((max energy - error(i))^gamma) / (max_energy^gamma) ) + epsilon* (1.0 / number-of-tiles)
                 float term1= k * (((float)Math.Pow((double)(maxEnergy-numberOfMismatch),gamma)/maxEnergyPowerGamma));
                 float term2= epsilonMulInverseOfNumOfTiles;
                 weight[i] =  term1+term2; 
 
+                // Console.WriteLine($"NumberOfMismatch={numberOfMismatch}, Term 1 + Term 2 = {term1} + {term2}");
+                // Console.WriteLine("tileID= "+i+", weight= "+weight[i].ToString("0.000")+$", # of mismatches={numberOfMismatch}"+$", term1= "+term1.ToString("0.000")+$", term2= "+term2.ToString("0.000"));
+                // Console.WriteLine("--------------------------");
+            }
+
+            this.RemoveTile(col,row);
+
+            return weight;
+        }
+
+        public float[] GetProbabilityVector_TestAlgo_V4(int col,int row, int tileSetID){
+            int numberOfMismatch = 0;
+            int tileID = 0;
+            float k = 1f;
+            int maxEnergy = 24;
+            float gamma = 2.0f;
+            float epsilon = 0f; // 1/16
+            int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
+            float maxEnergyPowerGamma = (float)Math.Pow((double)maxEnergy,gamma);
+
+            float epsilonMulInverseOfNumOfTiles = epsilon *(1.0f/numberOfTiles);
+
+            float[] weight = new float[numberOfTiles];
+            for (int i=0;i<numberOfTiles;i++){
+                // Place Ith tile to the position
+                tileID = i;
+                this.PlaceTile(tileSetID, tileID, col,row);
+
+                // Get error(i) or the number of mismatches using Ith tile
+                numberOfMismatch = this.GetNumberOfMismatch_TestAlgo_V4(col,row);
+
+                if (numberOfMismatch>24){
+                    Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
+                }
+                // Weight[i] = (k * ((max energy - error(i))^gamma) / (max_energy^gamma) ) + epsilon* (1.0 / number-of-tiles)
+                float term1= k * (((float)Math.Pow((double)(maxEnergy-numberOfMismatch),gamma)/maxEnergyPowerGamma));
+                float term2= epsilonMulInverseOfNumOfTiles;
+                weight[i] =  term1+term2; 
+
+                // Console.WriteLine($"NumberOfMismatch={numberOfMismatch}, Term 1 + Term 2 = {term1} + {term2}");
                 // Console.WriteLine("tileID= "+i+", weight= "+weight[i].ToString("0.000")+$", # of mismatches={numberOfMismatch}"+$", term1= "+term1.ToString("0.000")+$", term2= "+term2.ToString("0.000"));
                 // Console.WriteLine("--------------------------");
             }
@@ -649,12 +731,113 @@ namespace Wang
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////// Tests Algo Methods ////////////////////////////////////////////////
+        public int[] GetTileSetMismatches(int col,int row, int tileSetID){
+            int tileID = 0;
+            int numberOfMismatch = 0;
+            int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
+   
+            int[] tileSetMismatches = new int[numberOfTiles];
+            for (int i=0;i<numberOfTiles;i++){
+                // Place Ith tile to the position
+                tileID = i;
+                this.PlaceTile(tileSetID, tileID, col,row);
 
+                // Get error(i) or the number of mismatches using Ith tile
+                numberOfMismatch = this.GetNumberOfMismatch(col,row);
+
+                if (numberOfMismatch>24){
+                    Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
+                }
+             
+                tileSetMismatches[i]=numberOfMismatch;
+            }
+
+            this.RemoveTile(col,row);
+
+            return tileSetMismatches;
+        }
+
+        public int[] GetTileSetMismatches_TestAlgo_V4(int col,int row, int tileSetID){
+            int tileID = 0;
+            int numberOfMismatch = 0;
+            int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
+   
+            int[] tileSetMismatches = new int[numberOfTiles];
+            for (int i=0;i<numberOfTiles;i++){
+                // Place Ith tile to the position
+                tileID = i;
+                this.PlaceTile(tileSetID, tileID, col,row);
+
+                // Get error(i) or the number of mismatches using Ith tile
+                numberOfMismatch = this.GetNumberOfMismatch_TestAlgo_V4(col,row);
+
+                if (numberOfMismatch>24){
+                    Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
+                }
+             
+                tileSetMismatches[i]=numberOfMismatch;
+            }
+
+            this.RemoveTile(col,row);
+
+            return tileSetMismatches;
+        }
+
+
+        public TileMismatch[] SortTileMismatches(int[] tileMismatches){
+            TileMismatch[] tileMismatchArray = new TileMismatch[tileMismatches.Length];
+
+            for (int i=0;i<tileMismatches.Length;i++){
+                TileMismatch newTileMismatch = new TileMismatch(tileID:i,numberOfMismatches:tileMismatches[i]);
+                tileMismatchArray[i] = newTileMismatch;
+            }
+
+            Array.Sort<TileMismatch>(tileMismatchArray , (x,y) => x.NumberOfMismatches.CompareTo(y.NumberOfMismatches));
+
+            return tileMismatchArray;
+        }
+
+         public TileWeight[] SortTileWeight(float[] tileWeights){
+            TileWeight[] tileWeightArray = new TileWeight[tileWeights.Length];
+
+            for (int i=0;i<tileWeights.Length;i++){
+                TileWeight newTileWeight=new TileWeight(tileID:i,weight:tileWeights[i]);
+                tileWeightArray[i] = newTileWeight;
+            }
+
+            Array.Sort<TileWeight>(tileWeightArray , (x,y) => x.Weight.CompareTo(y.Weight));
+            // Utils.QuickSortTileWeight(tileWeightArray,0,tileWeightArray.Length-1);
+            // Descending
+            Array.Reverse(tileWeightArray);
+
+            return tileWeightArray;
+        }
     }
 
     struct BoardTileSlot
     {
         public int? TileSetID;
         public int? TileID;
+    }
+
+    struct TileMismatch{
+        public int TileID;
+        public int NumberOfMismatches;
+
+        public TileMismatch(int tileID, int numberOfMismatches){
+            this.TileID=tileID;
+            this.NumberOfMismatches=numberOfMismatches;
+        }
+    }
+
+    public struct TileWeight {
+        public int TileID;
+        public float Weight;
+
+        public TileWeight(int tileID, float weight){
+            this.TileID=tileID;
+            this.Weight=weight;
+        }
     }
 }

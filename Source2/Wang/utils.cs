@@ -31,5 +31,37 @@ namespace Wang
         {
             return (Width*col)+row;
         }
+
+        static public int Partition(TileWeight[] arr, int left, int right) {
+         TileWeight pivot;
+         pivot = arr[left];
+         while (true) {
+            while (arr[left].Weight < pivot.Weight) {
+               left++;
+            }
+            while (arr[right].Weight > pivot.Weight) {
+               right--;
+            }
+            if (left < right) {
+               TileWeight temp = arr[right];
+               arr[right] = arr[left];
+               arr[left] = temp;
+            } else {
+               return right;
+            }
+         }
+      }
+      static public void QuickSortTileWeight(TileWeight[] arr, int left, int right) {
+         int pivot;
+         if (left < right) {
+            pivot = Partition(arr, left, right);
+            if (pivot > 1) {
+               QuickSortTileWeight(arr, left, pivot - 1);
+            }  
+            if (pivot + 1 < right) {
+              QuickSortTileWeight(arr, pivot + 1, right);
+            }
+         }
+      }
     }
 }

@@ -50,7 +50,7 @@ namespace Wang
             (int col, int row) val = (0,0);
             newBoard.PlaceTile(0,tileIndex,val.col,val.row);
        
-            for (int i=1;i<3;i++){
+            for (int i=1;i<newBoard.TileSlots.Length;i++){
                 val=newBoard.AddTileToNextSlot(val.col,val.row);
             }
   
@@ -241,6 +241,235 @@ namespace Wang
                 if (numberOfFlips==1000000){
                     break;
                 }
+            }
+
+  
+            // Generate and Save PNG
+            Picture newPic = new Picture();
+            newPic.SavePNG(newBoard, outputName+".png");
+
+            // Timer stop
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+            Console.WriteLine("Statistics");
+            Console.WriteLine($"Board Size {newBoard.Width} by {newBoard.Height}");
+            Console.WriteLine("Number of colors is "+ numOfColors);
+            Console.WriteLine("Tileset length is "+ newBoard.TileSet[0].Tiles.Length);
+            Console.WriteLine("Number of flips is "+ numberOfFlips);
+            Console.WriteLine("Energy is "+ numberOfMismatch);
+            Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
+        }
+
+        public void TestAlgo_V1(int width, int height, int numOfColors,string outputName)
+        {   
+            Stopwatch sw = Stopwatch.StartNew();
+
+            int numberOfFlips = 0;
+            int numberOfMismatch = 0;
+            // Create board
+            Board newBoard = new Board(height,width);
+
+            // Generate tile set
+            WangCornerTileSet tileSet= newBoard.GenerateTileSet(numOfColors,1);
+
+            // Add tile set to board
+            newBoard.AddTileSet(tileSet);
+          
+            // Default tilesetID to use for now
+            int tileSetID = 0;
+
+            // Get Random tile to put
+            // Random random = new Random();
+            (int col,int row) slotPos;
+
+            // start left to right
+            slotPos = (col:0,row:0);
+
+            while (true){
+                // check if there are mismatches
+                bool isThereMismatch = newBoard.IsThereMismatch(slotPos.col,slotPos.row);
+   
+                // place random tile if there is
+                if (isThereMismatch){
+                    float[] probabilityVector = newBoard.GetProbabilityVector(slotPos.col,slotPos.row,tileSetID);
+                    TileWeight[] sortedTileWeight = newBoard.SortTileWeight(probabilityVector);
+
+                    float[] normalizedProbabilityVector= newBoard.GetNormalizedProbabilityVector(probabilityVector);
+                    TileWeight[] sortedNormalizedTileWeight = newBoard.SortTileWeight(normalizedProbabilityVector);
+
+                    int[] tileSetMismatches = newBoard.GetTileSetMismatches(slotPos.col,slotPos.row,tileSetID);
+                    TileMismatch[] sortedTileSetMismatches = newBoard.SortTileMismatches(tileSetMismatches);
+                    
+
+                    float[] cumulativeProbabilityVector = newBoard.GetCumulativeProbabilityVector(normalizedProbabilityVector);
+                    int tileID = newBoard.ChooseTileIndexFromCumulativeProbabilityVector(cumulativeProbabilityVector);
+
+           
+                    
+                    Console.Write($"\nSorted TileMismatches tileID    = ");
+                    for (int i=0;i<sortedTileSetMismatches.Length;i++){
+                        Console.Write($"{sortedTileSetMismatches[i].TileID}, ");
+                    }
+                    Console.Write($"\nSorted number of mismatch       = ");
+                    for (int i=0;i<sortedTileSetMismatches.Length;i++){
+                        Console.Write($"{sortedTileSetMismatches[i].NumberOfMismatches}, ");
+                    }
+
+                    Console.Write($"\n\nSorted Prenormalization Weight Vector TileID= ");
+                    for (int i=0;i<sortedTileWeight.Length;i++){
+                        Console.Write($"{sortedTileWeight[i].TileID}, ");
+                    }
+
+                    Console.Write($"\nSorted Prenormalization Weight Vector Weight= ");
+                    for (int i=0;i<sortedTileWeight.Length;i++){
+                        Console.Write($"{sortedTileWeight[i].Weight}, ");
+                    }
+
+                    Console.Write($"\n\nSorted Normalized Weight Vector TileID= ");
+                    for (int i=0;i<sortedNormalizedTileWeight.Length;i++){
+                        Console.Write($"{sortedNormalizedTileWeight[i].TileID}, ");
+                    }
+
+                    Console.Write($"\nSorted Normalized Weight Vector Weight= ");
+                    for (int i=0;i<sortedNormalizedTileWeight.Length;i++){
+                        Console.Write($"{sortedNormalizedTileWeight[i].Weight}, ");
+                    }
+
+                    Console.WriteLine("\n--------------");
+
+                    // place selected tile
+                    newBoard.PlaceTile(tileSetID, tileID,slotPos.col,slotPos.row);
+
+                    numberOfFlips++;
+                    numberOfMismatch=newBoard.GetBoardTotalMismatch();
+                }
+
+                if (numberOfMismatch==0){
+                    break;
+                }
+
+                // time out after N flips
+                if (numberOfFlips==1000000){
+                    break;
+                }
+
+                slotPos = newBoard.GetNextTileSlot(slotPos.col,slotPos.row);
+                if (slotPos.col==newBoard.Height && slotPos.row==0 ){
+                    break;
+                }  
+            }
+
+  
+            // Generate and Save PNG
+            Picture newPic = new Picture();
+            newPic.SavePNG(newBoard, outputName+".png");
+
+            // Timer stop
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+            Console.WriteLine("Statistics");
+            Console.WriteLine($"Board Size {newBoard.Width} by {newBoard.Height}");
+            Console.WriteLine("Number of colors is "+ numOfColors);
+            Console.WriteLine("Tileset length is "+ newBoard.TileSet[0].Tiles.Length);
+            Console.WriteLine("Number of flips is "+ numberOfFlips);
+            Console.WriteLine("Energy is "+ numberOfMismatch);
+            Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
+        }
+
+        public void TestAlgo_V2(int width, int height, int numOfColors,string outputName)
+        {   
+            Stopwatch sw = Stopwatch.StartNew();
+
+            int numberOfFlips = 0;
+            int numberOfMismatch = 0;
+            // Create board
+            Board newBoard = new Board(height,width);
+
+            // Generate tile set
+            WangCornerTileSet tileSet= newBoard.GenerateTileSet(numOfColors,1);
+
+            // Add tile set to board
+            newBoard.AddTileSet(tileSet);
+          
+            // Default tilesetID to use for now
+            int tileSetID = 0;
+
+            // // Get Random tile to put
+            // Random random = new Random();
+            (int col,int row) slotPos;
+
+            slotPos = (col:0,row:0);
+
+            while (true){
+                // check if there are mismatches
+                bool isThereMismatch = newBoard.IsThereMismatch(slotPos.col,slotPos.row);
+   
+                // place random tile if there is
+                if (isThereMismatch){
+                    float[] probabilityVector = newBoard.GetProbabilityVector_TestAlgo_V4(slotPos.col,slotPos.row,tileSetID);
+                    TileWeight[] sortedTileWeight = newBoard.SortTileWeight(probabilityVector);
+
+                    float[] normalizedProbabilityVector= newBoard.GetNormalizedProbabilityVector(probabilityVector);
+                    TileWeight[] sortedNormalizedTileWeight = newBoard.SortTileWeight(normalizedProbabilityVector);
+
+                    int[] tileSetMismatches = newBoard.GetTileSetMismatches_TestAlgo_V4(slotPos.col,slotPos.row,tileSetID);
+                    TileMismatch[] sortedTileSetMismatches = newBoard.SortTileMismatches(tileSetMismatches);
+                    
+
+                    float[] cumulativeProbabilityVector = newBoard.GetCumulativeProbabilityVector(normalizedProbabilityVector);
+                    int tileID = newBoard.ChooseTileIndexFromCumulativeProbabilityVector(cumulativeProbabilityVector);
+                    
+                    Console.Write($"\nSorted TileMismatches tileID    = ");
+                    for (int i=0;i<sortedTileSetMismatches.Length;i++){
+                        Console.Write($"{sortedTileSetMismatches[i].TileID}, ");
+                    }
+                    Console.Write($"\nSorted number of mismatch       = ");
+                    for (int i=0;i<sortedTileSetMismatches.Length;i++){
+                        Console.Write($"{sortedTileSetMismatches[i].NumberOfMismatches}, ");
+                    }
+
+                    Console.Write($"\n\nSorted Prenormalization Weight Vector TileID= ");
+                    for (int i=0;i<sortedTileWeight.Length;i++){
+                        Console.Write($"{sortedTileWeight[i].TileID}, ");
+                    }
+
+                    Console.Write($"\nSorted Prenormalization Weight Vector Weight= ");
+                    for (int i=0;i<sortedTileWeight.Length;i++){
+                        Console.Write($"{sortedTileWeight[i].Weight}, ");
+                    }
+
+                    Console.Write($"\n\nSorted Normalized Weight Vector TileID= ");
+                    for (int i=0;i<sortedNormalizedTileWeight.Length;i++){
+                        Console.Write($"{sortedNormalizedTileWeight[i].TileID}, ");
+                    }
+
+                    Console.Write($"\nSorted Normalized Weight Vector Weight= ");
+                    for (int i=0;i<sortedNormalizedTileWeight.Length;i++){
+                        Console.Write($"{sortedNormalizedTileWeight[i].Weight}, ");
+                    }
+
+                    Console.WriteLine("\n--------------");
+
+                    // place selected tile
+                    newBoard.PlaceTile(tileSetID, tileID,slotPos.col,slotPos.row);
+
+                    numberOfFlips++;
+                    numberOfMismatch=newBoard.GetBoardTotalMismatch();
+                }
+
+                if (numberOfMismatch==0){
+                    break;
+                }
+
+                // time out after N flips
+                if (numberOfFlips==1000000){
+                    break;
+                }
+
+                slotPos = newBoard.GetNextTileSlot(slotPos.col,slotPos.row);
+                if (slotPos.col==newBoard.Height && slotPos.row==0 ){
+                    break;
+                }  
             }
 
   
