@@ -1,7 +1,7 @@
 namespace Wang
 {
 
-    class WangCornerTile
+    public class WangCornerTile
     {
         /* Properties of WangCornerTile */
         public int TileID;

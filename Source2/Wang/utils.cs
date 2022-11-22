@@ -63,5 +63,15 @@ namespace Wang
             }
          }
       }
+
+      static public void PrintResult(Board newBoard, int numberOfColors, int numberOfFlips, int numberOfMismatch, TimeSpan time){
+         Console.WriteLine("Statistics");
+         Console.WriteLine($"Board Size {newBoard.Width} by {newBoard.Height}");
+         Console.WriteLine("Number of colors is "+ numberOfColors);
+         Console.WriteLine("Tileset length is "+ newBoard.TileSet[0].Tiles.Length);
+         Console.WriteLine("Number of flips is "+ numberOfFlips);
+         Console.WriteLine("Energy is "+ numberOfMismatch);
+         Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
+      }
     }
 }

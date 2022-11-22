@@ -3,7 +3,7 @@ using System.Linq;
 namespace Wang
 {
 
- class WangCornerTileSet
+ public class WangCornerTileSet
  {
     /* Properties of WangCornerTileSet */
     public WangCornerTile[]? Tiles;

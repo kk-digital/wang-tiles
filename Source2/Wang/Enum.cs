@@ -115,4 +115,25 @@ namespace Wang
     C7_NE,
     C8_SE, 
     }
+
+    // The order of how tile slots are updated.
+    // 0 - left to right, pass thorugh once only
+    // 1 - random positions with mismatch
+    public enum TileSelectionRule{
+        LeftToRight,
+        RandomWithMismatch,
+    }
+
+    // The mode of energy calculation
+    // 
+    // 0 - total number of mismatches.
+    // Max mismatch is 24.
+    // 
+    // 1 - Count only 1 per corner if 
+    // there is mismatch. 
+    // Max mismatch is 4.
+    public enum EnergyCalculationMode{
+        TotalCornerMismatches,
+        CountOnePerCorner,
+    }
 }

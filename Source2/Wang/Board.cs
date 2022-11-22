@@ -1,6 +1,6 @@
 namespace Wang
 {
-    class Board
+    public class Board
     {
         public BoardTileSlot[] TileSlots;
         public int Height;
@@ -290,7 +290,7 @@ namespace Wang
             return numberOfMismatch;
         }
 
-        public int GetNumberOfMismatch_TestAlgo_V4(int col, int row){
+        public int GetNumberOfMismatch_CountCornerMismatchAsOne(int col, int row){
             int numberOfMismatch=0;
             Color[] cornerColors = GetTileCornerColorValues(col,row);
   
@@ -608,7 +608,7 @@ namespace Wang
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////// Weighted-Probability Algo Methods ////////////////////////////////
-        public float[] GetProbabilityVector(int col,int row, int tileSetID){
+        public float[] GetProbabilityVector(int col,int row, int tileSetID, EnergyCalculationMode energyCalculationMode){
             int numberOfMismatch = 0;
             int tileID = 0;
             float k = 1f;
@@ -627,7 +627,15 @@ namespace Wang
                 this.PlaceTile(tileSetID, tileID, col,row);
 
                 // Get error(i) or the number of mismatches using Ith tile
-                numberOfMismatch = this.GetNumberOfMismatch(col,row);
+                switch (energyCalculationMode){
+                    case EnergyCalculationMode.TotalCornerMismatches:
+                        numberOfMismatch = this.GetNumberOfMismatch(col,row);
+                        break;
+                    case EnergyCalculationMode.CountOnePerCorner:
+                        numberOfMismatch = this.GetNumberOfMismatch_CountCornerMismatchAsOne(col,row);
+                        break;
+
+                }
 
                 if (numberOfMismatch>24){
                     Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
@@ -647,44 +655,6 @@ namespace Wang
             return weight;
         }
 
-        public float[] GetProbabilityVector_TestAlgo_V4(int col,int row, int tileSetID){
-            int numberOfMismatch = 0;
-            int tileID = 0;
-            float k = 1f;
-            int maxEnergy = 24;
-            float gamma = 2.0f;
-            float epsilon = 0f; // 1/16
-            int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
-            float maxEnergyPowerGamma = (float)Math.Pow((double)maxEnergy,gamma);
-
-            float epsilonMulInverseOfNumOfTiles = epsilon *(1.0f/numberOfTiles);
-
-            float[] weight = new float[numberOfTiles];
-            for (int i=0;i<numberOfTiles;i++){
-                // Place Ith tile to the position
-                tileID = i;
-                this.PlaceTile(tileSetID, tileID, col,row);
-
-                // Get error(i) or the number of mismatches using Ith tile
-                numberOfMismatch = this.GetNumberOfMismatch_TestAlgo_V4(col,row);
-
-                if (numberOfMismatch>24){
-                    Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
-                }
-                // Weight[i] = (k * ((max energy - error(i))^gamma) / (max_energy^gamma) ) + epsilon* (1.0 / number-of-tiles)
-                float term1= k * (((float)Math.Pow((double)(maxEnergy-numberOfMismatch),gamma)/maxEnergyPowerGamma));
-                float term2= epsilonMulInverseOfNumOfTiles;
-                weight[i] =  term1+term2; 
-
-                // Console.WriteLine($"NumberOfMismatch={numberOfMismatch}, Term 1 + Term 2 = {term1} + {term2}");
-                // Console.WriteLine("tileID= "+i+", weight= "+weight[i].ToString("0.000")+$", # of mismatches={numberOfMismatch}"+$", term1= "+term1.ToString("0.000")+$", term2= "+term2.ToString("0.000"));
-                // Console.WriteLine("--------------------------");
-            }
-
-            this.RemoveTile(col,row);
-
-            return weight;
-        }
 
         public float[] GetNormalizedProbabilityVector(float[] probabilityVector){
             float sum = 0f;
@@ -732,7 +702,7 @@ namespace Wang
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////////// Tests Algo Methods ////////////////////////////////////////////////
-        public int[] GetTileSetMismatches(int col,int row, int tileSetID){
+        public int[] GetTileSetMismatches(int col,int row, int tileSetID, EnergyCalculationMode energyCalculationMode){
             int tileID = 0;
             int numberOfMismatch = 0;
             int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
@@ -744,7 +714,16 @@ namespace Wang
                 this.PlaceTile(tileSetID, tileID, col,row);
 
                 // Get error(i) or the number of mismatches using Ith tile
-                numberOfMismatch = this.GetNumberOfMismatch(col,row);
+                switch (energyCalculationMode){
+                    case EnergyCalculationMode.TotalCornerMismatches:
+                        numberOfMismatch = this.GetNumberOfMismatch(col,row);
+                        break;
+                    case EnergyCalculationMode.CountOnePerCorner:
+                        numberOfMismatch = this.GetNumberOfMismatch_CountCornerMismatchAsOne(col,row);
+                        break;
+
+                }
+                
 
                 if (numberOfMismatch>24){
                     Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
@@ -757,33 +736,6 @@ namespace Wang
 
             return tileSetMismatches;
         }
-
-        public int[] GetTileSetMismatches_TestAlgo_V4(int col,int row, int tileSetID){
-            int tileID = 0;
-            int numberOfMismatch = 0;
-            int numberOfTiles = this.TileSet[tileSetID].Tiles.Length;
-   
-            int[] tileSetMismatches = new int[numberOfTiles];
-            for (int i=0;i<numberOfTiles;i++){
-                // Place Ith tile to the position
-                tileID = i;
-                this.PlaceTile(tileSetID, tileID, col,row);
-
-                // Get error(i) or the number of mismatches using Ith tile
-                numberOfMismatch = this.GetNumberOfMismatch_TestAlgo_V4(col,row);
-
-                if (numberOfMismatch>24){
-                    Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
-                }
-             
-                tileSetMismatches[i]=numberOfMismatch;
-            }
-
-            this.RemoveTile(col,row);
-
-            return tileSetMismatches;
-        }
-
 
         public TileMismatch[] SortTileMismatches(int[] tileMismatches){
             TileMismatch[] tileMismatchArray = new TileMismatch[tileMismatches.Length];
@@ -815,13 +767,13 @@ namespace Wang
         }
     }
 
-    struct BoardTileSlot
+    public struct BoardTileSlot
     {
         public int? TileSetID;
         public int? TileID;
     }
 
-    struct TileMismatch{
+    public struct TileMismatch{
         public int TileID;
         public int NumberOfMismatches;
 

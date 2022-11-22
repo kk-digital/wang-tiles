@@ -104,10 +104,20 @@ class MainClass
         weightedProbabilityCommand.Handler = CommandHandler.Create<int,int,int,int,string>((version,width,height,colors,outputName) =>
         {
             Generator newGeneratedBoard= new Generator();
+            GeneratorOptions options = new GeneratorOptions();
 
+            options.Width = width;
+            options.Height = height;
+            options.NumOfColors = colors;
+            options.OutputName = outputName;
+
+            options.TileSelectionRule = TileSelectionRule.RandomWithMismatch;
+            options.EnergyCalculationMode = EnergyCalculationMode.TotalCornerMismatches;
+            options.SkipUnassignedTileWithoutAdjacent = false;
+            options.SelectLowestEnergy = false;
             switch (version){
                 case 1:
-                    newGeneratedBoard.WeightedProbability_V1(width,height,colors,outputName);
+                    newGeneratedBoard.WeightedProbability_V1(options);
                     break;
             }
         });
@@ -129,19 +139,39 @@ class MainClass
             new Option<string>(
                 name:"--output-name",
                 description:"(string) The filename of the resulting picture (default directory is ./data)."),
+            new Option<int>(
+                name:"--tile-selection-rule",
+                description:"(int) The tile selection rule to use."),
+            new Option<int>(
+                name:"--energy-calculation-mode",
+                description:"(int) The mode for energy calculation."),
+            new Option<bool>(
+                name:"--skip-unassigned-tile-without-adjacent",
+                description:"(int) Set true to skip unassigned tile that doesn't have any adjacent tiles."),
+            new Option<bool>(
+                name:"--select-lowest-energy",
+                description:"(int) Set true if we want to select the tile with lowest energy."),
         };
 
-        testAlgoCommand.Handler = CommandHandler.Create<int,int,int,int,string>((version,width,height,colors,outputName) =>
+        testAlgoCommand.Handler = CommandHandler.Create<int,int,int,int,string,int,int,bool,bool>((version,width,height,colors,outputName, tileSelectionRule, energyCalculationMode,skipUnassignedTileWithoutAdjacent,selectLowestEnergy) =>
         {
             Generator newGeneratedBoard= new Generator();
+            GeneratorOptions options = new GeneratorOptions();
 
+            options.Width = width;
+            options.Height = height;
+            options.NumOfColors = colors;
+            options.OutputName = outputName;
+
+            options.TileSelectionRule = (TileSelectionRule)tileSelectionRule;
+            options.EnergyCalculationMode = (EnergyCalculationMode)energyCalculationMode;
+            options.SkipUnassignedTileWithoutAdjacent = skipUnassignedTileWithoutAdjacent;
+            options.SelectLowestEnergy = selectLowestEnergy;
+           
             switch (version){
                 case 1:
-                    newGeneratedBoard.TestAlgo_V1(width,height,colors,outputName);
+                    newGeneratedBoard.TestAlgo_V1(options);
                     break;
-                case 2:
-                    newGeneratedBoard.TestAlgo_V2(width,height,colors,outputName);
-                break;
             }
         });
 
