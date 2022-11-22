@@ -19,7 +19,7 @@ for macos x
 
 Sample usage
 
-```./bin/Debug/net6.0/wang-tiles -- schonings-algo --version 1 --width 3 --height 3 --colors 3 --output-name "TestSchonings_V1```
+```./bin/Debug/net6.0/wang-tiles -- schonings-algo --version 1 --width 3 --height 3 --colors 3 --output-name "TestSchonings_V1"```
 
 Usage for ```wang-tiles```
 ```
@@ -38,7 +38,7 @@ Commands:
   schonings-algo
 ```
 
-
+#### wang-tiles placement-algo
 Usage for ```wang-tiles placement-algo```
 ```
 Usage:
@@ -53,7 +53,7 @@ Options:
   -?, -h, --help               Show help and usage information
 ```
 
-
+#### wang-tiles schonings-algo
 Usage for ```wang-tiles schonings-algo```
 ```
 Usage:
@@ -68,7 +68,7 @@ Options:
   -?, -h, --help               Show help and usage information
 ```
 
-
+#### wang-tiles weighted-probability
 Usage for ```wang-tiles weighted-probability```
 ```
 Usage:
@@ -83,7 +83,7 @@ Options:
   -?, -h, --help               Show help and usage information
 ```
 
-
+#### wang-tiles test-algo
 Usage for ```wang-tiles test-algo```
 ```
 Usage:
