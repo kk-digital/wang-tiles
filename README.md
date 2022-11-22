@@ -55,6 +55,7 @@ Options:
 ```
 
 #### wang-tiles schonings-algo
+---
 Usage for ```wang-tiles schonings-algo```
 ```
 Usage:
@@ -70,6 +71,7 @@ Options:
 ```
 
 #### wang-tiles weighted-probability
+---
 Usage for ```wang-tiles weighted-probability```
 ```
 Usage:
@@ -85,6 +87,7 @@ Options:
 ```
 
 #### wang-tiles test-algo
+---
 Usage for ```wang-tiles test-algo```
 ```
 Usage:
