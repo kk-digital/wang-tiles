@@ -1,9 +1,9 @@
-namespace Wang
-{
-    public enum Layer
-    {
-        LayerFront,
-        LayerMid,
-        LayerBack
-    }
-}
+// namespace Wang
+// {
+//     public enum Layer
+//     {
+//         LayerFront,
+//         LayerMid,
+//         LayerBack
+//     }
+// }

@@ -1,68 +1,111 @@
 # wang-tiles
 
-### usage
+This repository is a generator based on wang-tile model in creating aperiodic and continuous representation of tile composition using only a few set of tiles that has different corner colors. 
 
-```help```
+### Usage
+Compile using 
 
-### list tilesets
+```dotnet build```
 
-```list tilesets ```
+Run using the binary created from building
 
-### list boards
+for windows
 
-```list boards ```
+```./bin/Debug/net6.0/wang-tiles.exe```
 
-### list  scenes
+for macos x
 
-```list scenes```
+```./bin/Debug/net6.0/wang-tiles```
 
-### list pixelassignments
+Sample usage
 
-```list pixelassignments```
+```./bin/Debug/net6.0/wang-tiles -- schonings-algo --version 1 --width 3 --height 3 --colors 3 --output-name "TestSchonings_V1```
 
+Usage for ```wang-tiles```
+```
+Description:
+  Wang Tile Generator
 
-### create new tileset
+Usage:
+  wang-tiles [command] [options]
 
-```new tileset [tilesize] [vertical_color_count] [horizontal_color_count] [variant_count] [tilesPerRow]``` ///// [tilesize] ---> 8x8 16x16 32x32
+Options:
+  --version       Show version information
+  -?, -h, --help  Show help and usage information
 
-##### --example--
-```new tileset 16x16 2 2 1 6 ```
-
-```new tileset 8x8 4 4 2 8 ```
-
-### Board Generation
-
-```Board Generate [Board Type] [sizeX] [sizeY] ```  ///// [Board Type] ---> Background Radial flat FloatingIsland
-
-#### example
-
-```Board Generate Radial 16 16```
-
-### Random Test Scene (/data/s03_OutputScene/)
-
-```test-scene-output-random -ts [tileset_name1] -ts [tileset_name2] -width [sizeX] -height [sizeY] -out [outpath] ```
-
-##### --example--
-``` test-scene-output-random -ts tileset_7135462500629519505.json -width 4 -height 6 -out abc ```
-
-``` test-scene-output-random -ts tileset_7135374712056073458.json -out abc ```
-
-``` test-scene-output-random -ts tileset_7135374712056073458.json -width 4 -height 4 -out abc ```
+Commands:
+  placement-algo
+  schonings-algo
+```
 
 
-### Algorithm1 Test Scene (/data/s03_OutputScene/)
+Usage for ```wang-tiles placement-algo```
+```
+Usage:
+  wang-tiles placement-algo [options]
 
-```test-scene-output-algorithm1 -ts [tileset_name1] -ts [tileset_name2] -width [sizeX] -height [sizeY] -out [outpath] ```
+Options:
+  --version <version>          (int) The version of Placement Algo to run (1 or 2).
+  --width <width>              (int) The width of the board to be made.
+  --height <height>            (int) The height of the board to be made.
+  --colors <colors>            (int) The number of colors used to generate the tile set.
+  --output-name <output-name>  (string) The filename of the resulting picture (default directory is ./data).
+  -?, -h, --help               Show help and usage information
+```
 
-##### --example--
-``` test-scene-output-algorithm1 -ts tileset_7135462500629519505.json -width 4 -height 6 -out abc ```
 
-``` test-scene-output-algorithm1 -ts tileset_7135374712056073458.json -out abc ```
+Usage for ```wang-tiles schonings-algo```
+```
+Usage:
+  wang-tiles schonings-algo [options]
 
-``` test-scene-output-algorithm1 -ts tileset_7135374712056073458.json -width 4 -height 4 -out abc ```
+Options:
+  --version <version>          (int) The version of Schonings Algo to run (1).
+  --width <width>              (int) The width of the board to be made.
+  --height <height>            (int) The height of the board to be made.
+  --colors <colors>            (int) The number of colors used to generate the tile set.
+  --output-name <output-name>  (string) The filename of the resulting picture (default directory is ./data).
+  -?, -h, --help               Show help and usage information
+```
 
-### Scene From Board (/data/s03_OutputScene/)
 
-```test-scene -b <board> -ts <tileset1> -ts <tileset2> ```
-#### --example---
-```create-scene -b board_7135423044148756854.json -ts tileset_7135462500629519505.json -ts tileset_7135376489486133149.json ``` 
+Usage for ```wang-tiles weighted-probability```
+```
+Usage:
+  wang-tiles weighted-probability [options]
+
+Options:
+  --version <version>          (int) The version of Weighted Probability Algo to run (1).
+  --width <width>              (int) The width of the board to be made.
+  --height <height>            (int) The height of the board to be made.
+  --colors <colors>            (int) The number of colors used to generate the tile set.
+  --output-name <output-name>  (string) The filename of the resulting picture (default directory is ./data).
+  -?, -h, --help               Show help and usage information
+```
+
+
+Usage for ```wang-tiles test-algo```
+```
+Usage:
+  wang-tiles test-algo [options]
+
+Options:
+  --version <version>                                  (int) The version of Test Algo to run (1).
+  --width <width>                                      (int) The width of the board to be made.
+  --height <height>                                    (int) The height of the board to be made.
+  --colors <colors>                                    (int) The number of colors used to generate the tile set.
+  --output-name <output-name>                          (string) The filename of the resulting picture (default directory is ./data).
+  --tile-selection-rule <tile-selection-rule>          (int) The tile selection rule to use.
+  --energy-calculation-mode <energy-calculation-mode>  (int) The mode for energy calculation.
+  --skip-unassigned-tile-without-adjacent              (int) Set true to skip unassigned tile that doesn't have any adjacent tiles.
+  --select-lowest-energy                               (int) Set true if we want to select the tile with lowest energy.
+  -?, -h, --help                                       Show help and usage information
+```
+
+For more information, run
+
+```./bin/Debug/net6.0/wang-tiles -- -h```
+
+```./bin/Debug/net6.0/wang-tiles placement-algo -- -h```
+
+```./bin/Debug/net6.0/wang-tiles schonings-algo -- -h```

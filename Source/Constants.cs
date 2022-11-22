@@ -1,11 +1,11 @@
-namespace Wang
-{
+// namespace Wang
+// {
 
-    public static class Constants
-    {
+//     public static class Constants
+//     {
 
 
-        public static string OutputPath = @"././data";
-    }
+//         public static string OutputPath = @"././data";
+//     }
 
-}
+// }
