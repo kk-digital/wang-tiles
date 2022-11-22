@@ -39,6 +39,7 @@ Commands:
 ```
 
 #### wang-tiles placement-algo
+---
 Usage for ```wang-tiles placement-algo```
 ```
 Usage:
