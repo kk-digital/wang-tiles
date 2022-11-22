@@ -21,6 +21,8 @@ Sample usage
 
 ```./bin/Debug/net6.0/wang-tiles -- schonings-algo --version 1 --width 3 --height 3 --colors 3 --output-name "TestSchonings_V1"```
 
+#### wang-tiles 
+---
 Usage for ```wang-tiles```
 ```
 Description:
@@ -36,6 +38,8 @@ Options:
 Commands:
   placement-algo
   schonings-algo
+  weighted-probability
+  test-algo
 ```
 
 #### wang-tiles placement-algo
