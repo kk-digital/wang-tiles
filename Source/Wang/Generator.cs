@@ -383,19 +383,17 @@ namespace Wang
                 }
 
                 // Next position
-                switch (options.TileSelectionRule){
-                case TileSelectionRule.LeftToRight:
+                if (options.TileSelectionRule== TileSelectionRule.LeftToRight){
                     slotPos = newBoard.GetNextTileSlot(slotPos.col,slotPos.row);
-
                     if (slotPos.col==newBoard.Height && slotPos.row==0 ){
                         break;
                     }  
-                    break;
-                case TileSelectionRule.RandomWithMismatch:
+                }else if (options.TileSelectionRule==TileSelectionRule.RandomWithMismatch){
                     // Choose random position
                     slotPos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
                     break;
                 }
+                    
             }
 
   
