@@ -1,27 +1,34 @@
-namespace Wang
-{
-    public enum Color
-    {
-        // MatchAll means match anything
-        MatchAll = 0,
-        Air, // Color 1 is air, space, or other
-        A,
-        B,
-        C,
-        D,
-        E,
-        F,
-        G,
-        H,
-        I,
-        J,
-        K,
-        L,
-        M,
-        N,
-        O,
-        P,
+namespace WangTile
+{   
 
+    public struct CornerColorData{
+        public int CornerColorID;
+        public int NumberOfTimesUsed;
+        public int ColorPalette;
+        // int[] TilesUsingThis;
+
+    }
+
+    public struct HorizontalColorData{
+        public int HorizontalColorID;
+
+        public int CornerColor1;
+        public int CornerColor2;
+
+        public int NumberOfTimesUsed;
+        public int ColorPalette;
+        // int[] TilesUsingThis;
+    }
+
+    public struct VerticalColorData{
+        public int VerticalColorID;
+
+        public int CornerColor1;
+        public int CornerColor2;
+        
+        public int NumberOfTimesUsed;
+        public int ColorPalette;
+        // int[] TilesUsingThis;
     }
 
      public struct PixelColor
@@ -51,7 +58,7 @@ namespace Wang
         public static PixelColor MakePixelColor(int r, int g, int b, int a)
         {
             PixelColor result = new PixelColor();
-            result.Color = Utils.ToRGBA8((char)r, (char)g, (char)b, (char)a);
+            result.Color = toRGBA8((char)r, (char)g, (char)b, (char)a);
             return result;
         }
 
@@ -60,6 +67,10 @@ namespace Wang
             return MakePixelColor(r, g, b, 255);
         }
 
+        static int toRGBA8(char r, char g, char b, char a)
+        {
+            return (r << 24) + (g << 16) + (b << 8) + a;
+        }
     }
 
     public class ColorMap

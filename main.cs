@@ -1,5 +1,5 @@
 
-using Wang;
+using CornerWangTile;
 
 using System.Text.Json;
 using System.Text.Json.Serialization;
