@@ -2,35 +2,144 @@ namespace WangTile
 {   
 
     public struct CornerColorData{
-        public int CornerColorID;
+        public CornerColor CornerColorID;
         public int NumberOfTimesUsed;
         public int ColorPalette;
         // int[] TilesUsingThis;
 
+        public CornerColorData(CornerColor cornerColor){
+            this.CornerColorID=cornerColor;
+            this.NumberOfTimesUsed=1;
+            this.ColorPalette=0;
+        }
     }
 
     public struct HorizontalColorData{
-        public int HorizontalColorID;
+        public HorizontalColor HorizontalColorID;
 
-        public int CornerColor1;
-        public int CornerColor2;
+        public CornerColor CornerColor1;
+        public CornerColor CornerColor2;
 
         public int NumberOfTimesUsed;
         public int ColorPalette;
         // int[] TilesUsingThis;
+
+        public HorizontalColorData(HorizontalColor hColor,CornerColor cColor1,CornerColor cColor2){
+            this.HorizontalColorID=hColor;
+            this.CornerColor1=cColor1;
+            this.CornerColor2=cColor2;
+
+            this.NumberOfTimesUsed=1;
+            this.ColorPalette=0;
+        }
     }
 
     public struct VerticalColorData{
-        public int VerticalColorID;
+        public VerticalColor VerticalColorID;
 
-        public int CornerColor1;
-        public int CornerColor2;
+        public CornerColor CornerColor1;
+        public CornerColor CornerColor2;
         
         public int NumberOfTimesUsed;
         public int ColorPalette;
         // int[] TilesUsingThis;
+
+        public VerticalColorData(VerticalColor vColor,CornerColor cColor1,CornerColor cColor2){
+            this.VerticalColorID=vColor;
+            this.CornerColor1=cColor1;
+            this.CornerColor2=cColor2;
+            
+            this.NumberOfTimesUsed=1;
+            this.ColorPalette=0;
+        }
     }
 
+    public enum CornerColor {
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        G,
+        H,
+        I,
+        J,
+        K,
+        L,
+        M,
+        N,
+        O,
+        P,
+        Q,
+        R,
+        S,
+        T,
+        U,
+        V,
+        W,
+        X,
+        Y,
+        Z,
+    }
+
+        public enum HorizontalColor {
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        G,
+        H,
+        I,
+        J,
+        K,
+        L,
+        M,
+        N,
+        O,
+        P,
+        Q,
+        R,
+        S,
+        T,
+        U,
+        V,
+        W,
+        X,
+        Y,
+        Z,
+    }
+
+        public enum VerticalColor {
+        A,
+        B,
+        C,
+        D,
+        E,
+        F,
+        G,
+        H,
+        I,
+        J,
+        K,
+        L,
+        M,
+        N,
+        O,
+        P,
+        Q,
+        R,
+        S,
+        T,
+        U,
+        V,
+        W,
+        X,
+        Y,
+        Z,
+    }
      public struct PixelColor
     {
         public int Color;
@@ -76,6 +185,18 @@ namespace WangTile
     public class ColorMap
     {
         public PixelColor[] PixelColors;
+        public int ColorCount=0;
+
+        public int GetColorCount()
+        {
+            return this.ColorCount;
+        }
+
+        public void IncrementColorCount()
+        {
+            this.ColorCount++;
+        }
+
 
         public PixelColor GetPixelColor(int index)
         {
@@ -84,7 +205,7 @@ namespace WangTile
 
         public ColorMap()
         {
-            PixelColors = new PixelColor[16];
+            PixelColors = new PixelColor[32];
 
             PixelColors[0] = PixelColor.MakePixelColor(255,0,0, 255);
             PixelColors[1] = PixelColor.MakePixelColor(0,255,0, 255);
@@ -102,6 +223,22 @@ namespace WangTile
             PixelColors[13] = PixelColor.MakePixelColor(0,0,205, 255);
             PixelColors[14] = PixelColor.MakePixelColor(255,20,147, 255);
             PixelColors[15] = PixelColor.MakePixelColor(0,0,255, 250);
+            PixelColors[16] = PixelColor.MakePixelColor(255,0,0, 255);
+            PixelColors[17] = PixelColor.MakePixelColor(0,255,0, 255);
+            PixelColors[18] = PixelColor.MakePixelColor(128,128,0, 255);
+            PixelColors[19] = PixelColor.MakePixelColor(255,255,0, 255);
+            PixelColors[20] = PixelColor.MakePixelColor(0,255,255, 255);
+            PixelColors[21] = PixelColor.MakePixelColor(255,0,255, 255);
+            PixelColors[22] = PixelColor.MakePixelColor(138,43,226, 255);
+            PixelColors[23] = PixelColor.MakePixelColor(0,128,0, 255);
+            PixelColors[24] = PixelColor.MakePixelColor(128,0,128, 255);
+            PixelColors[25] = PixelColor.MakePixelColor(0,128,128, 255);
+            PixelColors[26] = PixelColor.MakePixelColor(0,0,128, 255);
+            PixelColors[27] = PixelColor.MakePixelColor(255,140,0, 255);
+            PixelColors[28] = PixelColor.MakePixelColor(255,228,196, 255);
+            PixelColors[29] = PixelColor.MakePixelColor(0,0,205, 255);
+            PixelColors[30] = PixelColor.MakePixelColor(255,20,147, 255);
+            PixelColors[31] = PixelColor.MakePixelColor(0,0,255, 250);
         }
     }
 

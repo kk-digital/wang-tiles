@@ -1,6 +1,6 @@
 
 using CornerWangTile;
-
+using WangTile;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.CommandLine;
@@ -37,7 +37,7 @@ class MainClass
 
        placementAlgoCommand.Handler = CommandHandler.Create<int,int,int,int,string>((version,width,height,colors,outputName) =>
         {
-            Generator newGeneratedBoard= new Generator();
+            CornerWangTile.Generator newGeneratedBoard= new CornerWangTile.Generator();
             switch (version){
                 case 1:
                     newGeneratedBoard.PlacementAlgo_V1(width,height,colors,outputName);
@@ -70,7 +70,7 @@ class MainClass
 
         schoningsAlgoCommand.Handler = CommandHandler.Create<int,int,int,int,string>((version,width,height,colors,outputName) =>
         {
-            Generator newGeneratedBoard= new Generator();
+            CornerWangTile.Generator newGeneratedBoard= new CornerWangTile.Generator();
 
             switch (version){
                 case 1:
@@ -103,8 +103,8 @@ class MainClass
 
         weightedProbabilityCommand.Handler = CommandHandler.Create<int,int,int,int,string>((version,width,height,colors,outputName) =>
         {
-            Generator newGeneratedBoard= new Generator();
-            GeneratorOptions options = new GeneratorOptions();
+            CornerWangTile.Generator newGeneratedBoard= new CornerWangTile.Generator();
+            CornerWangTile.GeneratorOptions options = new CornerWangTile.GeneratorOptions();
 
             options.Width = width;
             options.Height = height;
@@ -155,8 +155,8 @@ class MainClass
 
         testAlgoCommand.Handler = CommandHandler.Create<int,int,int,int,string,int,int,bool,bool>((version,width,height,colors,outputName, tileSelectionRule, energyCalculationMode,skipUnassignedTileWithoutAdjacent,selectLowestEnergy) =>
         {
-            Generator newGeneratedBoard= new Generator();
-            GeneratorOptions options = new GeneratorOptions();
+            CornerWangTile.Generator newGeneratedBoard= new CornerWangTile.Generator();
+            CornerWangTile.GeneratorOptions options = new CornerWangTile.GeneratorOptions();
 
             options.Width = width;
             options.Height = height;
@@ -175,11 +175,37 @@ class MainClass
             }
         });
 
+        var tetrisCommand = new Command("tetris")
+        {
+            new Option<int>(
+                name:"--version",
+                description:"(int) The version of Weighted Probability Algo to run (1)."),
+            new Option<int>(
+                name: "--width",
+                description:"(int) The width of the board to be made."),
+            new Option<int>(
+                name:"--height",
+                description:"(int) The height of the board to be made."),
+            new Option<string>(
+                name:"--output-name",
+                description:"(string) The filename of the resulting picture (default directory is ./data)."),
+        };
+
+        tetrisCommand.Handler = CommandHandler.Create<int,int,int,string>((version,width,height,outputName) =>
+        {
+            WangTile.Generator newGeneratedBoard= new WangTile.Generator();
+            switch (version){
+                case 1:
+                    newGeneratedBoard.TetrisBlocks_V1(width,height,outputName);
+                    break;
+            }
+        });
 
         root.AddCommand(placementAlgoCommand);
         root.AddCommand(schoningsAlgoCommand);
         root.AddCommand(weightedProbabilityCommand);
         root.AddCommand(testAlgoCommand);
+        root.AddCommand(tetrisCommand);
 
         root.Invoke(args);
     }

@@ -3,24 +3,24 @@ namespace WangTile
 
     public class WangTile
     {
-        /* Properties of WangCornerTile */
+        /* Properties of WangTile */
         public int TileID;
 
-        public int CornerColorNW;
-        public int CornerColorNE;
-        public int CornerColorSE;
-        public int CornerColorSW;
+        public CornerColor CornerColorNW;
+        public CornerColor CornerColorNE;
+        public CornerColor CornerColorSE;
+        public CornerColor CornerColorSW;
 
-        public int EdgeColorNorth;
-        public int EdgeColorSouth;
+        public VerticalColor EdgeColorNorth;
+        public VerticalColor EdgeColorSouth;
 
-        public int EdgeColorWest;
-        public int EdgeColorEast;
+        public HorizontalColor EdgeColorWest;
+        public HorizontalColor EdgeColorEast;
 
         public int BitMask;
 
         /* Constructor for WangTile */
-        public WangTile(int cornerColorNW, int cornerColorNE, int cornerColorSE, int cornerColorSW, int edgeColorN, int edgeColorE, int edgeColorS, int edgeColorW)
+        public WangTile(CornerColor cornerColorNW, CornerColor cornerColorNE, CornerColor cornerColorSE, CornerColor cornerColorSW, VerticalColor edgeColorN, HorizontalColor edgeColorE, VerticalColor edgeColorS, HorizontalColor edgeColorW)
         {
             this.CornerColorNW = cornerColorNW;
             this.CornerColorNE = cornerColorNE;
@@ -35,6 +35,7 @@ namespace WangTile
             this.BitMask=0;
         }
 
+        /* Methods for WangTile */
         public void ClearBitfield(){
             this.BitMask=0;
         }
