@@ -10,14 +10,14 @@ namespace WangTile
             ColorMap colorMap = new ColorMap();
 
             WangTileSet tileSet= new WangTileSet();
-
-            // Tetris Block 1 - L horizontal
+            int tileID=0;
+            // Tetris Block 1 - l horizontal
             // [][][][] 
             // [0,1,2,3]
             // 
             // Tile 0 of Tetris Block 1
             // Add tiles to tileset
-            int tileID=tileSet.CreateTile(colorMap,CornerColor.A,CornerColor.B,CornerColor.C,CornerColor.D,VerticalColor.A,HorizontalColor.B,VerticalColor.B,HorizontalColor.A);
+            tileID=tileSet.CreateTile(colorMap,CornerColor.A,CornerColor.B,CornerColor.C,CornerColor.D,VerticalColor.A,HorizontalColor.B,VerticalColor.B,HorizontalColor.A);
             tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
             tileSet.Tiles[tileID].SetBit(BitMask.NW_8NE);
             tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
@@ -144,10 +144,30 @@ namespace WangTile
             int tileIndex = random.Next(0,newBoard.TileSet[0].Tiles.Length);
 
             // place the random tile on the board slot position 0,0
-            (int col,int row) randomPos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
-            newBoard.PlaceTile(0,tileIndex,randomPos.col,randomPos.row);
-            
-            // place tiles to next tile, left to right
+            (int col, int row) pos = (0,0);
+            newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
+
+
+            for (int i=1; i<newBoard.TileSlots.Length;i++){
+                // place tiles to next tile, left to right
+                pos = Utils.GetNextTileSlot(newBoard.Width, pos.col, pos.row);
+                // random
+                // pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
+
+                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+                for (int x=0; x<tileMismatchesStruct.Length;x++){
+                    Console.WriteLine($"TileID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
+                }
+
+                int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
+                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[7].NumberOfMismatches){
+                    Random rand= new Random();
+                    lowestMismatchTileID  = rand.Next(0,tileMismatchesStruct.Length);
+                    
+                }
+                newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
+            }
   
             // Generate and Save PNG
             Picture newPic = new Picture();

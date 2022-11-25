@@ -7,6 +7,12 @@ namespace WangTile
 
         public WangTile[]? Tiles;
 
+        public WangTileSet(){
+            this.CornerColors=new CornerColorData[1];
+            this.VerticalColors=new VerticalColorData[1];
+            this.HorizontalColors=new HorizontalColorData[1];
+        }
+
         /* Methods of WangTileSet */
         public int CreateTile(ColorMap colorMap, CornerColor cornerColorNW, CornerColor cornerColorNE, CornerColor cornerColorSE, CornerColor cornerColorSW, VerticalColor edgeColorN, HorizontalColor edgeColorE, VerticalColor edgeColorS, HorizontalColor edgeColorW)
         {
@@ -14,8 +20,10 @@ namespace WangTile
 
             if (this.Tiles==null){
                 this.Tiles=new WangTile[1];
+                newTile.TileID=0;
                 this.Tiles[0]=newTile;
             } else {
+                newTile.TileID=this.Tiles.Length;
                 this.Tiles=this.Tiles.Append(newTile).ToArray();
             }
 
