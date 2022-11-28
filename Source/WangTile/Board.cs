@@ -56,7 +56,7 @@ namespace WangTile
             this.TileSlots[index].TileID=null;
         }
 
-        public int[] GetTileMismatchArray(int tileSetID,int col, int row){
+        public int[] GetTileMismatchArray(int tileSetID,int col, int row, bool useBitmasking){
             WangTile[] tiles = this.TileSet[tileSetID].Tiles;
             int[] tilesMismatches= new int[tiles.Length];
 
@@ -66,7 +66,7 @@ namespace WangTile
                 int tileID = tiles[i].TileID;
                 this.PlaceTile(tileSetID,tileID,col,row);
 
-                (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(col,row);
+                (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,col,row);
 
                 // North west
                 numberOfMismatch=numberOfMismatch+countMismatchOnCorner(cColors, TileOffsetCorner.C0_NW, TileOffsetCorner.C8_NE, TileOffsetCorner.C1_SE, TileOffsetCorner.C2_SW);
@@ -164,7 +164,7 @@ namespace WangTile
             return numberOfMismatch;
         }
 
-        public (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) GetTileAdjacentColorValues(int col, int row) {
+        public (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) GetTileAdjacentColorValues(bool useBitmasking, int col, int row) {
             CornerColor[] cornerColorValues = new CornerColor[16];
             HorizontalColor[] horizontalColorValues = new HorizontalColor[4];
             VerticalColor[] verticalColorValues = new VerticalColor[4];
@@ -178,7 +178,21 @@ namespace WangTile
             WangTile southTile = getSouthTile(col,row);
             WangTile southWestTile = getSouthWestTile(col,row);
             WangTile westTile = getWestTile(col,row);
+            for (int i=0;i<=(int)TileOffsetCorner.C8_SE;i++){
+                cornerColorValues[i]= CornerColor.WildCard;
+            }
 
+            verticalColorValues[(int)TileOffsetVertical.V0_N] = VerticalColor.WildCard;
+            verticalColorValues[(int)TileOffsetVertical.V2_S] = VerticalColor.WildCard;
+            verticalColorValues[(int)TileOffsetVertical.V0_S] = VerticalColor.WildCard;
+            verticalColorValues[(int)TileOffsetVertical.V6_N] = VerticalColor.WildCard;
+
+            horizontalColorValues[(int)TileOffsetHorizontal.H0_E] = HorizontalColor.WildCard;
+            horizontalColorValues[(int)TileOffsetHorizontal.H4_W] = HorizontalColor.WildCard;
+            horizontalColorValues[(int)TileOffsetHorizontal.H0_W] = HorizontalColor.WildCard;
+            horizontalColorValues[(int)TileOffsetHorizontal.H8_E] = HorizontalColor.WildCard; 
+
+            // ///////
             cornerColorValues[(int)TileOffsetCorner.C0_NW]= currentTile.CornerColorNW;
             cornerColorValues[(int)TileOffsetCorner.C8_NE]= westTile.CornerColorNE;
             cornerColorValues[(int)TileOffsetCorner.C1_SE]= northWestTile.CornerColorSE;
@@ -213,7 +227,82 @@ namespace WangTile
             horizontalColorValues[(int)TileOffsetHorizontal.H0_W]=currentTile.EdgeColorWest;
             horizontalColorValues[(int)TileOffsetHorizontal.H8_E]=westTile.EdgeColorEast;
 
+            // cornerColorValues = applyBitmaskingForCornerColor(currentTile.BitMask, cornerColorValues);
+            // verticalColorValues = applyBitmaskingForVerticalColor(currentTile.BitMask, verticalColorValues);
+            // horizontalColorValues = applyBitmaskingForHorizontalColor(currentTile.BitMask, horizontalColorValues);
+
             return (cColors:cornerColorValues,hColors:horizontalColorValues,vColors:verticalColorValues);
+        }
+
+        CornerColor[] applyBitmaskingForCornerColor(int tileBitmask,  CornerColor[] cColors){
+            if ((tileBitmask&(1<<(int)BitMask.NW_8NE))==((1<<(int)BitMask.NW_8NE))){
+                cColors[(int)TileOffsetCorner.C8_NE]=CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.NW_1SE))==((1<<(int)BitMask.NW_1SE))){
+                cColors[(int)TileOffsetCorner.C1_SE]= CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.NW_2SW))==((1<<(int)BitMask.NW_2SW))){
+                cColors[(int)TileOffsetCorner.C2_SW]= CornerColor.WildCard;
+            }
+
+
+            if ((tileBitmask&(1<<(int)BitMask.NE_2SE))==((1<<(int)BitMask.NE_2SE))){
+                cColors[(int)TileOffsetCorner.C2_SE]= CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.NE_3SW))==((1<<(int)BitMask.NE_3SW))){
+                 cColors[(int)TileOffsetCorner.C3_SW]= CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.NE_4NW))==((1<<(int)BitMask.NE_4NW))){
+                 cColors[(int)TileOffsetCorner.C4_NW]= CornerColor.WildCard;
+            }
+
+
+            if ((tileBitmask&(1<<(int)BitMask.SE_4SW))==((1<<(int)BitMask.SE_4SW))){
+                cColors[(int)TileOffsetCorner.C4_SW]= CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.SE_5NW))==((1<<(int)BitMask.SE_5NW))){
+                cColors[(int)TileOffsetCorner.C5_NW]= CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.SE_6NE))==((1<<(int)BitMask.SE_6NE))){
+                cColors[(int)TileOffsetCorner.C6_NE]= CornerColor.WildCard;
+            }
+
+
+            if ((tileBitmask&(1<<(int)BitMask.SW_6NW))==((1<<(int)BitMask.SW_6NW))){
+                cColors[(int)TileOffsetCorner.C6_NW]= CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.SW_7NE))==((1<<(int)BitMask.SW_7NE))){
+                cColors[(int)TileOffsetCorner.C7_NE]= CornerColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.SW_8SE))==((1<<(int)BitMask.SW_8SE))){
+                cColors[(int)TileOffsetCorner.C8_SE]= CornerColor.WildCard;
+            }
+
+            return cColors;
+        }
+
+        VerticalColor[] applyBitmaskingForVerticalColor(int tileBitmask,  VerticalColor[] vColors){
+            if ((tileBitmask&(1<<(int)BitMask.N_2S))==((1<<(int)BitMask.N_2S))){
+                vColors[(int)TileOffsetVertical.V2_S]=VerticalColor.WildCard;
+            }
+            if ((tileBitmask&(1<<(int)BitMask.S_6N))==((1<<(int)BitMask.S_6N))){
+                vColors[(int)TileOffsetVertical.V6_N]=VerticalColor.WildCard;
+
+            }
+  
+            return vColors;
+        }
+
+        HorizontalColor[] applyBitmaskingForHorizontalColor(int tileBitmask,  HorizontalColor[] hColors){
+            if ((tileBitmask&(1<<(int)BitMask.E_4W))==((1<<(int)BitMask.E_4W))){
+                hColors[(int)TileOffsetHorizontal.H4_W]=HorizontalColor.WildCard;
+
+            }
+            if ((tileBitmask&(1<<(int)BitMask.W_8E))==((1<<(int)BitMask.W_8E))){
+                hColors[(int)TileOffsetHorizontal.H8_E]=HorizontalColor.WildCard;
+            }
+  
+            return hColors;
         }
 
         (int col,int row) getNorthCoordinates(int col,int row){

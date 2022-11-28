@@ -154,17 +154,16 @@ namespace WangTile
                 // random
                 // pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
 
-                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row);
+                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row, true);
                 TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
                 for (int x=0; x<tileMismatchesStruct.Length;x++){
                     Console.WriteLine($"TileID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
                 }
 
                 int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
-                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[7].NumberOfMismatches){
+                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[2].NumberOfMismatches){
                     Random rand= new Random();
-                    lowestMismatchTileID  = rand.Next(0,tileMismatchesStruct.Length);
-                    
+                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,2)].TileID;
                 }
                 newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
             }
