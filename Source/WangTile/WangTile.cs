@@ -17,7 +17,7 @@ namespace WangTile
         public HorizontalColor EdgeColorWest;
         public HorizontalColor EdgeColorEast;
 
-        public int BitMask;
+        public int TileBitMask;
 
         /* Constructor for WangTile */
         public WangTile(CornerColor cornerColorNW, CornerColor cornerColorNE, CornerColor cornerColorSE, CornerColor cornerColorSW, VerticalColor edgeColorN, HorizontalColor edgeColorE, VerticalColor edgeColorS, HorizontalColor edgeColorW)
@@ -32,16 +32,28 @@ namespace WangTile
             this.EdgeColorSouth=edgeColorS;
             this.EdgeColorWest=edgeColorW;
 
-            this.BitMask=0;
+            this.TileBitMask=0;
         }
 
         /* Methods for WangTile */
         public void ClearBitfield(){
-            this.BitMask=0;
+            this.TileBitMask=0;
         }
 
         public void SetBit(BitMask bit){
-            this.BitMask=this.BitMask | (1<<(int)bit);
+            this.TileBitMask=this.TileBitMask | (1<<(int)bit);
+        }
+
+        public void MaskAllCorners(){
+            for (BitMask i=BitMask.NW_8NE;i<=BitMask.SW_8SE;i++){
+                this.SetBit(i);
+            }
+        }
+
+        public void MaskAllEdges(){
+            for (BitMask i=BitMask.N_2S;i<=BitMask.W_8E;i++){
+                this.SetBit(i);
+            }
         }
     }
 }

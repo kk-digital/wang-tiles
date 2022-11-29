@@ -121,24 +121,21 @@ namespace WangTile
         NW_1SE,
         NW_2SW,
 
-        N_2S,
-
         NE_2SE,
         NE_3SW,
         NE_4NW,
-
-        E_4W,
 
         SE_4SW,
         SE_5NW,
         SE_6NE,
 
-        S_6N,
-
         SW_6NW,
         SW_7NE,
         SW_8SE,
 
+        N_2S,
+        E_4W,
+        S_6N,
         W_8E,
     }
 }

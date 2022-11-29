@@ -18,61 +18,28 @@ namespace WangTile
             // Tile 0 of Tetris Block 1
             // Add tiles to tileset
             tileID=tileSet.CreateTile(colorMap,CornerColor.A,CornerColor.B,CornerColor.C,CornerColor.D,VerticalColor.A,HorizontalColor.B,VerticalColor.B,HorizontalColor.A);
-            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_8NE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_2SW);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_2SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_3SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_5NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_6NE);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_6NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_7NE);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_8SE);
 
             // Tile 1 of Tetris Block 1
             tileID=tileSet.CreateTile(colorMap,CornerColor.B,CornerColor.E,CornerColor.F,CornerColor.C,VerticalColor.C,HorizontalColor.C,VerticalColor.D,HorizontalColor.B);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_2SW);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_2SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_3SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_5NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_6NE);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_6NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_7NE);
 
             // Tile 2 of Tetris Block 1
             tileID=tileSet.CreateTile(colorMap,CornerColor.E,CornerColor.G,CornerColor.H,CornerColor.F,VerticalColor.E,HorizontalColor.D,VerticalColor.F,HorizontalColor.C);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_2SW);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_2SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_3SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_5NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_6NE);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_6NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_7NE);
 
             // Tile 3 of Tetris Block 1
             tileID=tileSet.CreateTile(colorMap,CornerColor.G,CornerColor.I,CornerColor.J,CornerColor.H,VerticalColor.G,HorizontalColor.E,VerticalColor.H,HorizontalColor.D);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_2SW);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_2SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_3SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_4NW);
             tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_4SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_5NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_6NE);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_6NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_7NE);
 
             // Tetris Block 2 - Square block
             // [][] _ [0,1]
@@ -81,54 +48,30 @@ namespace WangTile
             // Tile 0 of Tetris Block 2
             // Add tiles to tileset
             tileID=tileSet.CreateTile(colorMap,CornerColor.K,CornerColor.L,CornerColor.M,CornerColor.N,VerticalColor.I,HorizontalColor.G,VerticalColor.J,HorizontalColor.F);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_8NE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_2SW);
             tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_2SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_3SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_7NE);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_8SE);
 
             // Tile 1 of Tetris Block 2
             // Add tiles to tileset
             tileID=tileSet.CreateTile(colorMap,CornerColor.L,CornerColor.O,CornerColor.P,CornerColor.M,VerticalColor.K,HorizontalColor.H,VerticalColor.L,HorizontalColor.G);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_2SW);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_2SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_3SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_4NW);
             tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_4SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_5NW);
 
             // Tile 2 of Tetris Block 2
             // Add tiles to tileset
             tileID=tileSet.CreateTile(colorMap,CornerColor.M,CornerColor.P,CornerColor.Q,CornerColor.R,VerticalColor.L,HorizontalColor.J,VerticalColor.M,HorizontalColor.I);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_3SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.NE_4NW);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_4SW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_5NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_6NE);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_7NE);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_6NW);
 
             // Tile 3 of Tetris Block 2
             // Add tiles to tileset
             tileID=tileSet.CreateTile(colorMap,CornerColor.N,CornerColor.M,CornerColor.R,CornerColor.S,VerticalColor.J,HorizontalColor.I,VerticalColor.N,HorizontalColor.K);
+            tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_8NE);
-            tileSet.Tiles[tileID].SetBit(BitMask.NW_1SE);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_5NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SE_6NE);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_7NE);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_6NW);
-            tileSet.Tiles[tileID].SetBit(BitMask.SW_8SE);
     
 
             newBoard.AddTileSet(tileSet);
@@ -161,9 +104,9 @@ namespace WangTile
                 }
 
                 int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
-                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[2].NumberOfMismatches){
+                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[7].NumberOfMismatches){
                     Random rand= new Random();
-                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,2)].TileID;
+                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,7)].TileID;
                 }
                 newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
             }
