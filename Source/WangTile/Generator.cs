@@ -96,6 +96,8 @@ namespace WangTile
 
 
             for (int i=1; i<100;i++){
+                Console.WriteLine($"Tile Number={i}");
+
                 // place tiles to next tile, left to right
                 pos = Utils.GetNextTileSlot(newBoard.Width, pos.col, pos.row);
                 // random
@@ -114,6 +116,7 @@ namespace WangTile
                 }
 
                 Console.WriteLine($"Tile put={lowestMismatchTileID}");
+                Console.WriteLine("-----------------");
 
                 newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
             }
