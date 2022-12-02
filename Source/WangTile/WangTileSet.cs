@@ -53,9 +53,9 @@ namespace WangTile
 
                 // Assign new color palette
                 // Use color count as color pallete
-                // cornerColorData.ColorPalette=colorMap.GetColorCount();
-                cornerColorData.ColorPalette=(int)cornerColor;
-                colorMap.IncrementColorCount();
+                cornerColorData.ColorPalette=colorMap.GetCornerColorCount();
+                // cornerColorData.ColorPalette=(int)cornerColor;
+                colorMap.IncrementCornerColorCount();
 
                 if (this.CornerColors==null){
                     this.CornerColors=new CornerColorData[1];
@@ -79,9 +79,9 @@ namespace WangTile
 
                 // Assign new color palette
                 // Use color count as color pallete
-                // horizontalColorData.ColorPalette=colorMap.GetColorCount();
-                horizontalColorData.ColorPalette=(int)hColor;
-                colorMap.IncrementColorCount();
+                horizontalColorData.ColorPalette=colorMap.GetHorizontalColorCount();
+                // horizontalColorData.ColorPalette=(int)hColor;
+                colorMap.IncrementHorizontalColorCount();
 
                 if (this.HorizontalColors==null){
                     this.HorizontalColors=new HorizontalColorData[1];
@@ -103,9 +103,9 @@ namespace WangTile
 
                 // Assign new color palette
                 // Use color count as color pallete
-                // verticalColorData.ColorPalette=colorMap.GetColorCount();
-                verticalColorData.ColorPalette=(int)vColor;
-                colorMap.IncrementColorCount();
+                verticalColorData.ColorPalette=colorMap.GetVerticalColorCount();
+                // verticalColorData.ColorPalette=(int)vColor;
+                colorMap.IncrementVerticalColorCount();
 
                 if (this.VerticalColors==null){
                     this.VerticalColors=new VerticalColorData[1];

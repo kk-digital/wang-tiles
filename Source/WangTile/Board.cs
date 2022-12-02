@@ -88,99 +88,63 @@ namespace WangTile
         int countMismatchOnCorners(CornerColor[] cornerColors, int tileBitmask){
             int numberOfMismatch=0;
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_NW]!=cornerColors[(int)TileOffsetCorner.C8_NE] && (
-                cornerColors[(int)TileOffsetCorner.C0_NW]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C8_NE]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.NW_8NE))==1<<(int)BitMask.NW_8NE &&
-                cornerColors[(int)TileOffsetCorner.C8_NE]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_NW]!=cornerColors[(int)TileOffsetCorner.C8_NE] ) && 
+                !((tileBitmask&(1<<(int)BitMask.NW_8NE))==1<<(int)BitMask.NW_8NE)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_NW]!=cornerColors[(int)TileOffsetCorner.C1_SE] && (
-                cornerColors[(int)TileOffsetCorner.C0_NW]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C1_SE]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.NW_1SE))==1<<(int)BitMask.NW_1SE &&
-                cornerColors[(int)TileOffsetCorner.C1_SE]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_NW]!=cornerColors[(int)TileOffsetCorner.C1_SE] ) && 
+                !((tileBitmask&(1<<(int)BitMask.NW_1SE))==1<<(int)BitMask.NW_1SE)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_NW]!=cornerColors[(int)TileOffsetCorner.C2_SW] && (
-                cornerColors[(int)TileOffsetCorner.C0_NW]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C2_SW]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.NW_2SW))==1<<(int)BitMask.NW_2SW &&
-                cornerColors[(int)TileOffsetCorner.C2_SW]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_NW]!=cornerColors[(int)TileOffsetCorner.C2_SW] ) && 
+                !((tileBitmask&(1<<(int)BitMask.NW_2SW))==1<<(int)BitMask.NW_2SW)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_NE]!=cornerColors[(int)TileOffsetCorner.C2_SE] && (
-                cornerColors[(int)TileOffsetCorner.C0_NE]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C2_SE]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.NE_2SE))==1<<(int)BitMask.NE_2SE &&
-                cornerColors[(int)TileOffsetCorner.C2_SE]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_NE]!=cornerColors[(int)TileOffsetCorner.C2_SE] ) && 
+                !((tileBitmask&(1<<(int)BitMask.NE_2SE))==1<<(int)BitMask.NE_2SE)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_NE]!=cornerColors[(int)TileOffsetCorner.C3_SW] && (
-                cornerColors[(int)TileOffsetCorner.C0_NE]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C3_SW]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.NE_3SW))==1<<(int)BitMask.NE_3SW &&
-                cornerColors[(int)TileOffsetCorner.C3_SW]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_NE]!=cornerColors[(int)TileOffsetCorner.C3_SW] ) &&
+                !((tileBitmask&(1<<(int)BitMask.NE_3SW))==1<<(int)BitMask.NE_3SW)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_NE]!=cornerColors[(int)TileOffsetCorner.C4_NW] && (
-                cornerColors[(int)TileOffsetCorner.C0_NE]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C4_NW]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.NE_4NW))==1<<(int)BitMask.NE_4NW &&
-                cornerColors[(int)TileOffsetCorner.C4_NW]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_NE]!=cornerColors[(int)TileOffsetCorner.C4_NW] ) && 
+                !((tileBitmask&(1<<(int)BitMask.NE_4NW))==1<<(int)BitMask.NE_4NW)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_SE]!=cornerColors[(int)TileOffsetCorner.C4_SW] && (
-                cornerColors[(int)TileOffsetCorner.C0_SE]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C4_SW]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.SE_4SW))==1<<(int)BitMask.SE_4SW &&
-                cornerColors[(int)TileOffsetCorner.C4_SW]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_SE]!=cornerColors[(int)TileOffsetCorner.C4_SW] ) && 
+                !((tileBitmask&(1<<(int)BitMask.SE_4SW))==1<<(int)BitMask.SE_4SW)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_SE]!=cornerColors[(int)TileOffsetCorner.C5_NW] && (
-                cornerColors[(int)TileOffsetCorner.C0_SE]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C5_NW]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.SE_5NW))==1<<(int)BitMask.SE_5NW &&
-                cornerColors[(int)TileOffsetCorner.C5_NW]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_SE]!=cornerColors[(int)TileOffsetCorner.C5_NW] ) && 
+                !((tileBitmask&(1<<(int)BitMask.SE_5NW))==1<<(int)BitMask.SE_5NW)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_SE]!=cornerColors[(int)TileOffsetCorner.C6_NE] && (
-                cornerColors[(int)TileOffsetCorner.C0_SE]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C6_NE]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.SE_6NE))==1<<(int)BitMask.SE_6NE &&
-                cornerColors[(int)TileOffsetCorner.C6_NE]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_SE]!=cornerColors[(int)TileOffsetCorner.C6_NE]) && 
+                !((tileBitmask&(1<<(int)BitMask.SE_6NE))==1<<(int)BitMask.SE_6NE)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_SW]!=cornerColors[(int)TileOffsetCorner.C6_NW] && (
-                cornerColors[(int)TileOffsetCorner.C0_SW]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C6_NW]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.SW_6NW))==1<<(int)BitMask.SW_6NW &&
-                cornerColors[(int)TileOffsetCorner.C6_NW]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_SW]!=cornerColors[(int)TileOffsetCorner.C6_NW] ) &&
+                !((tileBitmask&(1<<(int)BitMask.SW_6NW))==1<<(int)BitMask.SW_6NW)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_SW]!=cornerColors[(int)TileOffsetCorner.C7_NE] && (
-                cornerColors[(int)TileOffsetCorner.C0_SW]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C7_NE]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.SW_7NE))==1<<(int)BitMask.SW_7NE &&
-                cornerColors[(int)TileOffsetCorner.C7_NE]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_SW]!=cornerColors[(int)TileOffsetCorner.C7_NE] ) && 
+                !((tileBitmask&(1<<(int)BitMask.SW_7NE))==1<<(int)BitMask.SW_7NE)) {
                 numberOfMismatch++;
             }
 
-            if ((cornerColors[(int)TileOffsetCorner.C0_SW]!=cornerColors[(int)TileOffsetCorner.C8_SE] && (
-                cornerColors[(int)TileOffsetCorner.C0_SW]!=(int)CornerColor.WildCard &&
-                cornerColors[(int)TileOffsetCorner.C8_SE]!=(int)CornerColor.WildCard)) || 
-                !((tileBitmask&(1<<(int)BitMask.SW_8SE))==1<<(int)BitMask.SW_8SE &&
-                cornerColors[(int)TileOffsetCorner.C8_SE]==(int)CornerColor.WildCard)) {
+            if ((cornerColors[(int)TileOffsetCorner.C0_SW]!=cornerColors[(int)TileOffsetCorner.C8_SE]) && 
+                !((tileBitmask&(1<<(int)BitMask.SW_8SE))==1<<(int)BitMask.SW_8SE)) {
                 numberOfMismatch++;
             }
 
@@ -190,19 +154,19 @@ namespace WangTile
         int countMismatchVertical(VerticalColor[] vColors, int tileBitmask){
             int numberOfMismatch=0;
 
-            if ((vColors[(int)TileOffsetVertical.V0_N]!=vColors[(int)TileOffsetVertical.V2_S] && (
-                vColors[(int)TileOffsetVertical.V0_N]!=(int)VerticalColor.WildCard &&
-                vColors[(int)TileOffsetVertical.V2_S]!=(int)VerticalColor.WildCard)) || 
+            if ((vColors[(int)TileOffsetVertical.V0_N]!=vColors[(int)TileOffsetVertical.V2_S] &&
+                (vColors[(int)TileOffsetVertical.V0_N]!=VerticalColor.NoColor &&
+                vColors[(int)TileOffsetVertical.V2_S]!=VerticalColor.NoColor) ) && 
                 !((tileBitmask&(1<<(int)BitMask.N_2S))==1<<(int)BitMask.N_2S &&
-                vColors[(int)TileOffsetVertical.V2_S]==(int)VerticalColor.WildCard)) {
+                vColors[(int)TileOffsetVertical.V2_S]==VerticalColor.WildCard)) {
                 numberOfMismatch++;
             }
-
-            if ((vColors[(int)TileOffsetVertical.V0_S]!=vColors[(int)TileOffsetVertical.V6_N] && (
-                vColors[(int)TileOffsetVertical.V0_S]!=(int)VerticalColor.WildCard &&
-                vColors[(int)TileOffsetVertical.V6_N]!=(int)VerticalColor.WildCard)) || 
+  
+            if ((vColors[(int)TileOffsetVertical.V0_S]!=vColors[(int)TileOffsetVertical.V6_N] &&
+                (vColors[(int)TileOffsetVertical.V0_S]!=VerticalColor.NoColor &&
+                vColors[(int)TileOffsetVertical.V6_N]!=VerticalColor.NoColor)) && 
                 !((tileBitmask&(1<<(int)BitMask.S_6N))==1<<(int)BitMask.S_6N &&
-                vColors[(int)TileOffsetVertical.V6_N]==(int)VerticalColor.WildCard)) {
+                vColors[(int)TileOffsetVertical.V6_N]==VerticalColor.WildCard)) {
                 numberOfMismatch++;
             }
 
@@ -211,20 +175,20 @@ namespace WangTile
 
             int countMismatchHorizontal(HorizontalColor[] hColors, int tileBitmask){
             int numberOfMismatch=0;
-
-            if ((hColors[(int)TileOffsetHorizontal.H0_W]!=hColors[(int)TileOffsetHorizontal.H8_E] && (
-                hColors[(int)TileOffsetHorizontal.H0_W]!=(int)HorizontalColor.WildCard &&
-                hColors[(int)TileOffsetHorizontal.H8_E]!=(int)HorizontalColor.WildCard)) || 
+        
+            if ((hColors[(int)TileOffsetHorizontal.H0_W]!=hColors[(int)TileOffsetHorizontal.H8_E]) &&
+                (hColors[(int)TileOffsetHorizontal.H0_W]!=HorizontalColor.NoColor &&
+                hColors[(int)TileOffsetHorizontal.H8_E]!=HorizontalColor.NoColor) && 
                 !((tileBitmask&(1<<(int)BitMask.W_8E))==1<<(int)BitMask.W_8E &&
-                hColors[(int)TileOffsetHorizontal.H8_E]==(int)HorizontalColor.WildCard)) {
+                hColors[(int)TileOffsetHorizontal.H8_E]==HorizontalColor.WildCard)) {
                 numberOfMismatch++;
             }
 
-            if ((hColors[(int)TileOffsetHorizontal.H0_E]!=hColors[(int)TileOffsetHorizontal.H4_W] && (
-                hColors[(int)TileOffsetHorizontal.H0_E]!=(int)HorizontalColor.WildCard &&
-                hColors[(int)TileOffsetHorizontal.H4_W]!=(int)HorizontalColor.WildCard)) || 
+            if ((hColors[(int)TileOffsetHorizontal.H0_E]!=hColors[(int)TileOffsetHorizontal.H4_W] &&
+                (hColors[(int)TileOffsetHorizontal.H0_E]!=HorizontalColor.NoColor &&
+                hColors[(int)TileOffsetHorizontal.H4_W]!=HorizontalColor.NoColor)) && 
                 !((tileBitmask&(1<<(int)BitMask.E_4W))==1<<(int)BitMask.E_4W &&
-                hColors[(int)TileOffsetHorizontal.H4_W]==(int)HorizontalColor.WildCard)) {
+                hColors[(int)TileOffsetHorizontal.H4_W]==HorizontalColor.WildCard)) {
                 numberOfMismatch++;
             }
             
@@ -245,93 +209,100 @@ namespace WangTile
             WangTile southTile = getSouthTile(col,row);
             WangTile southWestTile = getSouthWestTile(col,row);
             WangTile westTile = getWestTile(col,row);
-            for (int i=0;i<=(int)TileOffsetCorner.C8_SE;i++){
-                cornerColorValues[i]= CornerColor.WildCard;
-            }
 
-            verticalColorValues[(int)TileOffsetVertical.V0_N] = VerticalColor.WildCard;
-            verticalColorValues[(int)TileOffsetVertical.V2_S] = VerticalColor.WildCard;
-            verticalColorValues[(int)TileOffsetVertical.V0_S] = VerticalColor.WildCard;
-            verticalColorValues[(int)TileOffsetVertical.V6_N] = VerticalColor.WildCard;
-
-            horizontalColorValues[(int)TileOffsetHorizontal.H0_E] = HorizontalColor.WildCard;
-            horizontalColorValues[(int)TileOffsetHorizontal.H4_W] = HorizontalColor.WildCard;
-            horizontalColorValues[(int)TileOffsetHorizontal.H0_W] = HorizontalColor.WildCard;
-            horizontalColorValues[(int)TileOffsetHorizontal.H8_E] = HorizontalColor.WildCard; 
-
-            // ///////
             cornerColorValues[(int)TileOffsetCorner.C0_NW]= currentTile.CornerColorNW;
-
-            if ((westTile.TileBitMask&(1<<(int)BitMask.NE_4NW))!=((1<<(int)BitMask.NE_4NW))){
-                cornerColorValues[(int)TileOffsetCorner.C8_NE]= westTile.CornerColorNE;
-            }
-            if ((northWestTile.TileBitMask&(1<<(int)BitMask.SE_5NW))!=((1<<(int)BitMask.SE_5NW))){
-                cornerColorValues[(int)TileOffsetCorner.C1_SE]= northWestTile.CornerColorSE;
-            }
-            if ((northTile.TileBitMask&(1<<(int)BitMask.SW_6NW))!=((1<<(int)BitMask.SW_6NW))){
-                cornerColorValues[(int)TileOffsetCorner.C2_SW]= northTile.CornerColorSW;
-            }
+            cornerColorValues[(int)TileOffsetCorner.C8_NE]= westTile.CornerColorNE;
+            cornerColorValues[(int)TileOffsetCorner.C1_SE]= northWestTile.CornerColorSE;
+            cornerColorValues[(int)TileOffsetCorner.C2_SW]= northTile.CornerColorSW;
 
             verticalColorValues[(int)TileOffsetVertical.V0_N]=currentTile.EdgeColorNorth;
-
-            if ((northTile.TileBitMask&(1<<(int)BitMask.S_6N))!=((1<<(int)BitMask.S_6N))){
-                verticalColorValues[(int)TileOffsetVertical.V2_S]=northTile.EdgeColorSouth;
-            }
-
+            verticalColorValues[(int)TileOffsetVertical.V2_S]=northTile.EdgeColorSouth;
 
             cornerColorValues[(int)TileOffsetCorner.C0_NE]= currentTile.CornerColorNE;
-
-            if ((northTile.TileBitMask&(1<<(int)BitMask.SE_6NE))!=((1<<(int)BitMask.SE_6NE))){
-                cornerColorValues[(int)TileOffsetCorner.C2_SE]= northTile.CornerColorSE;
-            }
-            if ((northEastTile.TileBitMask&(1<<(int)BitMask.SW_7NE))!=((1<<(int)BitMask.SW_7NE))){
-                cornerColorValues[(int)TileOffsetCorner.C3_SW]= northEastTile.CornerColorSW;
-            }
-            if ((eastTile.TileBitMask&(1<<(int)BitMask.NW_8NE))!=((1<<(int)BitMask.NW_8NE))){
-                cornerColorValues[(int)TileOffsetCorner.C4_NW]= eastTile.CornerColorNW;
-            }
+            cornerColorValues[(int)TileOffsetCorner.C2_SE]= northTile.CornerColorSE;
+            cornerColorValues[(int)TileOffsetCorner.C3_SW]= northEastTile.CornerColorSW;
+            cornerColorValues[(int)TileOffsetCorner.C4_NW]= eastTile.CornerColorNW;
 
             horizontalColorValues[(int)TileOffsetHorizontal.H0_E]=currentTile.EdgeColorEast;
-
-            if ((eastTile.TileBitMask&(1<<(int)BitMask.W_8E))!=((1<<(int)BitMask.W_8E))){
-                horizontalColorValues[(int)TileOffsetHorizontal.H4_W]=eastTile.EdgeColorWest;
-            }
-
+            horizontalColorValues[(int)TileOffsetHorizontal.H4_W]=eastTile.EdgeColorWest;
 
             cornerColorValues[(int)TileOffsetCorner.C0_SE]= currentTile.CornerColorSE;
-
-            if ((eastTile.TileBitMask&(1<<(int)BitMask.SW_8SE))!=((1<<(int)BitMask.SW_8SE))){
-                cornerColorValues[(int)TileOffsetCorner.C4_SW]= eastTile.CornerColorSW;
-            }
-            if ((southEastTile.TileBitMask&(1<<(int)BitMask.NW_1SE))!=((1<<(int)BitMask.NW_1SE))){
-                cornerColorValues[(int)TileOffsetCorner.C5_NW]= southEastTile.CornerColorNW;
-            }
-            if ((southTile.TileBitMask&(1<<(int)BitMask.NE_2SE))!=((1<<(int)BitMask.NE_2SE))){
-                cornerColorValues[(int)TileOffsetCorner.C6_NE]= southTile.CornerColorNE;
-            }
+            cornerColorValues[(int)TileOffsetCorner.C4_SW]= eastTile.CornerColorSW;
+            cornerColorValues[(int)TileOffsetCorner.C5_NW]= southEastTile.CornerColorNW;
+            cornerColorValues[(int)TileOffsetCorner.C6_NE]= southTile.CornerColorNE;
 
             verticalColorValues[(int)TileOffsetVertical.V0_S]=currentTile.EdgeColorSouth;
+            verticalColorValues[(int)TileOffsetVertical.V6_N]=southTile.EdgeColorNorth;
 
-            if ((southTile.TileBitMask&(1<<(int)BitMask.N_2S))!=((1<<(int)BitMask.N_2S))){
-                verticalColorValues[(int)TileOffsetVertical.V6_N]=southTile.EdgeColorNorth;
+            cornerColorValues[(int)TileOffsetCorner.C0_SW] = currentTile.CornerColorSW;
+            cornerColorValues[(int)TileOffsetCorner.C6_NW] = southTile.CornerColorNW;
+            cornerColorValues[(int)TileOffsetCorner.C7_NE] = southWestTile.CornerColorNE;
+            cornerColorValues[(int)TileOffsetCorner.C8_SE] = westTile.CornerColorSE;
+
+            horizontalColorValues[(int)TileOffsetHorizontal.H0_W] = currentTile.EdgeColorWest;
+            horizontalColorValues[(int)TileOffsetHorizontal.H8_E] = westTile.EdgeColorEast;
+
+            if ((westTile.TileBitMask&(1<<(int)BitMask.NE_4NW))==((1<<(int)BitMask.NE_4NW))){
+                cornerColorValues[(int)TileOffsetCorner.C8_NE]= CornerColor.WildCard;
+            }
+            if ((northWestTile.TileBitMask&(1<<(int)BitMask.SE_5NW))==((1<<(int)BitMask.SE_5NW))){
+                cornerColorValues[(int)TileOffsetCorner.C1_SE]= CornerColor.WildCard;
+            }
+            if ((northTile.TileBitMask&(1<<(int)BitMask.SW_6NW))==((1<<(int)BitMask.SW_6NW))){
+                cornerColorValues[(int)TileOffsetCorner.C2_SW]= CornerColor.WildCard;
             }
 
-            cornerColorValues[(int)TileOffsetCorner.C0_SW]= currentTile.CornerColorSW;
 
-            if ((southTile.TileBitMask&(1<<(int)BitMask.NW_2SW))!=((1<<(int)BitMask.NW_2SW))){
-                cornerColorValues[(int)TileOffsetCorner.C6_NW]= southTile.CornerColorNW;
-            }
-            if ((southWestTile.TileBitMask&(1<<(int)BitMask.NE_3SW))!=((1<<(int)BitMask.NE_3SW))){
-                cornerColorValues[(int)TileOffsetCorner.C7_NE]= southWestTile.CornerColorNE;
-            }
-            if ((westTile.TileBitMask&(1<<(int)BitMask.SE_4SW))!=((1<<(int)BitMask.SE_4SW))){
-                cornerColorValues[(int)TileOffsetCorner.C8_SE]= westTile.CornerColorSE;
+            if ((northTile.TileBitMask&(1<<(int)BitMask.S_6N))==((1<<(int)BitMask.S_6N))){
+                verticalColorValues[(int)TileOffsetVertical.V2_S]=VerticalColor.WildCard;
             }
 
-            horizontalColorValues[(int)TileOffsetHorizontal.H0_W]=currentTile.EdgeColorWest;
 
-            if ((westTile.TileBitMask&(1<<(int)BitMask.E_4W))!=((1<<(int)BitMask.E_4W))){
-                horizontalColorValues[(int)TileOffsetHorizontal.H8_E]=westTile.EdgeColorEast;
+            if ((northTile.TileBitMask&(1<<(int)BitMask.SE_6NE))==((1<<(int)BitMask.SE_6NE))){
+                cornerColorValues[(int)TileOffsetCorner.C2_SE]= CornerColor.WildCard;
+            }
+            if ((northEastTile.TileBitMask&(1<<(int)BitMask.SW_7NE))==((1<<(int)BitMask.SW_7NE))){
+                cornerColorValues[(int)TileOffsetCorner.C3_SW]= CornerColor.WildCard;
+            }
+            if ((eastTile.TileBitMask&(1<<(int)BitMask.NW_8NE))==((1<<(int)BitMask.NW_8NE))){
+                cornerColorValues[(int)TileOffsetCorner.C4_NW]= CornerColor.WildCard;
+            }
+
+
+            if ((eastTile.TileBitMask&(1<<(int)BitMask.W_8E))==((1<<(int)BitMask.W_8E))){
+                horizontalColorValues[(int)TileOffsetHorizontal.H4_W] = HorizontalColor.WildCard;
+            }
+
+
+            if ((eastTile.TileBitMask&(1<<(int)BitMask.SW_8SE))==((1<<(int)BitMask.SW_8SE))){
+                cornerColorValues[(int)TileOffsetCorner.C4_SW] = CornerColor.WildCard;
+            }
+            if ((southEastTile.TileBitMask&(1<<(int)BitMask.NW_1SE))==((1<<(int)BitMask.NW_1SE))){
+                cornerColorValues[(int)TileOffsetCorner.C5_NW] = CornerColor.WildCard;
+            }
+            if ((southTile.TileBitMask&(1<<(int)BitMask.NE_2SE))==((1<<(int)BitMask.NE_2SE))){
+                cornerColorValues[(int)TileOffsetCorner.C6_NE] = CornerColor.WildCard;
+            }
+
+
+            if ((southTile.TileBitMask&(1<<(int)BitMask.N_2S))==((1<<(int)BitMask.N_2S))){
+                verticalColorValues[(int)TileOffsetVertical.V6_N] = VerticalColor.WildCard;
+            }
+
+
+            if ((southTile.TileBitMask&(1<<(int)BitMask.NW_2SW))==((1<<(int)BitMask.NW_2SW))){
+                cornerColorValues[(int)TileOffsetCorner.C6_NW] = CornerColor.WildCard;
+            }
+            if ((southWestTile.TileBitMask&(1<<(int)BitMask.NE_3SW))==((1<<(int)BitMask.NE_3SW))){
+                cornerColorValues[(int)TileOffsetCorner.C7_NE] = CornerColor.WildCard;
+            }
+            if ((westTile.TileBitMask&(1<<(int)BitMask.SE_4SW))==((1<<(int)BitMask.SE_4SW))){
+                cornerColorValues[(int)TileOffsetCorner.C8_SE] = CornerColor.WildCard;
+            }
+
+
+            if ((westTile.TileBitMask&(1<<(int)BitMask.E_4W))==((1<<(int)BitMask.E_4W))){
+                horizontalColorValues[(int)TileOffsetHorizontal.H8_E] = HorizontalColor.WildCard;
             }
 
             // cornerColorValues = applyBitmaskingForCornerColor(currentTile.TileBitMask, cornerColorValues);
@@ -437,7 +408,13 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(col,row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            // empty tile
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getNorthWestTile(int col, int row){
@@ -452,7 +429,12 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getNorthTile(int col, int row){
@@ -465,7 +447,12 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+        
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getNorthEastTile(int col, int row){
@@ -480,7 +467,12 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getEastTile(int col, int row){
@@ -493,7 +485,12 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getSouthEastTile(int col, int row){
@@ -508,7 +505,12 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getSouthTile(int col, int row){
@@ -521,7 +523,12 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getSouthWestTile(int col, int row){
@@ -536,7 +543,12 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
         WangTile getWestTile(int col, int row){
@@ -549,8 +561,15 @@ namespace WangTile
                 return this.TileSet[tileSetID].Tiles[tileID];
             }
 
-            return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            // out of bounds tile
+            if (!isValidPosition(coord.col,coord.row)){
+                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            }
+
+            return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
+
+        
 
         bool isValidPosition(int col, int row){
             if (col >=0 && col<this.Height && row>=0 && row<this.Width){

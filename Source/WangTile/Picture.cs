@@ -63,13 +63,13 @@ namespace WangTile
             DrawCornerColor(builder, colorMap, tileSet.GetCornerColorPalette(tile.CornerColorSW), xPixelPosition + 1 , yPixelPosition+tileSizeInPixels-3, tileSizeInPixels);
 
             // North
-            DrawHorizontalEdgeColor(builder, colorMap, tileSet.GetVerticalColorPalette(tile.EdgeColorNorth), xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + 1, tileSizeInPixels);
+            DrawVerticalEdgeColor(builder, colorMap, tileSet.GetVerticalColorPalette(tile.EdgeColorNorth), xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + 1, tileSizeInPixels);
             // East
-            DrawVerticalEdgeColor(builder, colorMap, tileSet.GetHorizontalColorPalette(tile.EdgeColorEast), xPixelPosition + tileSizeInPixels - 2, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+            DrawHorizontalEdgeColor(builder, colorMap, tileSet.GetHorizontalColorPalette(tile.EdgeColorEast), xPixelPosition + tileSizeInPixels - 2, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
             // South
-            DrawHorizontalEdgeColor(builder, colorMap, tileSet.GetVerticalColorPalette(tile.EdgeColorSouth), xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 2, tileSizeInPixels);
+            DrawVerticalEdgeColor(builder, colorMap, tileSet.GetVerticalColorPalette(tile.EdgeColorSouth), xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 2, tileSizeInPixels);
             // West
-            DrawVerticalEdgeColor(builder, colorMap, tileSet.GetHorizontalColorPalette(tile.EdgeColorWest), xPixelPosition + 1, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+            DrawHorizontalEdgeColor(builder, colorMap, tileSet.GetHorizontalColorPalette(tile.EdgeColorWest), xPixelPosition + 1, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
         }
 
         public void DrawTileBorder(BigGustave.PngBuilder builder, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
@@ -87,22 +87,22 @@ namespace WangTile
         public void DrawCornerColor(BigGustave.PngBuilder builder, ColorMap colorMap, 
         int color, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
         {
-            PixelColor colorPixel = colorMap.GetPixelColor(color);
+            PixelColor colorPixel = colorMap.GetCornerPixelColor(color);
             FillRectangle(builder, xPixelPosition, yPixelPosition, 2, 2, colorPixel);
         }
 
         public void DrawVerticalEdgeColor(BigGustave.PngBuilder builder, ColorMap colorMap, 
         int color, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
         {
-            PixelColor colorPixel = colorMap.GetPixelColor((int)color);
-            FillRectangle(builder, xPixelPosition, yPixelPosition, 1, 4, colorPixel);
+            PixelColor colorPixel = colorMap.GetVerticalPixelColor((int)color);
+            FillRectangle(builder, xPixelPosition, yPixelPosition, 4, 1, colorPixel);
         }
 
         public void DrawHorizontalEdgeColor(BigGustave.PngBuilder builder, ColorMap colorMap, 
         int color, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
         {
-            PixelColor colorPixel = colorMap.GetPixelColor((int)color);
-            FillRectangle(builder, xPixelPosition, yPixelPosition, 4, 1, colorPixel);
+            PixelColor colorPixel = colorMap.GetHorizontalPixelColor((int)color);
+            FillRectangle(builder, xPixelPosition, yPixelPosition, 1, 4, colorPixel);
 
         }
     }

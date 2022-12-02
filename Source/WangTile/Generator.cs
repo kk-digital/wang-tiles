@@ -19,6 +19,7 @@ namespace WangTile
             // Add tiles to tileset
             tileID=tileSet.CreateTile(colorMap,CornerColor.A,CornerColor.B,CornerColor.C,CornerColor.D,VerticalColor.A,HorizontalColor.B,VerticalColor.B,HorizontalColor.A);
             tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
             tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
 
@@ -84,14 +85,17 @@ namespace WangTile
             Console.WriteLine($"Number of times Corner.B is used={tileSet.CornerColors[(int)CornerColor.B].NumberOfTimesUsed}");
             // Select random tile to place on first slot
             Random random = new Random();
-            int tileIndex = random.Next(0,newBoard.TileSet[0].Tiles.Length);
+            // int tileIndex = random.Next(0,newBoard.TileSet[0].Tiles.Length);
+            int tileIndex = 4;
+
 
             // place the random tile on the board slot position 0,0
             (int col, int row) pos = (0,0);
             newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
+            Console.WriteLine($"First tile is {tileIndex}");
 
 
-            for (int i=1; i<newBoard.TileSlots.Length;i++){
+            for (int i=1; i<100;i++){
                 // place tiles to next tile, left to right
                 pos = Utils.GetNextTileSlot(newBoard.Width, pos.col, pos.row);
                 // random
@@ -104,10 +108,13 @@ namespace WangTile
                 }
 
                 int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
-                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[7].NumberOfMismatches){
+                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[1].NumberOfMismatches){
                     Random rand= new Random();
-                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,7)].TileID;
+                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,2)].TileID;
                 }
+
+                Console.WriteLine($"Tile put={lowestMismatchTileID}");
+
                 newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
             }
   
