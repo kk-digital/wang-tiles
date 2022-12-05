@@ -189,14 +189,17 @@ class MainClass
             new Option<string>(
                 name:"--output-name",
                 description:"(string) The filename of the resulting picture (default directory is ./data)."),
+            new Option<int>(
+                name:"--color-matching",
+                description:"(int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching)."),
         };
 
-        tetrisCommand.Handler = CommandHandler.Create<int,int,int,string>((version,width,height,outputName) =>
+        tetrisCommand.Handler = CommandHandler.Create<int,int,int,string, int>((version,width,height,outputName, colorMatching) =>
         {
             WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
                 case 1:
-                    newGeneratedBoard.TetrisBlocks_V1(width,height,outputName);
+                    newGeneratedBoard.TetrisBlocks_V1(width,height,outputName, (ColorMatching)colorMatching);
                     break;
             }
         });

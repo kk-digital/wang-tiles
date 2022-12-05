@@ -51,7 +51,10 @@ namespace WangTile
 
         public void DrawTile(BigGustave.PngBuilder builder,WangTileSet tileSet,ColorMap colorMap, WangTile tile,int xPixelPosition,int yPixelPosition, int tileSizeInPixels)
         {
-            DrawTileBorder(builder, xPixelPosition, yPixelPosition, tileSizeInPixels);
+            // DrawTileBorder(builder, PixelColor.Gray, xPixelPosition, yPixelPosition, tileSizeInPixels);
+            PixelColor colorPixel = colorMap.GetCornerPixelColor(tileSet.GetCornerColorPalette(tile.CornerColorNW));
+            DrawTileBorder(builder, colorPixel, xPixelPosition, yPixelPosition, tileSizeInPixels);
+
 
             // NorthWest
             DrawCornerColor(builder, colorMap, tileSet.GetCornerColorPalette(tile.CornerColorNW), xPixelPosition + 1 , yPixelPosition+1, tileSizeInPixels);
@@ -70,18 +73,45 @@ namespace WangTile
             DrawVerticalEdgeColor(builder, colorMap, tileSet.GetVerticalColorPalette(tile.EdgeColorSouth), xPixelPosition + tileSizeInPixels / 2 - 2, yPixelPosition + tileSizeInPixels - 2, tileSizeInPixels);
             // West
             DrawHorizontalEdgeColor(builder, colorMap, tileSet.GetHorizontalColorPalette(tile.EdgeColorWest), xPixelPosition + 1, yPixelPosition + tileSizeInPixels / 2 - 2, tileSizeInPixels);
+        
+
+            DrawTileBitMask_Gray(builder, tile, xPixelPosition,yPixelPosition,tileSizeInPixels);
         }
 
-        public void DrawTileBorder(BigGustave.PngBuilder builder, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
+        public void DrawTileBorder(BigGustave.PngBuilder builder,
+        PixelColor pixelColor, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
         {
             // Left border
-            FillRectangle(builder, xPixelPosition, yPixelPosition, 1, tileSizeInPixels, PixelColor.Gray);
+            FillRectangle(builder, xPixelPosition, yPixelPosition, 1, tileSizeInPixels, pixelColor);
             // Up border
-            FillRectangle(builder, xPixelPosition, yPixelPosition, tileSizeInPixels, 1, PixelColor.Gray);
+            FillRectangle(builder, xPixelPosition, yPixelPosition, tileSizeInPixels, 1, pixelColor);
             // Right border
-            FillRectangle(builder, xPixelPosition + tileSizeInPixels - 1, yPixelPosition, 1, tileSizeInPixels, PixelColor.Gray);
+            FillRectangle(builder, xPixelPosition + tileSizeInPixels - 1, yPixelPosition, 1, tileSizeInPixels, pixelColor);
             // Down border
-            FillRectangle(builder, xPixelPosition, yPixelPosition + tileSizeInPixels - 1, tileSizeInPixels, 1, PixelColor.Gray);
+            FillRectangle(builder, xPixelPosition, yPixelPosition + tileSizeInPixels - 1, tileSizeInPixels, 1, pixelColor);
+        }
+
+        public void DrawTileBitMask_Gray(BigGustave.PngBuilder builder, WangTile tile, int xPixelPosition, int yPixelPosition, int tileSizeInPixels)
+        {   
+            if ((tile.TileBitMask&(1<<(int)BitMask.N_2S))==(1<<(int)BitMask.N_2S)){
+                // North
+                FillRectangle(builder, xPixelPosition + tileSizeInPixels / 2 - 1, yPixelPosition, 2, 1, PixelColor.Gray);
+            }
+           
+            if ((tile.TileBitMask&(1<<(int)BitMask.E_4W))==(1<<(int)BitMask.E_4W)){
+                // East
+                FillRectangle(builder, xPixelPosition + tileSizeInPixels - 1, yPixelPosition + tileSizeInPixels / 2 - 1, 1, 2, PixelColor.Gray);
+            }
+
+            if ((tile.TileBitMask&(1<<(int)BitMask.S_6N))==(1<<(int)BitMask.S_6N)){
+                // South
+                FillRectangle(builder, xPixelPosition + tileSizeInPixels / 2 - 1, yPixelPosition + tileSizeInPixels - 1, 2, 1, PixelColor.Gray);
+            }
+
+            if ((tile.TileBitMask&(1<<(int)BitMask.W_8E))==(1<<(int)BitMask.W_8E)){
+                // West
+                FillRectangle(builder,xPixelPosition , yPixelPosition + tileSizeInPixels / 2 - 1, 1, 2, PixelColor.Gray);
+            }
         }
 
         public void DrawCornerColor(BigGustave.PngBuilder builder, ColorMap colorMap, 

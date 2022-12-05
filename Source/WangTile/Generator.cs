@@ -4,7 +4,7 @@ namespace WangTile
 {
  
     class Generator {
-        public void TetrisBlocks_V1(int width, int height, string outputName)
+        public void TetrisBlocks_V1(int width, int height, string outputName, ColorMatching colorMatching)
         {
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
@@ -73,7 +73,43 @@ namespace WangTile
             tileSet.Tiles[tileID].MaskAllCorners();
             tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
-    
+
+            // Tetris Block 3 - l vertical block
+            // []   [0]
+            // [] _ [1]
+            // []   [2]
+            // []   [3]
+            // 
+            // Tile 0 of Tetris Block 3
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.T,CornerColor.U,CornerColor.V,CornerColor.W,VerticalColor.O,HorizontalColor.M,VerticalColor.P,HorizontalColor.L);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+
+            // Tile 1 of Tetris Block 3
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.W,CornerColor.V,CornerColor.X,CornerColor.Y,VerticalColor.P,HorizontalColor.O,VerticalColor.Q,HorizontalColor.N);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+
+            // Tile 2 of Tetris Block 3
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.Y,CornerColor.X,CornerColor.Z,CornerColor.AA,VerticalColor.Q,HorizontalColor.Q,VerticalColor.R,HorizontalColor.P);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+
+            // Tile 3 of Tetris Block 3
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AA,CornerColor.Z,CornerColor.AB,CornerColor.AC,VerticalColor.R,HorizontalColor.S,VerticalColor.S,HorizontalColor.R);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            
 
             newBoard.AddTileSet(tileSet);
 
@@ -81,38 +117,43 @@ namespace WangTile
             Console.WriteLine($"length of HorizontalColorsData={tileSet.HorizontalColors.Length}");
             Console.WriteLine($"length of VerticalColorsData={tileSet.VerticalColors.Length}");
 
-            Console.WriteLine($"Number of times Corner.A is used={tileSet.CornerColors[(int)CornerColor.A].NumberOfTimesUsed}");
-            Console.WriteLine($"Number of times Corner.B is used={tileSet.CornerColors[(int)CornerColor.B].NumberOfTimesUsed}");
+            // Console.WriteLine($"Number of times Corner.A is used={tileSet.CornerColors[(int)CornerColor.A].NumberOfTimesUsed}");
+            // Console.WriteLine($"Number of times Corner.B is used={tileSet.CornerColors[(int)CornerColor.B].NumberOfTimesUsed}");
+
             // Select random tile to place on first slot
             Random random = new Random();
             // int tileIndex = random.Next(0,newBoard.TileSet[0].Tiles.Length);
             int tileIndex = 4;
 
 
-            // place the random tile on the board slot position 0,0
-            (int col, int row) pos = (0,0);
+            // place the random tile on the board 
+            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
             newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
             Console.WriteLine($"First tile is {tileIndex}");
 
 
-            for (int i=1; i<100;i++){
+            for (int i=1; i<1000;i++){
                 Console.WriteLine($"Tile Number={i}");
 
-                // place tiles to next tile, left to right
-                pos = Utils.GetNextTileSlot(newBoard.Width, pos.col, pos.row);
-                // random
-                // pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
+                // place tiles to random position with atleast 1 adjacent edge side
+                pos = newBoard.FindRandomPositionWithAdjacentTilesOnEdges();
 
-                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row, true);
+                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row, true, colorMatching);
                 TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
                 for (int x=0; x<tileMismatchesStruct.Length;x++){
                     Console.WriteLine($"TileID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
                 }
 
                 int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
-                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[1].NumberOfMismatches){
+                int max = 0;
+                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[2].NumberOfMismatches){
+                    max = 2 ;
+                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[1].NumberOfMismatches){
+                    max = 1;
+                }
+                if (max!=0){
                     Random rand= new Random();
-                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,2)].TileID;
+                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,max+1)].TileID;
                 }
 
                 Console.WriteLine($"Tile put={lowestMismatchTileID}");
@@ -121,6 +162,8 @@ namespace WangTile
                 newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
             }
   
+            newBoard.RemoveTilesWithMismatches(true, colorMatching);
+
             // Generate and Save PNG
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
