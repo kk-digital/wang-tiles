@@ -128,15 +128,17 @@ namespace WangTile
 
             // place the random tile on the board 
             (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
+            // (int col, int row) pos = (0,0);
             newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
             Console.WriteLine($"First tile is {tileIndex}");
 
 
-            for (int i=1; i<1000;i++){
+            for (int i=1; i<100;i++){
                 Console.WriteLine($"Tile Number={i}");
 
                 // place tiles to random position with atleast 1 adjacent edge side
                 pos = newBoard.FindRandomPositionWithAdjacentTilesOnEdges();
+                // pos = newBoard.GetNextTileSlot(pos.col,pos.row);
 
                 int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row, true, colorMatching);
                 TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
@@ -161,8 +163,10 @@ namespace WangTile
 
                 newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
             }
-  
+
             newBoard.RemoveTilesWithMismatches(true, colorMatching);
+
+  
 
             // Generate and Save PNG
             Picture newPic = new Picture();

@@ -261,7 +261,7 @@ namespace CornerWangTile
                 }
 
                 // time out after N flips
-                if (numberOfFlips==1000000){
+                if (numberOfFlips==100000){
                     break;
                 }
             }
