@@ -2,9 +2,8 @@ namespace WangTile
 {
     public static class Utils
     {
-        public static (int col,int row) GetRandomPosition(int width, int height)
+        public static (int col,int row) GetRandomPosition(int width, int height, Random rand)
         {
-            Random rand = new Random();
             int randCol = rand.Next(0,height);
             int randRow = rand.Next(0,width);
 

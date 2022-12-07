@@ -58,13 +58,14 @@ namespace WangTile
 
         public ColorMap()
         {
-            CornerPixelColors = new PixelColor[32];
-            VerticalPixelColors = new PixelColor[32];
-            HorizontalPixelColors = new PixelColor[32];
+            CornerPixelColors = new PixelColor[41];
+            VerticalPixelColors = new PixelColor[41];
+            HorizontalPixelColors = new PixelColor[41];
 
-            // Red - 0-10 index
-            // Blue - 11-19 index
-            // Green - 20-31
+            // Red - 0-9 index
+            // Blue - 10-18 index
+            // Green - 19-28 index
+            // Yellow - 29-38 index
             CornerPixelColors[0] = PixelColor.MakePixelColor(255,0,0, 255);
             CornerPixelColors[1] = PixelColor.MakePixelColor(255,0,0, 255);
             CornerPixelColors[2] = PixelColor.MakePixelColor(255,0,0, 255);
@@ -75,7 +76,7 @@ namespace WangTile
             CornerPixelColors[7] = PixelColor.MakePixelColor(255,0,0, 255);
             CornerPixelColors[8] = PixelColor.MakePixelColor(255,0,0, 255);
             CornerPixelColors[9] = PixelColor.MakePixelColor(255,0,0, 255);
-            CornerPixelColors[10] = PixelColor.MakePixelColor(255,0,0, 255);
+            CornerPixelColors[10] = PixelColor.MakePixelColor(0,0,205, 255);
             CornerPixelColors[11] = PixelColor.MakePixelColor(0,0,205, 255);
             CornerPixelColors[12] = PixelColor.MakePixelColor(0,0,205, 255);
             CornerPixelColors[13] = PixelColor.MakePixelColor(0,0,205, 255);
@@ -84,7 +85,7 @@ namespace WangTile
             CornerPixelColors[16] = PixelColor.MakePixelColor(0,0,205, 255);
             CornerPixelColors[17] = PixelColor.MakePixelColor(0,0,205, 255);
             CornerPixelColors[18] = PixelColor.MakePixelColor(0,0,205, 255);
-            CornerPixelColors[19] = PixelColor.MakePixelColor(0,0,205, 255);
+            CornerPixelColors[19] = PixelColor.MakePixelColor(0,205,0, 255);
             CornerPixelColors[20] = PixelColor.MakePixelColor(0,205,0, 255);
             CornerPixelColors[21] = PixelColor.MakePixelColor(0,205,0, 255);
             CornerPixelColors[22] = PixelColor.MakePixelColor(0,205,0, 255);
@@ -94,9 +95,18 @@ namespace WangTile
             CornerPixelColors[26] = PixelColor.MakePixelColor(0,205,0, 255);
             CornerPixelColors[27] = PixelColor.MakePixelColor(0,205,0, 255);
             CornerPixelColors[28] = PixelColor.MakePixelColor(0,205,0, 255);
-            CornerPixelColors[29] = PixelColor.MakePixelColor(0,205,0, 255);
-            CornerPixelColors[30] = PixelColor.MakePixelColor(0,205,0, 255);
-            CornerPixelColors[31] = PixelColor.MakePixelColor(0,205,0, 255);
+            CornerPixelColors[29] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[30] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[31] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[32] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[33] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[34] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[35] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[36] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[37] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[38] = PixelColor.MakePixelColor(92,64,51, 255);
+            CornerPixelColors[39] = PixelColor.MakePixelColor(205,205,0, 255);
+            CornerPixelColors[40] = PixelColor.MakePixelColor(205,205,0, 255);
 
             // same vertical colors until 8th index
             // VerticalPixelColors[0] = PixelColor.MakePixelColor(255,0,0, 255);
@@ -234,6 +244,15 @@ namespace WangTile
             VerticalPixelColors[29] = PixelColor.MakePixelColor(0,0,205, 255);
             VerticalPixelColors[30] = PixelColor.MakePixelColor(255,20,147, 255);
             VerticalPixelColors[31] = PixelColor.MakePixelColor(0,0,255, 250);
+            VerticalPixelColors[32] = PixelColor.MakePixelColor(128,128,0, 255);
+            VerticalPixelColors[33] = PixelColor.MakePixelColor(255,255,0, 255);
+            VerticalPixelColors[34] = PixelColor.MakePixelColor(0,255,255, 255);
+            VerticalPixelColors[35] = PixelColor.MakePixelColor(255,0,255, 255);
+            VerticalPixelColors[36] = PixelColor.MakePixelColor(138,43,226, 255);
+            VerticalPixelColors[37] = PixelColor.MakePixelColor(0,128,0, 255);
+            VerticalPixelColors[38] = PixelColor.MakePixelColor(128,0,128, 255);
+            VerticalPixelColors[39] = PixelColor.MakePixelColor(0,128,128, 255);
+            VerticalPixelColors[40] = PixelColor.MakePixelColor(0,128,128, 255);
 
             // different horizontal colors in all indexes
             HorizontalPixelColors[0] = PixelColor.MakePixelColor(255,0,0, 255);
@@ -268,6 +287,15 @@ namespace WangTile
             HorizontalPixelColors[29] = PixelColor.MakePixelColor(0,0,205, 255);
             HorizontalPixelColors[30] = PixelColor.MakePixelColor(255,20,147, 255);
             HorizontalPixelColors[31] = PixelColor.MakePixelColor(0,0,255, 250);
+            HorizontalPixelColors[32] = PixelColor.MakePixelColor(128,128,0, 255);
+            HorizontalPixelColors[33] = PixelColor.MakePixelColor(255,255,0, 255);
+            HorizontalPixelColors[34] = PixelColor.MakePixelColor(0,255,255, 255);
+            HorizontalPixelColors[35] = PixelColor.MakePixelColor(255,0,255, 255);
+            HorizontalPixelColors[36] = PixelColor.MakePixelColor(138,43,226, 255);
+            HorizontalPixelColors[37] = PixelColor.MakePixelColor(0,128,0, 255);
+            HorizontalPixelColors[38] = PixelColor.MakePixelColor(128,0,128, 255);
+            HorizontalPixelColors[39] = PixelColor.MakePixelColor(0,128,128, 255);
+            HorizontalPixelColors[40] = PixelColor.MakePixelColor(0,128,128, 255);
         }
     }
 }

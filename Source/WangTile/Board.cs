@@ -102,7 +102,7 @@ namespace WangTile
                 if (numberOfMismatch>0){
                     wasThereMismatch = true;
                     this.RemoveTile(pos.col,pos.row);
-                    Console.WriteLine($"Col={pos.col},Row={pos.row}, mismatches={numberOfMismatch}");
+                    // Console.WriteLine($"Col={pos.col},Row={pos.row}, mismatches={numberOfMismatch}");
                 }
 
                 pos = GetNextTileSlot(pos.col,pos.row);
@@ -115,8 +115,8 @@ namespace WangTile
 
                     pos.col=0;
                     pos.row=0;
-                    Console.WriteLine("-----------------|");
                 }
+
             }
         }
 
@@ -136,7 +136,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.NW_8NE)) == (1<<(int)BitMask.NW_8NE)){
                 cornerColorC0_NW=CornerColor.WildCard;
             }
-            if ((cornerColorC0_NW!=cornerColors[(int)TileOffsetCorner.C8_NE] && 
+            if (cornerColorC0_NW!=CornerColor.WildCard && (cornerColorC0_NW!=cornerColors[(int)TileOffsetCorner.C8_NE] && 
             !((cornerColorC0_NW==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C8_NE]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C8_NE]==CornerColor.NoColor && cornerColorC0_NW==CornerColor.WildCard))
             )) {
@@ -147,7 +147,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.NW_1SE)) == (1<<(int)BitMask.NW_1SE)){
                 cornerColorC0_NW=CornerColor.WildCard;
             }
-            if ((cornerColorC0_NW!=cornerColors[(int)TileOffsetCorner.C1_SE] && 
+            if (cornerColorC0_NW!=CornerColor.WildCard && (cornerColorC0_NW!=cornerColors[(int)TileOffsetCorner.C1_SE] && 
             !((cornerColorC0_NW==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C1_SE]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C1_SE]==CornerColor.NoColor && cornerColorC0_NW==CornerColor.WildCard))
             )) {
@@ -158,7 +158,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.NW_2SW)) == (1<<(int)BitMask.NW_2SW)){
                 cornerColorC0_NW=CornerColor.WildCard;
             }
-            if ((cornerColorC0_NW!=cornerColors[(int)TileOffsetCorner.C2_SW] && 
+            if (cornerColorC0_NW!=CornerColor.WildCard && (cornerColorC0_NW!=cornerColors[(int)TileOffsetCorner.C2_SW] && 
             !((cornerColorC0_NW==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C2_SW]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C2_SW]==CornerColor.NoColor && cornerColorC0_NW==CornerColor.WildCard))
             )) {
@@ -170,7 +170,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.NE_2SE)) == (1<<(int)BitMask.NE_2SE)){
                 cornerColorC0_NE=CornerColor.WildCard;
             }
-            if ((cornerColorC0_NE!=cornerColors[(int)TileOffsetCorner.C2_SE] && 
+            if (cornerColorC0_NE!=CornerColor.WildCard && (cornerColorC0_NE!=cornerColors[(int)TileOffsetCorner.C2_SE] && 
             !((cornerColorC0_NE==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C2_SE]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C2_SE]==CornerColor.NoColor && cornerColorC0_NE==CornerColor.WildCard)) 
             )) {
@@ -180,14 +180,14 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.NE_3SW)) == (1<<(int)BitMask.NE_3SW)){
                 cornerColorC0_NE=CornerColor.WildCard;
             }
-            if ((cornerColorC0_NE!=cornerColors[(int)TileOffsetCorner.C3_SW] && 
+            if (cornerColorC0_NE!=CornerColor.WildCard && (cornerColorC0_NE!=cornerColors[(int)TileOffsetCorner.C3_SW] && 
             !((cornerColorC0_NE==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C3_SW]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C3_SW]==CornerColor.NoColor && cornerColorC0_NE==CornerColor.WildCard)) 
             )) {
                 numberOfMismatch++;
             }
 
-            if ((tileBitmask&(1<<(int)BitMask.NE_4NW)) == (1<<(int)BitMask.NE_4NW)){
+            if (cornerColorC0_NE!=CornerColor.WildCard && (tileBitmask&(1<<(int)BitMask.NE_4NW)) == (1<<(int)BitMask.NE_4NW)){
                 cornerColorC0_NE=CornerColor.WildCard;
             }
             if ((cornerColorC0_NE!=cornerColors[(int)TileOffsetCorner.C4_NW] && 
@@ -203,7 +203,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.SE_4SW)) == (1<<(int)BitMask.SE_4SW)){
                 cornerColorC0_SE=CornerColor.WildCard;
             }
-            if ((cornerColorC0_SE!=cornerColors[(int)TileOffsetCorner.C4_SW] && 
+            if (cornerColorC0_SE!=CornerColor.WildCard && (cornerColorC0_SE!=cornerColors[(int)TileOffsetCorner.C4_SW] && 
             !((cornerColorC0_SE==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C4_SW]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C4_SW]==CornerColor.NoColor && cornerColorC0_SE==CornerColor.WildCard)) 
             )) {
@@ -213,7 +213,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.SE_5NW)) == (1<<(int)BitMask.SE_5NW)){
                 cornerColorC0_SE=CornerColor.WildCard;
             }
-            if ((cornerColorC0_SE!=cornerColors[(int)TileOffsetCorner.C5_NW] && 
+            if (cornerColorC0_SE!=CornerColor.WildCard && (cornerColorC0_SE!=cornerColors[(int)TileOffsetCorner.C5_NW] && 
             !((cornerColorC0_SE==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C5_NW]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C5_NW]==CornerColor.NoColor && cornerColorC0_SE==CornerColor.WildCard)) 
             )) {
@@ -223,7 +223,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.SE_6NE)) == (1<<(int)BitMask.SE_6NE)){
                 cornerColorC0_SE=CornerColor.WildCard;
             }
-            if ((cornerColorC0_SE!=cornerColors[(int)TileOffsetCorner.C6_NE] && 
+            if (cornerColorC0_SE!=CornerColor.WildCard && (cornerColorC0_SE!=cornerColors[(int)TileOffsetCorner.C6_NE] && 
             !((cornerColorC0_SE==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C6_NE]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C6_NE]==CornerColor.NoColor && cornerColorC0_SE==CornerColor.WildCard)) 
             )) {
@@ -236,7 +236,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.SW_6NW)) == (1<<(int)BitMask.SW_6NW)){
                 cornerColorC0_SW=CornerColor.WildCard;
             }
-            if ((cornerColorC0_SW!=cornerColors[(int)TileOffsetCorner.C6_NW] && 
+            if (cornerColorC0_SW!=CornerColor.WildCard && (cornerColorC0_SW!=cornerColors[(int)TileOffsetCorner.C6_NW] && 
             !((cornerColorC0_SW==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C6_NW]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C6_NW]==CornerColor.NoColor && cornerColorC0_SW==CornerColor.WildCard)) 
             )) {
@@ -246,7 +246,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.SW_7NE)) == (1<<(int)BitMask.SW_7NE)){
                 cornerColorC0_SW=CornerColor.WildCard;
             }
-            if ((cornerColorC0_SW!=cornerColors[(int)TileOffsetCorner.C7_NE] && 
+            if (cornerColorC0_SW!=CornerColor.WildCard && (cornerColorC0_SW!=cornerColors[(int)TileOffsetCorner.C7_NE] && 
             !((cornerColorC0_SW==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C7_NE]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C7_NE]==CornerColor.NoColor && cornerColorC0_SW==CornerColor.WildCard)) 
             )) {
@@ -256,7 +256,7 @@ namespace WangTile
             if ((tileBitmask&(1<<(int)BitMask.SW_8SE)) == (1<<(int)BitMask.SW_8SE)){
                 cornerColorC0_SW=CornerColor.WildCard;
             }
-            if ((cornerColorC0_SW!=cornerColors[(int)TileOffsetCorner.C8_SE] && 
+            if (cornerColorC0_SW!=CornerColor.WildCard && (cornerColorC0_SW!=cornerColors[(int)TileOffsetCorner.C8_SE] && 
             !((cornerColorC0_SW==CornerColor.NoColor && cornerColors[(int)TileOffsetCorner.C8_SE]==CornerColor.WildCard) || 
             (cornerColors[(int)TileOffsetCorner.C8_SE]==CornerColor.NoColor && cornerColorC0_SW==CornerColor.WildCard)) 
             )) {
@@ -269,19 +269,19 @@ namespace WangTile
         int countMismatchVertical(VerticalColor[] vColors, int tileBitmask){
             int numberOfMismatch=0;
 
-            if (vColors[(int)TileOffsetVertical.V0_N]!=vColors[(int)TileOffsetVertical.V2_S] && 
+            if ((vColors[(int)TileOffsetVertical.V0_N]!=vColors[(int)TileOffsetVertical.V2_S] && 
             !((vColors[(int)TileOffsetVertical.V0_N]==VerticalColor.NoColor && vColors[(int)TileOffsetVertical.V2_S]==VerticalColor.WildCard) || 
             (vColors[(int)TileOffsetVertical.V2_S]==VerticalColor.NoColor && vColors[(int)TileOffsetVertical.V0_N]==VerticalColor.WildCard))
-            ){
-                Console.WriteLine($"V0_N={vColors[(int)TileOffsetVertical.V0_N]}, V2_S={vColors[(int)TileOffsetVertical.V2_S]}");
+            ) && vColors[(int)TileOffsetVertical.V0_N]!=VerticalColor.WildCard){
+                // Console.WriteLine($"V0_N={vColors[(int)TileOffsetVertical.V0_N]}, V2_S={vColors[(int)TileOffsetVertical.V2_S]}");
                 numberOfMismatch++;
             }
   
-            if (vColors[(int)TileOffsetVertical.V0_S]!=vColors[(int)TileOffsetVertical.V6_N] && 
+            if ((vColors[(int)TileOffsetVertical.V0_S]!=vColors[(int)TileOffsetVertical.V6_N] && 
             !((vColors[(int)TileOffsetVertical.V0_S]==VerticalColor.NoColor && vColors[(int)TileOffsetVertical.V6_N]==VerticalColor.WildCard) || 
             (vColors[(int)TileOffsetVertical.V6_N]==VerticalColor.NoColor && vColors[(int)TileOffsetVertical.V0_S]==VerticalColor.WildCard)) 
-            ){
-                Console.WriteLine($"V0_S={vColors[(int)TileOffsetVertical.V0_S]}, V6_N={vColors[(int)TileOffsetVertical.V6_N]}");
+            ) && vColors[(int)TileOffsetVertical.V0_S]!=VerticalColor.WildCard){
+                // Console.WriteLine($"V0_S={vColors[(int)TileOffsetVertical.V0_S]}, V6_N={vColors[(int)TileOffsetVertical.V6_N]}");
                 numberOfMismatch++;
             }
 
@@ -291,19 +291,19 @@ namespace WangTile
             int countMismatchHorizontal(HorizontalColor[] hColors, int tileBitmask){
             int numberOfMismatch=0;
         
-            if (hColors[(int)TileOffsetHorizontal.H0_W]!=hColors[(int)TileOffsetHorizontal.H8_E] && 
+            if ((hColors[(int)TileOffsetHorizontal.H0_W]!=hColors[(int)TileOffsetHorizontal.H8_E] && 
             !((hColors[(int)TileOffsetHorizontal.H0_W]==HorizontalColor.NoColor && hColors[(int)TileOffsetHorizontal.H8_E]==HorizontalColor.WildCard) || 
             (hColors[(int)TileOffsetHorizontal.H8_E]==HorizontalColor.NoColor && hColors[(int)TileOffsetHorizontal.H0_W]==HorizontalColor.WildCard)) 
-            ){
-                Console.WriteLine($"H0_W={hColors[(int)TileOffsetHorizontal.H0_W]}, H8_E={hColors[(int)TileOffsetHorizontal.H8_E]}");
+            ) && hColors[(int)TileOffsetHorizontal.H0_W]!=HorizontalColor.WildCard){
+                // Console.WriteLine($"H0_W={hColors[(int)TileOffsetHorizontal.H0_W]}, H8_E={hColors[(int)TileOffsetHorizontal.H8_E]}");
                 numberOfMismatch++;
             }
 
-            if (hColors[(int)TileOffsetHorizontal.H0_E]!=hColors[(int)TileOffsetHorizontal.H4_W]  && 
+            if ((hColors[(int)TileOffsetHorizontal.H0_E]!=hColors[(int)TileOffsetHorizontal.H4_W]  && 
             !((hColors[(int)TileOffsetHorizontal.H0_E]==HorizontalColor.NoColor && hColors[(int)TileOffsetHorizontal.H4_W]==HorizontalColor.WildCard) || 
             (hColors[(int)TileOffsetHorizontal.H4_W]==HorizontalColor.NoColor && hColors[(int)TileOffsetHorizontal.H0_E]==HorizontalColor.WildCard)) 
-            ){
-                Console.WriteLine($"H0_E={hColors[(int)TileOffsetHorizontal.H0_E]}, H4_W={hColors[(int)TileOffsetHorizontal.H4_W]}");
+            ) && hColors[(int)TileOffsetHorizontal.H0_E]!=HorizontalColor.WildCard){
+                // Console.WriteLine($"H0_E={hColors[(int)TileOffsetHorizontal.H0_E]}, H4_W={hColors[(int)TileOffsetHorizontal.H4_W]}");
                 numberOfMismatch++;
             }
             
@@ -485,6 +485,47 @@ namespace WangTile
             }
 
             return (cColors:cornerColorValues,hColors:horizontalColorValues,vColors:verticalColorValues);
+        }
+        
+        // Return empty slot position
+        public (int col, int row) GetEmptySlotPosition(){
+            (int col, int row) pos = (0,0);
+
+            while (true){
+                int index = Utils.GetBoardSlotIndex(this.Width, pos.col, pos.row);
+                if (this.TileSlots[index].TileID==null){
+                    return pos;
+                }
+
+                 pos = GetNextTileSlot(pos.col,pos.row);
+                
+                if (pos.col==this.Height){
+                    return (col: this.Height, row: this.Width);
+                }
+            }
+        }
+        // RemoveAdjacentTiles remove all 4 tiles on its north, east, south, and west.
+        public void RemoveAdjacentTiles(int col, int row){
+            (int Col,int Row) northPos = this.getNorthCoordinates(col, row);
+            (int Col,int Row) eastPos = this.getEastCoordinates(col, row);
+            (int Col,int Row) southPos = this.getSouthCoordinates(col, row);
+            (int Col,int Row) westPos = this.getWestCoordinates(col, row);
+
+            if (this.isValidPosition(northPos.Col, northPos.Row)){
+                this.RemoveTile(northPos.Col, northPos.Row);
+            }
+
+            if (this.isValidPosition(eastPos.Col,eastPos.Row)){
+                this.RemoveTile(eastPos.Col,eastPos.Row);
+            }
+
+            if (this.isValidPosition(southPos.Col, southPos.Row)){
+                this.RemoveTile(southPos.Col, southPos.Row); 
+            }
+
+            if (this.isValidPosition(westPos.Col, westPos.Row)){
+                this.RemoveTile(westPos.Col, westPos.Row);
+            }
         }
 
         (int col,int row) getNorthCoordinates(int col,int row){
@@ -673,12 +714,28 @@ namespace WangTile
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
         }
 
-        public (int col, int row) FindRandomPositionWithAdjacentTilesOnEdges(){
+        // Find random tile slot position with adjacent tile and has no tile yet
+        public (int col, int row) FindEmptySlotWithAdjacentTilesOnEdges(Random rand){
+            int i=0;
+            (int col, int row) emptySlotPos;
             while (true){
-                (int col, int row) pos = Utils.GetRandomPosition(this.Width,this.Height);
-                if (IsThereAnAdjacentTileOnEdges(pos.col,pos.row)){
+                (int col, int row) pos = Utils.GetRandomPosition(this.Width,this.Height, rand);
+                if (IsThereAnAdjacentTileOnEdges(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row)){
                     return (col:pos.col,row:pos.row);
                 }
+
+                if (i%100==0){
+                    emptySlotPos = this.GetEmptySlotPosition();
+                    if (emptySlotPos.col==this.Height && emptySlotPos.row== this.Width){
+                        // No empty tile slots
+                        return emptySlotPos;
+                    }
+
+                    if (i==1000){
+                        return pos;
+                    } 
+                }
+                i++;
             }
         }
 

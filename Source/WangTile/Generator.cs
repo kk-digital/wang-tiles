@@ -110,67 +110,127 @@ namespace WangTile
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
             tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
             
+            // Tetris Block 4 - T block facing up
+            //   []   _   [0]
+            // [][][]  [1][2][3]
+            // 
+            // Tile 0 of Tetris Block 4
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AD,CornerColor.AE,CornerColor.AF,CornerColor.AG,VerticalColor.T,HorizontalColor.U,VerticalColor.U,HorizontalColor.T);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+
+            // Tile 1 of Tetris Block 4
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AJ,CornerColor.AG,CornerColor.AI,CornerColor.AK,VerticalColor.W,HorizontalColor.W,VerticalColor.X,HorizontalColor.V);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // Tile 2 of Tetris Block 4
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AG,CornerColor.AF,CornerColor.AH,CornerColor.AI,VerticalColor.U,HorizontalColor.X,VerticalColor.V,HorizontalColor.W);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // Tile 3 of Tetris Block 4
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AF,CornerColor.AL,CornerColor.AM,CornerColor.AH,VerticalColor.Y,HorizontalColor.Y,VerticalColor.Z,HorizontalColor.X);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
 
             newBoard.AddTileSet(tileSet);
 
-            Console.WriteLine($"length of CornerColorsData={tileSet.CornerColors.Length}");
-            Console.WriteLine($"length of HorizontalColorsData={tileSet.HorizontalColors.Length}");
-            Console.WriteLine($"length of VerticalColorsData={tileSet.VerticalColors.Length}");
-
-            // Console.WriteLine($"Number of times Corner.A is used={tileSet.CornerColors[(int)CornerColor.A].NumberOfTimesUsed}");
-            // Console.WriteLine($"Number of times Corner.B is used={tileSet.CornerColors[(int)CornerColor.B].NumberOfTimesUsed}");
 
             // Select random tile to place on first slot
-            Random random = new Random();
-            // int tileIndex = random.Next(0,newBoard.TileSet[0].Tiles.Length);
-            int tileIndex = 4;
-
+            Random rand = new Random();
+            int tileIndex = rand.Next(0,newBoard.TileSet[0].Tiles.Length);
 
             // place the random tile on the board 
-            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height);
+            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
             // (int col, int row) pos = (0,0);
             newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
             Console.WriteLine($"First tile is {tileIndex}");
+           
 
-
-            for (int i=1; i<100;i++){
-                Console.WriteLine($"Tile Number={i}");
-
-                // place tiles to random position with atleast 1 adjacent edge side
-                pos = newBoard.FindRandomPositionWithAdjacentTilesOnEdges();
-                // pos = newBoard.GetNextTileSlot(pos.col,pos.row);
-
-                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row, true, colorMatching);
-                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
-                for (int x=0; x<tileMismatchesStruct.Length;x++){
-                    Console.WriteLine($"TileID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
+            int i=0;
+            while (i<10000){
+                Console.WriteLine($"Iteration={i}");
+                TetrisBlockIterate(newBoard, colorMatching, rand);
+                if (i%100==0){
+                Picture newPic2 = new Picture();
+                newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 }
 
-                int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
-                int max = 0;
-                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[2].NumberOfMismatches){
-                    max = 2 ;
-                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[1].NumberOfMismatches){
-                    max = 1;
-                }
-                if (max!=0){
-                    Random rand= new Random();
-                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,max+1)].TileID;
-                }
+                // Thread.Sleep(1000);
+                newBoard.RemoveTilesWithMismatches(true, colorMatching);
 
-                Console.WriteLine($"Tile put={lowestMismatchTileID}");
-                Console.WriteLine("-----------------");
+                if (i%100==0){
+                    (int col, int row) emptySlotPos = newBoard.GetEmptySlotPosition();
+                   
+                    // Thread.Sleep(500);
+                    if (emptySlotPos.col==newBoard.Height && emptySlotPos.row== newBoard.Width){
+                        // No empty tile slots
+                        break;
+                    }
 
-                newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
+                    // There is empty tile slot
+                    // then remove the adjacent tiles
+                    newBoard.RemoveAdjacentTiles(pos.col, pos.row);
+                    newBoard.RemoveTilesWithMismatches(true, colorMatching);
+                }
+ 
+                i++;
             }
-
-            newBoard.RemoveTilesWithMismatches(true, colorMatching);
-
-  
-
+     
             // Generate and Save PNG
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
+        }
+
+        void TetrisBlockIterate(Board newBoard,ColorMatching colorMatching, Random rand){
+            (int col, int row) pos;
+            // for (int i=1; i<4;i++){
+            while (true){
+                // place tiles to random position with atleast 1 adjacent edge side
+                pos = newBoard.FindEmptySlotWithAdjacentTilesOnEdges(rand);
+                if (pos.col == newBoard.Height && pos.row == newBoard.Width){
+                        // No empty tile slots
+                        break;
+                }
+
+                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row, true, colorMatching);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+                Console.WriteLine($"Pos={pos.col},{pos.row}");
+                for (int x=0; x<tileMismatchesStruct.Length;x++){
+                    Console.WriteLine($"Tile ID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
+                }
+                // Console.WriteLine("------------");
+                int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
+                int max = 0;
+                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[5].NumberOfMismatches){
+                    max = 5 ;
+                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[4].NumberOfMismatches){
+                    max = 4 ;
+                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[3].NumberOfMismatches){
+                    max = 3 ;
+                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[2].NumberOfMismatches){
+                    max = 2 ;
+                } else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[1].NumberOfMismatches){
+                    max = 1;
+                }
+
+                if (max!=0){
+                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,max+1)].TileID;
+                }
+
+                newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
+            }
         }
     }
 }
