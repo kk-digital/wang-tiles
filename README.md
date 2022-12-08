@@ -110,6 +110,25 @@ Options:
   -?, -h, --help                                       Show help and usage information
 ```
 
+#### wang-tiles tetris
+---
+Usage for ```wang-tiles tetris```
+```
+Usage:
+  wang-tiles tetris [options]
+
+Options:
+  --version <version>                (int) The version of Weighted Probability Algo to run (1).
+  --width <width>                    (int) The width of the board to be made.
+  --height <height>                  (int) The height of the board to be made.
+  --output-name <output-name>        (string) The filename of the resulting picture (default directory is ./data).
+  --color-matching <color-matching>  (int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching).
+  -?, -h, --help                     Show help and usage information
+```
+Sample Command
+```
+./bin/Debug/net6.0/wang-tiles -- tetris --version 1 --width 16 --height 16 --output-name "Tetris_V1_16x16" --color-matching 1
+```
 For more information, run
 
 ```./bin/Debug/net6.0/wang-tiles -- -h```
