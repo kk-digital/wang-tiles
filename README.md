@@ -129,10 +129,12 @@ Sample Command
 ```
 ./bin/Debug/net6.0/wang-tiles -- tetris --version 1 --width 16 --height 16 --output-name "Tetris_V1_16x16" --color-matching 1
 ```
+---
 For more information, run
 
 ```./bin/Debug/net6.0/wang-tiles -- -h```
-
-```./bin/Debug/net6.0/wang-tiles placement-algo -- -h```
-
-```./bin/Debug/net6.0/wang-tiles schonings-algo -- -h```
+```./bin/Debug/net6.0/wang-tiles -- placement-algo -h```
+```./bin/Debug/net6.0/wang-tiles -- schonings-algo -h```
+```./bin/Debug/net6.0/wang-tiles -- weighted-probability -h```
+```./bin/Debug/net6.0/wang-tiles -- test-algo -h```
+```./bin/Debug/net6.0/wang-tiles -- tetris -h```
