@@ -133,8 +133,13 @@ Sample Command
 For more information, run
 
 ```./bin/Debug/net6.0/wang-tiles -- -h```
+
 ```./bin/Debug/net6.0/wang-tiles -- placement-algo -h```
+
 ```./bin/Debug/net6.0/wang-tiles -- schonings-algo -h```
+
 ```./bin/Debug/net6.0/wang-tiles -- weighted-probability -h```
+
 ```./bin/Debug/net6.0/wang-tiles -- test-algo -h```
+
 ```./bin/Debug/net6.0/wang-tiles -- tetris -h```
