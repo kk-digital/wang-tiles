@@ -203,14 +203,14 @@ namespace WangTile
                 //     Picture newPic2 = new Picture();
                 //     newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 // }
-                // Picture newPic2 = new Picture();
-                // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-                // Thread.Sleep(500);
+                Picture newPic2 = new Picture();
+                newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+                Thread.Sleep(500);
 
                 newBoard.RemoveTilesWithMismatches(true, colorMatching);
 
-                // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-                // Thread.Sleep(500);
+                newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+                Thread.Sleep(500);
 
                 if (i%100==0){
                     (int col, int row) emptySlotPos = newBoard.GetEmptySlotPosition();
