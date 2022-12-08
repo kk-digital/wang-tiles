@@ -634,15 +634,14 @@ namespace CornerWangTile
                     case EnergyCalculationMode.CountOnePerCorner:
                         numberOfMismatch = this.GetNumberOfMismatch_CountCornerMismatchAsOne(col,row);
                         break;
-
                 }
 
                 if (numberOfMismatch>24){
                     Console.WriteLine("numberOfMismatch = ",numberOfMismatch);
                 }
                 // Weight[i] = (k * ((max energy - error(i))^gamma) / (max_energy^gamma) ) + epsilon* (1.0 / number-of-tiles)
-                float term1= k * (((float)Math.Pow((double)(maxEnergy-numberOfMismatch),gamma)/maxEnergyPowerGamma));
-                float term2= epsilonMulInverseOfNumOfTiles;
+                float term1 = k * (((float)Math.Pow((double)(maxEnergy-numberOfMismatch),gamma)/maxEnergyPowerGamma));
+                float term2 = epsilonMulInverseOfNumOfTiles;
                 weight[i] =  term1+term2; 
 
                 // Console.WriteLine($"NumberOfMismatch={numberOfMismatch}, Term 1 + Term 2 = {term1} + {term2}");

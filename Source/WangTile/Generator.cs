@@ -6,6 +6,8 @@ namespace WangTile
     class Generator {
         public void TetrisBlocks_V1(int width, int height, string outputName, ColorMatching colorMatching)
         {
+            Stopwatch sw = Stopwatch.StartNew();
+
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
@@ -144,6 +146,41 @@ namespace WangTile
             tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
 
+            // Tetris Block 5 - Z block 
+            // [][]   _ [0][1]
+            //   [][]      [2][3]
+            // 
+            // Tile 0 of Tetris Block 5
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AN,CornerColor.AO,CornerColor.AP,CornerColor.AQ,VerticalColor.AA,HorizontalColor.AA,VerticalColor.AB,HorizontalColor.Z);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // Tile 1 of Tetris Block 5
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AO,CornerColor.AR,CornerColor.AS,CornerColor.AP,VerticalColor.AC,HorizontalColor.AB,VerticalColor.AD,HorizontalColor.AA);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+
+            // Tile 2 of Tetris Block 5
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AP,CornerColor.AS,CornerColor.AT,CornerColor.AU,VerticalColor.AD,HorizontalColor.AD,VerticalColor.AE,HorizontalColor.AC);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // Tile 3 of Tetris Block 5
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.AS,CornerColor.AV,CornerColor.AW,CornerColor.AT,VerticalColor.AF,HorizontalColor.AE,VerticalColor.AG,HorizontalColor.AD);
+            tileSet.Tiles[tileID].MaskAllCorners();
+            tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+
             newBoard.AddTileSet(tileSet);
 
 
@@ -159,16 +196,21 @@ namespace WangTile
            
 
             int i=0;
-            while (i<10000){
-                Console.WriteLine($"Iteration={i}");
-                TetrisBlockIterate(newBoard, colorMatching, rand);
-                if (i%100==0){
-                Picture newPic2 = new Picture();
-                newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-                }
+            while (i<5000){
+                // Console.WriteLine($"Iteration={i}");
+                TetrisBlockIterate(newBoard, colorMatching, rand, pos);
+                // if (i%100==0){
+                //     Picture newPic2 = new Picture();
+                //     newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+                // }
+                // Picture newPic2 = new Picture();
+                // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+                // Thread.Sleep(500);
 
-                // Thread.Sleep(1000);
                 newBoard.RemoveTilesWithMismatches(true, colorMatching);
+
+                // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+                // Thread.Sleep(500);
 
                 if (i%100==0){
                     (int col, int row) emptySlotPos = newBoard.GetEmptySlotPosition();
@@ -191,45 +233,59 @@ namespace WangTile
             // Generate and Save PNG
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
+
+             // Timer stop
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+            Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
 
-        void TetrisBlockIterate(Board newBoard,ColorMatching colorMatching, Random rand){
-            (int col, int row) pos;
-            // for (int i=1; i<4;i++){
-            while (true){
+        void TetrisBlockIterate(Board newBoard,ColorMatching colorMatching, Random rand, (int col, int row) pos){
+            int tileSetID = 0;
+
+            for (int i=1; i<newBoard.TileSlots.Length*2;i++){
+            // while (true){
+                // pos = Utils.GetNextTileSlot(newBoard.Width, pos.col, pos.row);
+                
                 // place tiles to random position with atleast 1 adjacent edge side
                 pos = newBoard.FindEmptySlotWithAdjacentTilesOnEdges(rand);
                 if (pos.col == newBoard.Height && pos.row == newBoard.Width){
                         // No empty tile slots
                         break;
                 }
+  
 
-                int[] tileMismatches = newBoard.GetTileMismatchArray(0,pos.col,pos.row, true, colorMatching);
+                int[] tileMismatches = newBoard.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
                 TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
-                Console.WriteLine($"Pos={pos.col},{pos.row}");
-                for (int x=0; x<tileMismatchesStruct.Length;x++){
-                    Console.WriteLine($"Tile ID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
-                }
-                // Console.WriteLine("------------");
-                int lowestMismatchTileID = tileMismatchesStruct[0].TileID;
-                int max = 0;
-                if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[5].NumberOfMismatches){
-                    max = 5 ;
-                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[4].NumberOfMismatches){
-                    max = 4 ;
-                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[3].NumberOfMismatches){
-                    max = 3 ;
-                }else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[2].NumberOfMismatches){
-                    max = 2 ;
-                } else if (tileMismatchesStruct[0].NumberOfMismatches==tileMismatchesStruct[1].NumberOfMismatches){
-                    max = 1;
-                }
+                // for (int x=0; x<tileMismatchesStruct.Length;x++){
+                //     Console.WriteLine($"TileID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
 
-                if (max!=0){
-                    lowestMismatchTileID  = tileMismatchesStruct[rand.Next(0,max+1)].TileID;
-                }
+                // }
 
-                newBoard.PlaceTile(0,lowestMismatchTileID,pos.col,pos.row);
+                // TileProbability[] probabilityVector = newBoard.GetProbabilityVector(pos.col, pos.row, tileSetID, tileMismatchesStruct);
+                // TileProbability[] normalizedProbabilityVector= newBoard.GetNormalizedProbabilityVector(probabilityVector);
+                // TileProbability[] cumulativeProbabilityVector = newBoard.GetCumulativeProbabilityVector(normalizedProbabilityVector);
+                // Console.WriteLine("NormalizedCumulativeProbabilityVector");
+                // Console.WriteLine($"col={pos.col}, row={pos.row}");
+                // for (int x=0; x<cumulativeProbabilityVector.Length;x++){
+                //     Console.WriteLine($"TileID={cumulativeProbabilityVector[x].TileID}, Cumulative={cumulativeProbabilityVector[x].Weight}, Mismatches={cumulativeProbabilityVector[x].NumberOfMismatch}");
+
+                // }
+                // int lowestMismatchTileID = newBoard.ChooseTileIndexFromCumulativeProbabilityVector(cumulativeProbabilityVector, rand);
+                // Console.WriteLine($"Tile ID to put={lowestMismatchTileID}");
+                // Console.WriteLine($"Pos={pos.col},{pos.row}");
+                // for (int x=0; x<tileMismatchesStruct.Length;x++){
+                //     Console.WriteLine($"Tile ID={tileMismatchesStruct[x].TileID}, Mismatches={tileMismatchesStruct[x].NumberOfMismatches}");
+                // }
+                // // Console.WriteLine("------------");
+                TileMismatch[] lowestTileMismatches = newBoard.GetTilesWithLowestMismatches(tileMismatchesStruct);
+                int lowestMismatchTileID = lowestTileMismatches[rand.Next(0, lowestTileMismatches.Length)].TileID;
+                // for (int x=0; x<lowestTileMismatches.Length;x++){
+                //     Console.WriteLine($"TileID={lowestTileMismatches[x].TileID}, Mismatches={lowestTileMismatches[x].NumberOfMismatches}");
+
+                // }        
+
+                newBoard.PlaceTile(tileSetID, lowestMismatchTileID, pos.col, pos.row);
             }
         }
     }

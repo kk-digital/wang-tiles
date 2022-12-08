@@ -23,6 +23,22 @@ namespace WangTile
             }
         }
 
+        public static (int col,int row) GetNorthCoordinates(int col,int row){
+            return (col:col-1,row:row);
+        }
+
+        public static (int col,int row) GetEastCoordinates(int col,int row){
+            return (col:col,row:row+1);
+        }
+
+        public static (int col,int row) GetSouthCoordinates(int col,int row){
+            return (col:col+1,row:row);
+        }
+
+        public static (int col,int row) GetWestCoordinates(int col,int row){
+            return (col:col,row:row-1);
+        }
+
         public static TileMismatch[] SortTileMismatches(int[] tileMismatches){
             TileMismatch[] tileMismatchArray = new TileMismatch[tileMismatches.Length];
 
