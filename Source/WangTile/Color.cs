@@ -57,6 +57,7 @@ namespace WangTile
     public enum CornerColor {
         NoColor, // No color for empty tile slots.
         WildCard,
+        Border, // border of board
         A,
         B,
         C,
@@ -110,11 +111,39 @@ namespace WangTile
         AX,
         AY,
         AZ, 
+
+        BA,
+        BB,
+        BC,
+        BD,
+        BE,
+        BF,
+        BG,
+        BH,
+        BI,
+        BJ,
+        BK,
+        BL,
+        BM,
+        BN,
+        BO,
+        BP,
+        BQ,
+        BR,
+        BS,
+        BT,
+        BU,
+        BV,
+        BW,
+        BX,
+        BY,
+        BZ,
     }
 
         public enum HorizontalColor {
         NoColor, // No color for empty tile slots.
         WildCard,
+        Border, // border of board
         A,
         B,
         C,
@@ -168,11 +197,39 @@ namespace WangTile
         AX,
         AY,
         AZ,
+
+        BA,
+        BB,
+        BC,
+        BD,
+        BE,
+        BF,
+        BG,
+        BH,
+        BI,
+        BJ,
+        BK,
+        BL,
+        BM,
+        BN,
+        BO,
+        BP,
+        BQ,
+        BR,
+        BS,
+        BT,
+        BU,
+        BV,
+        BW,
+        BX,
+        BY,
+        BZ,
     }
 
         public enum VerticalColor {
         NoColor, // No color for empty tile slots.
         WildCard,
+        Border, // border of board
         A,
         B,
         C,
@@ -226,7 +283,35 @@ namespace WangTile
         AX,
         AY,
         AZ,
+
+        BA,
+        BB,
+        BC,
+        BD,
+        BE,
+        BF,
+        BG,
+        BH,
+        BI,
+        BJ,
+        BK,
+        BL,
+        BM,
+        BN,
+        BO,
+        BP,
+        BQ,
+        BR,
+        BS,
+        BT,
+        BU,
+        BV,
+        BW,
+        BX,
+        BY,
+        BZ,
     }
+    
      public struct PixelColor
     {
         public int Color;
