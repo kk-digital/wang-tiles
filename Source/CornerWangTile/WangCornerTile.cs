@@ -1,4 +1,4 @@
-namespace Wang
+namespace CornerWangTile
 {
 
     public class WangCornerTile
@@ -14,11 +14,11 @@ namespace Wang
         /* Constructor for WangCornerTile */
         public WangCornerTile(TileGeometry tileGeometry, Color cornerColorNW, Color cornerColorNE, Color cornerColorSE, Color cornerColorSW)
         {
-            TileGeometry = tileGeometry;
-            CornerColorNW = cornerColorNW;
-            CornerColorNE = cornerColorNE;
-            CornerColorSE = cornerColorSE;
-            CornerColorSW = cornerColorSW;
+            this.TileGeometry = tileGeometry;
+            this.CornerColorNW = cornerColorNW;
+            this.CornerColorNE = cornerColorNE;
+            this.CornerColorSE = cornerColorSE;
+            this.CornerColorSW = cornerColorSW;
         }
     }
 }

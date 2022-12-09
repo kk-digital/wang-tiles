@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Wang
+namespace CornerWangTile
 {
     ///<Summary>
     /// GeneratorOptions struct is a struct for the needed
@@ -261,7 +261,7 @@ namespace Wang
                 }
 
                 // time out after N flips
-                if (numberOfFlips==1000000){
+                if (numberOfFlips==100000){
                     break;
                 }
             }
@@ -406,5 +406,36 @@ namespace Wang
             TimeSpan time = sw.Elapsed;
             Utils.PrintResult(newBoard, options.NumOfColors,numberOfFlips,numberOfMismatch, time);
         }
+
+        //  public void TestQuickSort(GeneratorOptions options)
+        // {   
+        //     // test for quick sort
+        //     TileWeight[] tileWeights = new TileWeight[5];
+        //     TileWeight newTileWeight0 = new TileWeight(0, 1.4f);
+        //     tileWeights[0]= newTileWeight0;
+
+        //     TileWeight newTileWeight1 = new TileWeight(1, 2.4f);
+        //     tileWeights[1]= newTileWeight1;
+
+        //     TileWeight newTileWeight2 = new TileWeight(2, 3.4f);
+        //     tileWeights[2]= newTileWeight2;
+
+        //     TileWeight newTileWeight3 = new TileWeight(3, 0f);
+        //     tileWeights[3]= newTileWeight3;
+
+        //     TileWeight newTileWeight4 = new TileWeight(4, 0f);
+        //     tileWeights[4]= newTileWeight4;
+        //     for (int i=0;i<tileWeights.Length;i++){
+        //         Console.WriteLine($"TileID={tileWeights[i].TileID}, Weight={tileWeights[i].Weight}");
+        //     }
+
+        //     Console.WriteLine("-------------------");
+        //     Utils.QuickSortTileWeight(tileWeights,0,tileWeights.Length-1);
+
+        //     for (int i=0;i<tileWeights.Length;i++){
+        //         Console.WriteLine($"TileID={tileWeights[i].TileID}, Weight={tileWeights[i].Weight}");
+        //     }
+        // }
+
     }
 }

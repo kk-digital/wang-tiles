@@ -1,4 +1,4 @@
-namespace Wang
+namespace CornerWangTile
 {
     public enum TileGeometry
     {
@@ -86,6 +86,18 @@ namespace Wang
         C8,
     }
 
+    //          |         |
+    //          |         |
+    //    1     |    2    |    3
+    // _ _ _ _S̲E̲|S̲W̲_____S̲E̲|S̲W̲_ _ _ _
+    //        NE|NW     NE|NW
+    //    8     |    0    |    4
+    //          |         |
+    // _ _ _ _S̲E̲|S̲W̲_____S̲E̲|S̲W̲_ _ _ _
+    //        NE|NW     NE|NW
+    //    7     |    6    |    5
+    //          |         |
+    //          |         |
     // 0:NW : 0:NW, 8:NE, 1:SE, 2:SW
     // 0:NE : 0:NE, 2:SE, 3:SW, 4:NW
     // 0:SE : 0:SE, 4:SW, 5:NW, 6:NE

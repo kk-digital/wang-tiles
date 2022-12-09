@@ -1,4 +1,4 @@
-namespace Wang
+namespace CornerWangTile
 {
     public enum Color
     {

@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Wang
+namespace CornerWangTile
 {
 
  public class WangCornerTileSet
@@ -20,8 +20,10 @@ namespace Wang
 
       if (this.Tiles==null){
          this.Tiles=new WangCornerTile[1];
+         newTile.TileID=0;
          this.Tiles[0]=newTile;
       } else {
+         newTile.TileID=this.Tiles.Length;
          this.Tiles=this.Tiles.Append(newTile).ToArray();
       }
 

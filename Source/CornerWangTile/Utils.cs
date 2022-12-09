@@ -1,4 +1,4 @@
-namespace Wang
+namespace CornerWangTile
 {
     public static class Utils
     {
@@ -35,6 +35,14 @@ namespace Wang
         static public int Partition(TileWeight[] arr, int left, int right) {
          TileWeight pivot;
          pivot = arr[left];
+         while (true){
+            if (pivot.Weight==0f){
+               pivot=arr[left++];
+            }else{
+               break;
+            }
+         }
+         
          while (true) {
             while (arr[left].Weight < pivot.Weight) {
                left++;
