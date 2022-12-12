@@ -199,7 +199,10 @@ class MainClass
             WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
                 case 1:
-                    newGeneratedBoard.TetrisBlocks_V1(width,height,outputName, (ColorMatching)colorMatching);
+                    newGeneratedBoard.TetrisBlocks_V1_GreedyPlacement(width,height,outputName, (ColorMatching)colorMatching);
+                    break;
+                case 2:
+                    newGeneratedBoard.TetrisBlocks_V2_ProbabilityDistribution(width,height,outputName, (ColorMatching)colorMatching);
                     break;
             }
         });
