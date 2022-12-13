@@ -117,7 +117,7 @@ namespace WangTile
 
         public void RemoveTilesWithMismatches(bool useBitmasking, ColorMatching colorMatching){
             (int col, int row) pos = (0,0);
-
+    
             bool wasThereMismatch = false;
             while (true){
                 int numberOfMismatch = 0;
@@ -149,6 +149,43 @@ namespace WangTile
 
             }
         }
+
+        public void ReplaceTileOrRemoveAdjacent(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID){
+            (int col, int row) pos = (0,0);
+
+            int numberOfMismatch = 0;
+
+            // choose random position
+            pos.col = random.Next(0,this.Height);
+            pos.row = random.Next(0,this.Width);
+
+            WangTile tile = this.getTile(pos.col,pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+
+            
+            numberOfMismatch=TetrisMismatchCalculator.CountMismatchOnCorners_ForRemoval(cColors,tile.TileBitMask);
+            numberOfMismatch+=TetrisMismatchCalculator.CountMismatchVertical_ForRemoval(vColors,tile.TileBitMask);
+            numberOfMismatch+=TetrisMismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors,tile.TileBitMask);
+
+            if (numberOfMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
+                if (Utils.SelectProbability(random, 0.01f)){
+                    this.RemoveTile(pos.col,pos.row);
+                    this.RemoveAdjacentTiles(pos.col,pos.row);
+                }else{
+                    // Replace tile
+
+                    int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+                    TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+
+                    TileMismatch[] lowestTileMismatches = this.GetTilesWithLowestMismatches(tileMismatchesStruct);
+                    int lowestMismatchTileID = lowestTileMismatches[random.Next(0, lowestTileMismatches.Length)].TileID;
+                
+                    this.PlaceTile(tileSetID, lowestMismatchTileID, pos.col, pos.row);
+                }
+            } 
+        }
+
+
 
         public (int col, int row) GetNextTileSlot(int col, int row){
             if (row==this.Width-1){

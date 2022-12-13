@@ -23,6 +23,16 @@ namespace WangTile
             }
         }
 
+        public static bool SelectProbability(Random random, float probability)
+        {
+            float randFloat = (float)random.NextDouble();
+            if (randFloat<probability){
+                return true;
+            }
+
+            return false;
+        }
+
         public static (int col,int row) GetNorthCoordinates(int col,int row){
             return (col:col-1,row:row);
         }

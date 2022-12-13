@@ -40,7 +40,7 @@ namespace WangTile
             string fileName = "./data/json/test.json";
             string jsonString = File.ReadAllText(fileName);
             WangTileJSON[] wangArray = JsonSerializer.Deserialize<WangTileJSON[]>(jsonString)!;
-            Console.WriteLine($"WangTile[0] CornerColorNW={wangArray[0].CornerColorNW}");
+            Console.WriteLine($"WangTile[0] CornerColorNW={wangArray[0].CornerColorNW}, type=={wangArray[0].CornerColorNW.GetType()}");
             Console.WriteLine($"WangTile[0] CornerColorNE={wangArray[0].CornerColorNE}");
             Console.WriteLine($"WangTile[0] CornerColorSE={wangArray[0].CornerColorSE}");
             Console.WriteLine($"WangTile[0] CornerColorSW={wangArray[0].CornerColorSW}");
@@ -72,6 +72,12 @@ namespace WangTile
             Console.WriteLine($"WangTile[1] BitmaskEastEdge={wangArray[1].BitmaskEastEdge}");
             Console.WriteLine($"WangTile[1] BitmaskSouthEdge={wangArray[1].BitmaskSouthEdge}");
             Console.WriteLine($"WangTile[1] BitmaskWestEdge={wangArray[1].BitmaskWestEdge}");
+
+            var cornerColorNW = new CornerColor();
+            Enum.TryParse(wangArray[0].CornerColorNW, out cornerColorNW);
+            WangTile wangTile = new WangTile(cornerColorNW,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+            Console.WriteLine($"wangTil CornerColorNW={wangTile.CornerColorNW}, type={wangTile.CornerColorNW.GetType()}");
+            
         }
     }
 
