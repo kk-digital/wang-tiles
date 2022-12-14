@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using System.Text.Json;
+using System.Text;
 
 namespace WangTile
 {
@@ -98,6 +98,11 @@ namespace WangTile
         {
             Stopwatch sw = Stopwatch.StartNew();
 
+      
+            var csv = new StringBuilder();
+
+ 
+
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
@@ -124,23 +129,29 @@ namespace WangTile
             // Picture newPic2 = new Picture();
             //     newPic2.SavePNG(newBoard, colorMap, outputName+".png");
             //     Thread.Sleep(5);
-            while (i<50000){
-                // Console.WriteLine($"Iteration={i}");
+            while (i<200000){
                 newBoard.ReplaceTileOrRemoveAdjacent(useBitmasking, colorMatching, rand, tileSetID);
 
                 // if (i%50==0){
                 // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 // }
-           
+
+                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
+                var newLine = string.Format("{0},{1}", i, totalMismatch);
+                csv.AppendLine(newLine);  
+
                 i++;
             }
 
             newBoard.RemoveTilesWithMismatches(true, colorMatching);
-     
+
+            // Save CSV
+            File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", csv.ToString());
+
             // Generate and Save PNG
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
-
+            
              // Timer stop
             sw.Stop();
             TimeSpan time = sw.Elapsed;

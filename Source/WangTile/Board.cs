@@ -168,7 +168,7 @@ namespace WangTile
             numberOfMismatch+=TetrisMismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors,tile.TileBitMask);
 
             if (numberOfMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
-                if (Utils.SelectProbability(random, 0.01f)){
+                if (Utils.SelectProbability(random, 0.005f)){
                     this.RemoveTile(pos.col,pos.row);
                     this.RemoveAdjacentTiles(pos.col,pos.row);
                 }else{

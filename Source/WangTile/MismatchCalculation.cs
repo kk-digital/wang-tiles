@@ -2,6 +2,32 @@ namespace WangTile
 {
     public static class TetrisMismatchCalculator
     {
+
+        public static int GetBoardTotalMismatch(Board board, bool useBitmasking, ColorMatching colorMatching){
+            int col = board.Height;
+            int row = board.Width;
+            int totalMismatches=0;
+
+            for (int i=0;i<col-1;i++){
+                for (int j=0;j<row-1;j++){
+                    int index = Utils.GetBoardSlotIndex(board.Width, i, j);
+
+                    int? tileID = board.TileSlots[index].TileID;
+                    if (tileID!=null){
+                        WangTile tile = board.TileSet[0].Tiles[(int)tileID];
+
+                        (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = board.GetTileAdjacentColorValues(useBitmasking, i, j);
+
+                        totalMismatches+=TetrisMismatchCalculator.CountMismatchOnCorners_ForRemoval(cColors, tile.TileBitMask);
+                        totalMismatches+=TetrisMismatchCalculator.CountMismatchVertical_ForRemoval(vColors, tile.TileBitMask);
+                        totalMismatches+=TetrisMismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors, tile.TileBitMask);
+                    }
+                }
+            }
+
+            return totalMismatches;
+        }
+
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////// Mismatch Calculation for Placement //////////////////////////////////
