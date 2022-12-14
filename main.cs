@@ -192,9 +192,12 @@ class MainClass
             new Option<int>(
                 name:"--color-matching",
                 description:"(int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching)."),
+            new Option<int>(
+                name:"--iterations",
+                description:"(int) The number of iterations to do for the algo."),
         };
 
-        tetrisCommand.Handler = CommandHandler.Create<int,int,int,string, int>((version,width,height,outputName, colorMatching) =>
+        tetrisCommand.Handler = CommandHandler.Create<int,int,int,string, int, int>((version,width,height,outputName, colorMatching, iterations) =>
         {
             WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
@@ -203,6 +206,9 @@ class MainClass
                     break;
                 case 2:
                     newGeneratedBoard.TetrisBlocks_V2_GreedyPlacement(width,height,outputName, (ColorMatching)colorMatching);
+                    break;
+                case 3:
+                    newGeneratedBoard.TetrisBlocks_V3_Simulated_Annealing(width,height,outputName, (ColorMatching)colorMatching, iterations);
                     break;
             }
         });

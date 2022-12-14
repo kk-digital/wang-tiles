@@ -185,6 +185,33 @@ namespace WangTile
             } 
         }
 
+        public void ReplaceTileUsingSimulatedAnnealing(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, int iteration){
+            (int col, int row) pos = (0,0);
+
+            int currentMismatch = 0;
+
+            // choose random position
+            pos.col = random.Next(0,this.Height);
+            pos.row = random.Next(0,this.Width);
+
+            WangTile tile = this.getTile(pos.col,pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+
+            
+            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForRemoval(cColors,tile.TileBitMask);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForRemoval(vColors,tile.TileBitMask);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors,tile.TileBitMask);
+
+            if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
+                int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+                TileProbability[] tileProbabilities = this.GetTileProbability_SimulatedAnnealing(tileMismatchesStruct, currentMismatch, iteration);
+                int tileID = this.ChooseRandomTileIDBasedOnProbability(tileProbabilities,random);
+                
+                this.PlaceTile(tileSetID, tileID, pos.col, pos.row);
+            } 
+        }
+
 
 
         public (int col, int row) GetNextTileSlot(int col, int row){
@@ -693,6 +720,44 @@ namespace WangTile
         public void CalculateDistributionProbability(){
             
         }
-     
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////// Simulated Annealing Methods ////////////////////////////////
+        public TileProbability[] GetTileProbability_SimulatedAnnealing(TileMismatch[] tileMismatches, int currentMismatch, int iteration){
+            float p = 0f;
+            TileProbability[] tileProbabilities = new TileProbability[0];
+            for (int i=0; i<tileMismatches.Length;i++){
+                int mismatchDifference = tileMismatches[i].NumberOfMismatches-currentMismatch;
+
+                if (mismatchDifference<=0){
+                    p = 1f;
+                } else {
+                    p = (float)Math.Exp(((double)-1*(double)mismatchDifference)/((double)iteration));
+                }
+                TileProbability newTileProbability = new TileProbability(tileMismatches[i].TileID, p, tileMismatches[i].NumberOfMismatches);
+
+                tileProbabilities = tileProbabilities.Append(newTileProbability).ToArray();
+            }
+
+            return tileProbabilities;
+        }
+
+        public int ChooseRandomTileIDBasedOnProbability(TileProbability[] tileProbabilities, Random rand){
+            float sumOfProbabilities = 0f;
+            for (int i=0;i<tileProbabilities.Length;i++){
+                sumOfProbabilities+=tileProbabilities[i].Weight;
+            }
+
+            float x = (float)rand.NextDouble()*sumOfProbabilities;
+            for (int i=0; i<tileProbabilities.Length;++i){
+                x-=tileProbabilities[i].Weight;
+                if (x<=0){
+                    return tileProbabilities[i].TileID;
+                }
+            }
+
+            return tileProbabilities[tileProbabilities.Length-1].TileID;
+        }
     }
 }
