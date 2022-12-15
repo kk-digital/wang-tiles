@@ -215,8 +215,39 @@ namespace WangTile
             // Picture newPic2 = new Picture();
             // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
             // Thread.Sleep(5);
+
+            // initial temperature
+            newBoard.Temperature=1000f;
+            // Decrease temperature every L iteration
+            int L = 1;
             while (i<iterations){
-                newBoard.ReplaceTileUsingSimulatedAnnealing(useBitmasking, colorMatching, rand, tileSetID, i);
+
+                //Generate array with N indexes
+                // permute and shuffle them
+                // each tile appears once in a random order
+                (int col, int row)[] positionArr = new (int col, int row)[newBoard.TileSlots.Length];
+                pos = (0,0);
+                for (int j=0; j<newBoard.TileSlots.Length;j++){
+                    tileIndex=Utils.GetBoardSlotIndex(newBoard.Width, pos.col, pos.row);
+                    positionArr[tileIndex].col=pos.col;
+                    positionArr[tileIndex].row=pos.row;
+
+                    pos = Utils.GetNextTileSlot(newBoard.Width, pos.col,pos.row);
+                }
+
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    int z = rand.Next(j,newBoard.TileSlots.Length);
+                    (int col, int row) tmp = positionArr[j];
+                    positionArr[j]=positionArr[z];
+                    positionArr[z]=tmp;
+                }
+                
+
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    pos = positionArr[j];
+                    newBoard.ReplaceTileUsingSimulatedAnnealing(useBitmasking, colorMatching, rand, tileSetID, pos);
+
+                }
 
                 // if (i%50==0){
                 // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
@@ -226,6 +257,9 @@ namespace WangTile
                 var newLine = string.Format("{0},{1}", i, totalMismatch);
                 csv.AppendLine(newLine);  
 
+                if (iterations%L==0){
+                    newBoard.Temperature=newBoard.UpdateTemperature(rand);
+                }
                 i++;
             }
 

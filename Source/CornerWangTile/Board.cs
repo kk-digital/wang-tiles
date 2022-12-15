@@ -685,12 +685,15 @@ namespace CornerWangTile
         }
 
         public int ChooseTileIndexFromCumulativeProbabilityVector(float[] CumulativeProbabilityVector){
-            Random rand = new Random();
-            int randomInt = rand.Next(0,100);
-            float randomFloat = (float)randomInt / 100f;
-                
+            Random random = new Random();
+            // Generate random number 0-sum of weight probabilities
+            // 0 to cumulativeProbabilityVectore length-1
+            float randNumber = (float)Utils.GetRandomNumber(0, CumulativeProbabilityVector[CumulativeProbabilityVector.Length-1], random);
+            
+            // find index that the probability is less than the random number
+            // TODO: improve and use binary search
             for (int i=0;i<CumulativeProbabilityVector.Length;i++){
-                if (CumulativeProbabilityVector[i]>randomFloat){
+                if (CumulativeProbabilityVector[i]>randNumber){
                     return i;
                 }
             }

@@ -33,6 +33,11 @@ namespace WangTile
             return false;
         }
 
+        public static double GetRandomNumber(double minimum, double maximum, Random random)
+        { 
+            return random.NextDouble() * (maximum - minimum) + minimum;
+        }
+
         public static (int col,int row) GetNorthCoordinates(int col,int row){
             return (col:col-1,row:row);
         }

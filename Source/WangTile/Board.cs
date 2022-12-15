@@ -19,11 +19,11 @@ namespace WangTile
     public struct TileProbability{
         public int TileID;
         public int NumberOfMismatch;
-        public float Weight;
+        public float Probability;
 
-        public TileProbability(int tileID, float weight, int numberOfMismatches){
+        public TileProbability(int tileID, float probability, int numberOfMismatches){
             this.TileID = tileID;
-            this.Weight = weight;
+            this.Probability = probability;
             this.NumberOfMismatch= numberOfMismatches;
         }
     }
@@ -35,6 +35,9 @@ namespace WangTile
         public int Width;
         public WangTileSet[]? TileSet;
         
+        // For simulated annealing
+        public float Temperature;
+
         // Constructor
         public Board(int height, int width)
         {
@@ -184,35 +187,6 @@ namespace WangTile
                 }
             } 
         }
-
-        public void ReplaceTileUsingSimulatedAnnealing(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, int iteration){
-            (int col, int row) pos = (0,0);
-
-            int currentMismatch = 0;
-
-            // choose random position
-            pos.col = random.Next(0,this.Height);
-            pos.row = random.Next(0,this.Width);
-
-            WangTile tile = this.getTile(pos.col,pos.row);
-            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
-
-            
-            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForRemoval(cColors,tile.TileBitMask);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForRemoval(vColors,tile.TileBitMask);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors,tile.TileBitMask);
-
-            if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
-                int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
-                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
-                TileProbability[] tileProbabilities = this.GetTileProbability_SimulatedAnnealing(tileMismatchesStruct, currentMismatch, iteration);
-                int tileID = this.ChooseRandomTileIDBasedOnProbability(tileProbabilities,random);
-                
-                this.PlaceTile(tileSetID, tileID, pos.col, pos.row);
-            } 
-        }
-
-
 
         public (int col, int row) GetNextTileSlot(int col, int row){
             if (row==this.Width-1){
@@ -675,12 +649,12 @@ namespace WangTile
         public TileProbability[] GetNormalizedProbabilityVector(TileProbability[] tileProbabilityVector){
             float sum = 0f;
             for (int i = 0;i < tileProbabilityVector.Length;i++){
-                sum += tileProbabilityVector[i].Weight;
+                sum += tileProbabilityVector[i].Probability;
             }
 
             for (int i = 0;i < tileProbabilityVector.Length;i++){
-                float normalizedWeight = tileProbabilityVector[i].Weight/sum;
-                tileProbabilityVector[i].Weight=normalizedWeight;
+                float normalizedWeight = tileProbabilityVector[i].Probability/sum;
+                tileProbabilityVector[i].Probability=normalizedWeight;
             }
 
             return tileProbabilityVector;
@@ -691,23 +665,23 @@ namespace WangTile
 
             float sum = 0;
             for (int i = 0;i < CV.Length;i++){
-                sum = sum + CV[i].Weight;
-                CV[i].Weight=sum;
+                sum = sum + CV[i].Probability;
+                CV[i].Probability=sum;
             }
             
             return CV;
         }
 
-        public int ChooseTileIndexFromCumulativeProbabilityVector(TileProbability[] CumulativeProbabilityVector, Random rand){
+        public int ChooseTileIndexFromCumulativeProbabilityVector(TileProbability[] CumulativeProbabilityVector, Random random){
+            // Generate random number 0-sum of weight probabilities
+            // 0 to cumulativeProbabilityVectore length-1
+            float randNumber = (float)Utils.GetRandomNumber(0, CumulativeProbabilityVector[CumulativeProbabilityVector.Length-1].Probability, random);
             
-            // int randomInt = rand.Next(0,100);
-            // float randomFloat = (float)randomInt / 100f;
-             float randomFloat = 0.3f;
-                
-            for (int i=0;i<CumulativeProbabilityVector.Length*2;i++){
-                int chooseIndex = rand.Next(0,CumulativeProbabilityVector.Length);
-                if (CumulativeProbabilityVector[chooseIndex].Weight<randomFloat){
-                    return CumulativeProbabilityVector[chooseIndex].TileID;
+            // find index that the probability is less than the random number
+            // TODO: improve and use binary search
+            for (int i=0;i<CumulativeProbabilityVector.Length;i++){
+                if (CumulativeProbabilityVector[i].Probability>randNumber){
+                    return CumulativeProbabilityVector[i].TileID;
                 }
             }
 
@@ -723,8 +697,33 @@ namespace WangTile
 
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
-        //////////////////////////////// Simulated Annealing Methods ////////////////////////////////
-        public TileProbability[] GetTileProbability_SimulatedAnnealing(TileMismatch[] tileMismatches, int currentMismatch, int iteration){
+        //////////////////////////////// Simulated Annealing Methods /////////////////////////////////////
+        public void ReplaceTileUsingSimulatedAnnealing(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+            int currentMismatch = 0;
+
+            WangTile tile = this.getTile(pos.col,pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+
+            
+            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForRemoval(cColors,tile.TileBitMask);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForRemoval(vColors,tile.TileBitMask);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors,tile.TileBitMask);
+
+            if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
+                int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+                TileProbability[] tileProbabilities = this.GetTileProbability_SimulatedAnnealing(tileMismatchesStruct, currentMismatch);
+                TileProbability[] tileNormalizedProbabilities =  this.GetNormalizedProbabilityVector(tileProbabilities);
+                TileProbability[] tileCumulativeProbabilities = this.GetCumulativeProbabilityVector(tileNormalizedProbabilities);
+
+                // int tileID = this.ChooseRandomTileIDBasedOnProbability(tileProbabilities,random);
+                int tileID = this.ChooseTileIndexFromCumulativeProbabilityVector(tileCumulativeProbabilities, random);
+                
+                this.PlaceTile(tileSetID, tileID, pos.col, pos.row);
+            } 
+        }
+
+        public TileProbability[] GetTileProbability_SimulatedAnnealing(TileMismatch[] tileMismatches, int currentMismatch){
             float p = 0f;
             TileProbability[] tileProbabilities = new TileProbability[0];
             for (int i=0; i<tileMismatches.Length;i++){
@@ -733,7 +732,7 @@ namespace WangTile
                 if (mismatchDifference<=0){
                     p = 1f;
                 } else {
-                    p = (float)Math.Exp(((double)-1*(double)mismatchDifference)/((double)iteration));
+                    p = (float)Math.Exp(((double)-1*(double)mismatchDifference)/((double)this.Temperature));
                 }
                 TileProbability newTileProbability = new TileProbability(tileMismatches[i].TileID, p, tileMismatches[i].NumberOfMismatches);
 
@@ -743,15 +742,25 @@ namespace WangTile
             return tileProbabilities;
         }
 
+        public float UpdateTemperature(Random random){
+            // int randInt = random.Next(80,100);
+
+            // value range 0.8-0.99
+            // float alpha = (float)randInt/100f;
+            float alpha=0.90f;
+
+            return this.Temperature*alpha;
+        }
+
         public int ChooseRandomTileIDBasedOnProbability(TileProbability[] tileProbabilities, Random rand){
             float sumOfProbabilities = 0f;
             for (int i=0;i<tileProbabilities.Length;i++){
-                sumOfProbabilities+=tileProbabilities[i].Weight;
+                sumOfProbabilities+=tileProbabilities[i].Probability;
             }
 
             float x = (float)rand.NextDouble()*sumOfProbabilities;
             for (int i=0; i<tileProbabilities.Length;++i){
-                x-=tileProbabilities[i].Weight;
+                x-=tileProbabilities[i].Probability;
                 if (x<=0){
                     return tileProbabilities[i].TileID;
                 }
