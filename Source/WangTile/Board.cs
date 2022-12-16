@@ -705,9 +705,9 @@ namespace WangTile
             (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
 
             
-            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForRemoval(cColors,tile.TileBitMask);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForRemoval(vColors,tile.TileBitMask);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors,tile.TileBitMask);
+            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
 
             if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
                 int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
@@ -722,6 +722,39 @@ namespace WangTile
                 this.PlaceTile(tileSetID, tileID, pos.col, pos.row);
             } 
         }
+
+        public void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+            int currentMismatch = 0;
+
+            WangTile tile = this.getTile(pos.col,pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+
+            
+            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
+    
+
+            if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
+                int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+                TileProbability[] tileProbabilities = this.GetTileProbability_SimulatedAnnealing(tileMismatchesStruct, currentMismatch);
+                TileProbability[] tileProbabilitiesPermutationShuffle = Utils.PermutationShuffleTileProbabilities(tileProbabilities,random);
+
+                int tileID = 0;
+                float randFloat = (float)random.NextDouble();
+                for (int i=0;i<tileProbabilitiesPermutationShuffle.Length;i++){
+                    if (tileProbabilitiesPermutationShuffle[i].Probability>randFloat){
+                        tileID = tileProbabilitiesPermutationShuffle[i].TileID;
+                        break;
+                    }
+                }
+ 
+                this.PlaceTile(tileSetID, tileID, pos.col, pos.row);
+            } 
+        }
+
+        
 
         public TileProbability[] GetTileProbability_SimulatedAnnealing(TileMismatch[] tileMismatches, int currentMismatch){
             float p = 0f;
@@ -742,12 +775,12 @@ namespace WangTile
             return tileProbabilities;
         }
 
-        public float UpdateTemperature(Random random){
+        public float UpdateTemperature(Random random, float alpha){
             // int randInt = random.Next(80,100);
 
             // value range 0.8-0.99
             // float alpha = (float)randInt/100f;
-            float alpha=0.90f;
+            // float alpha=0.90f;
 
             return this.Temperature*alpha;
         }

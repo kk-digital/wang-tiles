@@ -180,14 +180,13 @@ namespace WangTile
             }
         }
 
-          public void TetrisBlocks_V3_Simulated_Annealing(int width, int height, string outputName, ColorMatching colorMatching, int iterations)
+          public void TetrisBlocks_V3_Simulated_Annealing(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
       
-            var csv = new StringBuilder();
-
- 
+            var mismatchCSV = new StringBuilder();
+            var temperatureCSV = new StringBuilder();
 
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
@@ -217,9 +216,9 @@ namespace WangTile
             // Thread.Sleep(5);
 
             // initial temperature
-            newBoard.Temperature=1000f;
+            newBoard.Temperature=temperature;
             // Decrease temperature every L iteration
-            int L = 1;
+            int L = lIteration;
             while (i<iterations){
 
                 //Generate array with N indexes
@@ -255,10 +254,13 @@ namespace WangTile
 
                 int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
                 var newLine = string.Format("{0},{1}", i, totalMismatch);
-                csv.AppendLine(newLine);  
+                mismatchCSV.AppendLine(newLine);  
 
-                if (iterations%L==0){
-                    newBoard.Temperature=newBoard.UpdateTemperature(rand);
+                newLine = string.Format("{0},{1}", i, newBoard.Temperature);
+                temperatureCSV.AppendLine(newLine);  
+
+                if (i%L==0){
+                    newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
                 }
                 i++;
             }
@@ -266,7 +268,109 @@ namespace WangTile
             newBoard.RemoveTilesWithMismatches(true, colorMatching);
 
             // Save CSV
-            File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", csv.ToString());
+            File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
+            File.WriteAllText("./data/Tetris_16x16_Temperature.csv", temperatureCSV.ToString());
+
+            // Generate and Save PNG
+            Picture newPic = new Picture();
+            newPic.SavePNG(newBoard, colorMap, outputName+".png");
+            
+             // Timer stop
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+            Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
+        }
+
+          public void TetrisBlocks_V4_Simulated_Annealing_SequentialRejectionSampling(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+
+      
+            var mismatchCSV = new StringBuilder();
+            var temperatureCSV = new StringBuilder();
+
+            Board newBoard = new Board(height,width);
+            ColorMap colorMap = new ColorMap();
+
+            WangTileSet tileSet = Utils.GenerateTetrisTileSet(colorMap);
+            newBoard.AddTileSet(tileSet);
+
+            int tileSetID = 0;
+            bool useBitmasking = true;
+
+            // Select random tile to place on first slot
+            Random rand = new Random();
+            int tileIndex = rand.Next(0,newBoard.TileSet[tileSetID].Tiles.Length);
+
+            // place the random tile on the board 
+            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
+            // (int col, int row) pos = (0,0);
+            newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
+            // Console.WriteLine($"First tile is {tileIndex}");
+           
+
+            int i=0;
+
+            TetrisBlockIterate_V2(newBoard, colorMatching, rand, pos);
+            // Picture newPic2 = new Picture();
+            // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+            // Thread.Sleep(5);
+
+            // initial temperature
+            newBoard.Temperature=temperature;
+            // Decrease temperature every L iteration
+            int L = lIteration;
+            while (i<iterations){
+
+                //Generate array with N indexes
+                // permute and shuffle them
+                // each tile appears once in a random order
+                (int col, int row)[] positionArr = new (int col, int row)[newBoard.TileSlots.Length];
+                pos = (0,0);
+                for (int j=0; j<newBoard.TileSlots.Length;j++){
+                    tileIndex=Utils.GetBoardSlotIndex(newBoard.Width, pos.col, pos.row);
+                    positionArr[tileIndex].col=pos.col;
+                    positionArr[tileIndex].row=pos.row;
+
+                    pos = Utils.GetNextTileSlot(newBoard.Width, pos.col,pos.row);
+                }
+
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    int z = rand.Next(j,newBoard.TileSlots.Length);
+                    (int col, int row) tmp = positionArr[j];
+                    positionArr[j]=positionArr[z];
+                    positionArr[z]=tmp;
+                }
+                
+
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    pos = positionArr[j];
+                    newBoard.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(useBitmasking, colorMatching, rand, tileSetID, pos);
+
+                }
+
+                // if (i%50==0){
+                // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+                // }
+
+                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
+                var newLine = string.Format("{0},{1}", i, totalMismatch);
+                mismatchCSV.AppendLine(newLine);  
+
+                newLine = string.Format("{0},{1}", i, newBoard.Temperature);
+                temperatureCSV.AppendLine(newLine);  
+
+                if (i%L==0){
+                    newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
+                }
+                i++;
+            }
+
+            newBoard.RemoveTilesWithMismatches(true, colorMatching);
+
+            // Save CSV
+            File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
+            File.WriteAllText("./data/Tetris_16x16_Temperature.csv", temperatureCSV.ToString());
 
             // Generate and Save PNG
             Picture newPic = new Picture();

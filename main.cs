@@ -195,9 +195,18 @@ class MainClass
             new Option<int>(
                 name:"--iterations",
                 description:"(int) The number of iterations to do for the algo."),
+            new Option<float>(
+                name:"--temperature",
+                description:"(float) The initial temperature to be used."),
+            new Option<int>(
+                name:"--lIteration",
+                description:"(int) For updating temperature every Lth iteration."),
+            new Option<float>(
+                name:"--alpha",
+                description:"(float) The alpha value for updating the temperature."),
         };
 
-        tetrisCommand.Handler = CommandHandler.Create<int,int,int,string, int, int>((version,width,height,outputName, colorMatching, iterations) =>
+        tetrisCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float>((version,width,height,outputName, colorMatching, iterations, temperature, lIteration, alpha) =>
         {
             WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
@@ -208,7 +217,10 @@ class MainClass
                     newGeneratedBoard.TetrisBlocks_V2_GreedyPlacement(width,height,outputName, (ColorMatching)colorMatching);
                     break;
                 case 3:
-                    newGeneratedBoard.TetrisBlocks_V3_Simulated_Annealing(width,height,outputName, (ColorMatching)colorMatching, iterations);
+                    newGeneratedBoard.TetrisBlocks_V3_Simulated_Annealing(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
+                    break;
+                case 4:
+                    newGeneratedBoard.TetrisBlocks_V4_Simulated_Annealing_SequentialRejectionSampling(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
                     break;
             }
         });

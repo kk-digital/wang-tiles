@@ -33,6 +33,17 @@ namespace WangTile
             return false;
         }
 
+        public static TileProbability[] PermutationShuffleTileProbabilities(TileProbability[] tileProbabilities, Random rand){
+            for (int j=0;j<tileProbabilities.Length;j++){
+                int z = rand.Next(j,tileProbabilities.Length);
+                TileProbability tmp = tileProbabilities[j];
+                tileProbabilities[j]=tileProbabilities[z];
+                tileProbabilities[z]=tmp;
+            }
+
+            return tileProbabilities;
+        }
+
         public static double GetRandomNumber(double minimum, double maximum, Random random)
         { 
             return random.NextDouble() * (maximum - minimum) + minimum;
@@ -95,7 +106,7 @@ namespace WangTile
         {
             WangTileSet tileSet= new WangTileSet();
             int tileID=0;
-            // Tetris Block 1 - l horizontal
+            // Tetris Block 1 - I horizontal
             // [][][][] 
             // [0,1,2,3]
             // 
@@ -158,7 +169,7 @@ namespace WangTile
             tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
 
-            // Tetris Block 3 - l vertical block
+            // Tetris Block 3 - I vertical block
             // []   [0]
             // [] _ [1]
             // []   [2]
@@ -262,7 +273,7 @@ namespace WangTile
             tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
 
-            // Tetris Block 6 - T block  facing right
+            // Tetris Block 6 - T block facing right
             // []   _ [0]
             // [][]   [1][3]
             // []     [2]
@@ -297,7 +308,7 @@ namespace WangTile
             tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
 
-            // Tetris Block 7 - T block  facing down
+            // Tetris Block 7 - T block facing down
             // [][][] _ [0][1][2]
             //   []        [3]
             // 
@@ -330,6 +341,183 @@ namespace WangTile
             tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
             tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
             tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tetris Block 8 - T block facing left
+            // //   []       [1]
+            // // [][]  - [0][2]
+            // //   []       [3]
+            // //  
+            // // Tile 0 of Tetris Block 8
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.AU,HorizontalColor.AR,VerticalColor.AV,HorizontalColor.AQ);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tile 1 of Tetris Block 8
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.AW,HorizontalColor.AU,VerticalColor.AX,HorizontalColor.AT);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+
+            // // Tile 2 of Tetris Block 8
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.AX,HorizontalColor.AS,VerticalColor.AY,HorizontalColor.AR);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+
+            // // Tile 3 of Tetris Block 8
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.AY,HorizontalColor.AW,VerticalColor.AZ,HorizontalColor.AV);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tetris Block 9 - Z block facing up
+            // //   []       [0]
+            // // [][]  - [2][1]
+            // // []      [3]
+            // //  
+            // // Tile 0 of Tetris Block 9
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BA,HorizontalColor.AY,VerticalColor.BB,HorizontalColor.AX);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+
+            // // Tile 1 of Tetris Block 9
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BB,HorizontalColor.BB,VerticalColor.BC,HorizontalColor.BA);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tile 2 of Tetris Block 9
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BD,HorizontalColor.BA,VerticalColor.BE,HorizontalColor.AZ);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+
+            // // Tile 3 of Tetris Block 9
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BE,HorizontalColor.BD,VerticalColor.BF,HorizontalColor.BC);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tetris Block 10 - L block facing up
+            // // []     [0]
+            // // []   - [1]
+            // // [][]   [2][3]
+            // //  
+            // // Tile 0 of Tetris Block 10
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BG,HorizontalColor.BF,VerticalColor.BH,HorizontalColor.BE);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+
+            // // Tile 1 of Tetris Block 10
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BH,HorizontalColor.BH,VerticalColor.BI,HorizontalColor.BG);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+
+            // // Tile 2 of Tetris Block 10
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BI,HorizontalColor.BJ,VerticalColor.BJ,HorizontalColor.BI);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tile 3 of Tetris Block 10
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BK,HorizontalColor.BK,VerticalColor.BL,HorizontalColor.BJ);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tetris Block 11 - L block facing down
+            // // [][]     [0][1]
+            // //   []   -    [2]
+            // //   []        [3]
+            // //  
+            // // Tile 0 of Tetris Block 11
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BM,HorizontalColor.BM,VerticalColor.BN,HorizontalColor.BL);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tile 1 of Tetris Block 11
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BO,HorizontalColor.BN,VerticalColor.BP,HorizontalColor.BM);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tile 2 of Tetris Block 11
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BP,HorizontalColor.BP,VerticalColor.BQ,HorizontalColor.BO);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+
+            // // Tile 3 of Tetris Block 11
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BQ,HorizontalColor.BR,VerticalColor.BR,HorizontalColor.BQ);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tetris Block 12 - L block facing right - rotated 90 deg to right
+            // // [][][]    [0][1][2]
+            // // []   -    [3]
+            // //  
+            // // Tile 0 of Tetris Block 12
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BS,HorizontalColor.BT,VerticalColor.BT,HorizontalColor.BS);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+
+            // // Tile 1 of Tetris Block 12
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BV,HorizontalColor.BU,VerticalColor.BW,HorizontalColor.BT);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tile 2 of Tetris Block 12
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BX,HorizontalColor.BV,VerticalColor.BY,HorizontalColor.BU);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.N_2S);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+            // // Tile 3 of Tetris Block 12
+            // // Add tiles to tileset
+            // tileID=tileSet.CreateTile(colorMap,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.BT,HorizontalColor.BX,VerticalColor.BU,HorizontalColor.BW);
+            // tileSet.Tiles[tileID].MaskAllCorners();
+            // tileSet.Tiles[tileID].SetBit(BitMask.W_8E);
+            // tileSet.Tiles[tileID].SetBit(BitMask.E_4W);
+            // tileSet.Tiles[tileID].SetBit(BitMask.S_6N);
+
+
 
             return tileSet;
         }
