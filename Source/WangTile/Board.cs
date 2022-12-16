@@ -776,13 +776,12 @@ namespace WangTile
         }
 
         public float UpdateTemperature(Random random, float alpha){
-            // int randInt = random.Next(80,100);
-
             // value range 0.8-0.99
-            // float alpha = (float)randInt/100f;
-            // float alpha=0.90f;
+            // return this.Temperature*alpha;
 
-            return this.Temperature*alpha;
+            // L&M model
+            // alpha 0.50 or 0.90
+            return this.Temperature/(1+(alpha*this.Temperature));
         }
 
         public int ChooseRandomTileIDBasedOnProbability(TileProbability[] tileProbabilities, Random rand){
