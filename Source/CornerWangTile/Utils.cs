@@ -72,6 +72,11 @@ namespace CornerWangTile
          }
       }
 
+      public static double GetRandomNumber(double minimum, double maximum, Random random)
+        { 
+            return random.NextDouble() * (maximum - minimum) + minimum;
+        }
+
       static public void PrintResult(Board newBoard, int numberOfColors, int numberOfFlips, int numberOfMismatch, TimeSpan time){
          Console.WriteLine("Statistics");
          Console.WriteLine($"Board Size {newBoard.Width} by {newBoard.Height}");

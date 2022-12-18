@@ -123,11 +123,13 @@ Options:
   --height <height>                  (int) The height of the board to be made.
   --output-name <output-name>        (string) The filename of the resulting picture (default directory is ./data).
   --color-matching <color-matching>  (int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching).
+  --iterations <iterations>          (int) The number of iterations to do for the algo.
   -?, -h, --help                     Show help and usage information
 ```
 Sample Command
 ```
 ./bin/Debug/net6.0/wang-tiles -- tetris --version 1 --width 16 --height 16 --output-name "Tetris_V1_16x16" --color-matching 1
+./bin/Debug/net6.0/wang-tiles -- tetris --version 3 --width 16 --height 16 --output-name "Tetris_V3_16x16" --color-matching 1 --iterations 500
 ```
 ---
 For more information, run
