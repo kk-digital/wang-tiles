@@ -281,7 +281,7 @@ namespace WangTile
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
 
-          public void TetrisBlocks_V4_Simulated_Annealing_SequentialRejectionSampling(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
+        public void TetrisBlocks_V4_Simulated_Annealing_SequentialRejectionSampling(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
@@ -382,129 +382,100 @@ namespace WangTile
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
 
+        public void TetrisBlocks_V5_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
 
+      
+            var mismatchCSV = new StringBuilder();
+            var temperatureCSV = new StringBuilder();
 
-        // public void TetrisBlocks_V2_ProbabilityDistribution(int width, int height, string outputName, ColorMatching colorMatching)
-        // {
-        //     Stopwatch sw = Stopwatch.StartNew();
+            Board newBoard = new Board(height,width);
+            ColorMap colorMap = new ColorMap();
 
-        //     Board newBoard = new Board(height,width);
-        //     ColorMap colorMap = new ColorMap();
+            WangTileSet tileSet = Utils.GenerateTileSetFromJSON(colorMap, "./data/json/Map_Tiles_V1.tmj");
+            newBoard.AddTileSet(tileSet);
 
-        //     WangTileSet tileSet = Utils.GenerateTetrisTileSet(colorMap);
-        //     newBoard.AddTileSet(tileSet);
+            int tileSetID = 0;
+            bool useBitmasking = true;
 
-        //     // Select random tile to place on first slot
-        //     Random rand = new Random();
-        //     int tileIndex = rand.Next(0,newBoard.TileSet[0].Tiles.Length);
+            // Select random tile to place on first slot
+            Random rand = new Random();
+            int tileIndex = rand.Next(0,newBoard.TileSet[tileSetID].Tiles.Length);
 
-        //     // place the random tile on the board 
-        //     (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
-        //     // (int col, int row) pos = (0,0);
-        //     newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
-        //     // Console.WriteLine($"First tile is {tileIndex}");
+            // place the random tile on the board 
+            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
+            // (int col, int row) pos = (0,0);
+            newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
+            // Console.WriteLine($"First tile is {tileIndex}");
            
 
-        //     int i=0;
-        //     while (i<5000){
-        //         // Console.WriteLine($"Iteration={i}");
-        //         TetrisBlockIterate(newBoard, colorMatching, rand, pos);
-        //         // Picture newPic2 = new Picture();
-        //         // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-        //         // Thread.Sleep(500);
+            int i=0;
 
-        //         newBoard.RemoveTilesWithMismatches(true, colorMatching);
+            TetrisBlockIterate_V2(newBoard, colorMatching, rand, pos);
+            // Picture newPic2 = new Picture();
+            // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
+            // Thread.Sleep(5);
 
-        //         // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-        //         // Thread.Sleep(500);
-        //         if (i%100==0){
-        //             (int col, int row) emptySlotPos = newBoard.GetEmptySlotPosition();
-        //             // Thread.Sleep(500);
-        //             if (emptySlotPos.col==newBoard.Height && emptySlotPos.row== newBoard.Width){
-        //                 Console.WriteLine($"After Iteration[{i}], board is complete");
-        //                 // No empty tile slots
-        //                 break;
-        //             }
-                    
+            // initial temperature
+            newBoard.Temperature=temperature;
+            // Decrease temperature every L iteration
+            int L = lIteration;
+            while (i<iterations){
+                // Generate array with N indexes
+                // permute and shuffle them
+                // each tile appears once in a random order
+                (int col, int row)[] positionArr = new (int col, int row)[newBoard.TileSlots.Length];
+                pos = (0,0);
+                for (int j=0; j<newBoard.TileSlots.Length;j++){
+                    tileIndex=Utils.GetBoardSlotIndex(newBoard.Width, pos.col, pos.row);
+                    positionArr[tileIndex].col=pos.col;
+                    positionArr[tileIndex].row=pos.row;
 
-        //             // There is empty tile slot
-        //             // then remove the adjacent tiles
-        //             newBoard.RemoveAdjacentTiles(pos.col, pos.row);
-        //             newBoard.RemoveTilesWithMismatches(true, colorMatching);
-        //         }
- 
-        //         i++;
-        //     }
-     
-        //     // Generate and Save PNG
-        //     Picture newPic = new Picture();
-        //     newPic.SavePNG(newBoard, colorMap, outputName+".png");
+                    pos = Utils.GetNextTileSlot(newBoard.Width, pos.col,pos.row);
+                }
 
-        //      // Timer stop
-        //     sw.Stop();
-        //     TimeSpan time = sw.Elapsed;
-        //     Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
-        // }
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    int z = rand.Next(j,newBoard.TileSlots.Length);
+                    (int col, int row) tmp = positionArr[j];
+                    positionArr[j]=positionArr[z];
+                    positionArr[z]=tmp;
+                }
+                
 
-        // Cannot be run directly since there are needed changes for complete tile set
-        // public void TetrisBlocks_V2_CompleteTileSet_Test(int width, int height, string outputName, ColorMatching colorMatching)
-        // {
-        //     Stopwatch sw = Stopwatch.StartNew();
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    pos = positionArr[j];
+                    newBoard.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(useBitmasking, colorMatching, rand, tileSetID, pos);
 
-        //     Board newBoard = new Board(height,width);
-        //     ColorMap colorMap = new ColorMap();
+                }
 
-        //     WangTileSet tileSet = Utils.GenerateCompleteTileSet(colorMap, 4);
-        //     newBoard.AddTileSet(tileSet);
+                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
+                var newLine = string.Format("{0},{1}", i, totalMismatch);
+                mismatchCSV.AppendLine(newLine);  
 
-        //     // Select random tile to place on first slot
-        //     Random rand = new Random();
-        //     int tileIndex = rand.Next(0,newBoard.TileSet[0].Tiles.Length);
+                newLine = string.Format("{0},{1}", i, newBoard.Temperature);
+                temperatureCSV.AppendLine(newLine);  
 
-        //     // place the random tile on the board 
-        //     (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
-        //     // (int col, int row) pos = (0,0);
-        //     newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
-        //     // Console.WriteLine($"First tile is {tileIndex}");
-           
-        //     int i=0;
-        //     while (i<5000){
-        //         TetrisBlockIterate(newBoard, colorMatching, rand, pos);
-        //         // Picture newPic2 = new Picture();
-        //         // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-        //         // Thread.Sleep(500);
+                if (i%L==0){
+                    newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
+                }
+                i++;
+            }
 
-        //         newBoard.RemoveTilesWithMismatches(true, colorMatching);
+            // newBoard.RemoveTilesWithMismatches(true, colorMatching);
 
-        //         // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-        //         // Thread.Sleep(500);
+            // Save CSV
+            File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
+            File.WriteAllText("./data/Tetris_16x16_Temperature.csv", temperatureCSV.ToString());
 
-        //         if (i%100==0){
-        //             (int col, int row) emptySlotPos = newBoard.GetEmptySlotPosition();
-        //             // Thread.Sleep(500);
-        //             if (emptySlotPos.col==newBoard.Height && emptySlotPos.row== newBoard.Width){
-        //                 Console.WriteLine($"After Iteration[{i}], board is complete");
-        //                 // No empty tile slots
-        //                 break;
-        //             }
-                    
-        //             // There is empty tile slot
-        //             // then remove the adjacent tiles
-        //             newBoard.RemoveAdjacentTiles(pos.col, pos.row);
-        //             newBoard.RemoveTilesWithMismatches(true, colorMatching);
-        //         }
- 
-        //         i++;
-        //     }
-     
-        //     // Generate and Save PNG
-        //     Picture newPic = new Picture();
-        //     newPic.SavePNG(newBoard, colorMap, outputName+".png");
-
-        //     // Timer stop
-        //     sw.Stop();
-        //     TimeSpan time = sw.Elapsed;
-        //     Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
-        // }
+            // Generate and Save PNG
+            Picture newPic = new Picture();
+            newPic.SavePNG(newBoard, colorMap, outputName+".png");
+            
+             // Timer stop
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+            Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
+        }
     }
 }

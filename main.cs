@@ -222,6 +222,10 @@ class MainClass
                 case 4:
                     newGeneratedBoard.TetrisBlocks_V4_Simulated_Annealing_SequentialRejectionSampling(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
                     break;
+
+                case 5:
+                    newGeneratedBoard.TetrisBlocks_V5_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
+                    break;
             }
         });
 

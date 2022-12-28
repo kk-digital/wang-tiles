@@ -518,5 +518,39 @@ namespace WangTile
 
             return tileSet;
         }
+
+        public static WangTileSet GenerateTileSetFromJSON(ColorMap colorMap, string jsonDirectory)
+        {
+            WangTileSet tileSet= new WangTileSet();
+            int tileID=0;
+
+            TileJSON tile = WangTileJSON.DeserializeJSON(jsonDirectory);
+
+            for (int i=0;i<tile.Layers[0].Chunks.Length;i++){
+                TileChunksJSON tileLayerChunk = tile.Layers[0].Chunks[i];
+                WangTileJSON.CheckCornerMarkers(tileLayerChunk);
+
+                // Get north color
+                int northColorJSON = WangTileJSON.GetNorthColorFromTileChunks(tileLayerChunk);
+                // Get east color
+                int eastColorJSON = WangTileJSON.GetEastColorFromTileChunks(tileLayerChunk);
+                // Get south color
+                int southColorJSON = WangTileJSON.GetSouthColorFromTileChunks(tileLayerChunk);
+                // Get west color
+                int westColorJSON = WangTileJSON.GetWestColorFromTileChunks(tileLayerChunk);
+
+                VerticalColor northColor = colorMap.RetrieveVerticalColorForJSON(northColorJSON);
+                HorizontalColor eastColor = colorMap.RetrieveHorizontalColorForJSON(eastColorJSON);
+                VerticalColor southColor = colorMap.RetrieveVerticalColorForJSON(southColorJSON);
+                HorizontalColor westColor = colorMap.RetrieveHorizontalColorForJSON(westColorJSON);
+
+                // Add tiles to tileset
+                // CornerColor is temporary
+                tileID=tileSet.CreateTile(colorMap,CornerColor.A,CornerColor.A,CornerColor.A,CornerColor.A,northColor,eastColor,southColor,westColor);
+                tileSet.Tiles[tileID].MaskAllCorners();
+            }
+
+            return tileSet;
+        }
     }
 }
