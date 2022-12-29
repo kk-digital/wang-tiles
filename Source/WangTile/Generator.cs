@@ -34,7 +34,7 @@ namespace WangTile
                 // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 // Thread.Sleep(500);
 
-                newBoard.RemoveTilesWithMismatches(true, colorMatching);
+                newBoard.RemoveTilesWithMismatches_Tetris(true, colorMatching);
 
                 // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 // Thread.Sleep(500);
@@ -51,7 +51,7 @@ namespace WangTile
                     // There is empty tile slot
                     // then remove the adjacent tiles
                     newBoard.RemoveAdjacentTiles(pos.col, pos.row);
-                    newBoard.RemoveTilesWithMismatches(true, colorMatching);
+                    newBoard.RemoveTilesWithMismatches_Tetris(true, colorMatching);
                 }
  
                 i++;
@@ -136,14 +136,14 @@ namespace WangTile
                 // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 // }
 
-                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
+                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
                 var newLine = string.Format("{0},{1}", i, totalMismatch);
                 csv.AppendLine(newLine);  
 
                 i++;
             }
 
-            newBoard.RemoveTilesWithMismatches(true, colorMatching);
+            newBoard.RemoveTilesWithMismatches_Tetris(true, colorMatching);
 
             // Save CSV
             File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", csv.ToString());
@@ -244,7 +244,7 @@ namespace WangTile
 
                 for (int j=0;j<newBoard.TileSlots.Length;j++){
                     pos = positionArr[j];
-                    newBoard.ReplaceTileUsingSimulatedAnnealing(useBitmasking, colorMatching, rand, tileSetID, pos);
+                    newBoard.ReplaceTileUsingSimulatedAnnealing_Tetris(useBitmasking, colorMatching, rand, tileSetID, pos);
 
                 }
 
@@ -252,7 +252,7 @@ namespace WangTile
                 // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 // }
 
-                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
+                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
                 var newLine = string.Format("{0},{1}", i, totalMismatch);
                 mismatchCSV.AppendLine(newLine);  
 
@@ -265,7 +265,7 @@ namespace WangTile
                 i++;
             }
 
-            newBoard.RemoveTilesWithMismatches(true, colorMatching);
+            newBoard.RemoveTilesWithMismatches_Tetris(true, colorMatching);
 
             // Save CSV
             File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
@@ -345,7 +345,7 @@ namespace WangTile
 
                 for (int j=0;j<newBoard.TileSlots.Length;j++){
                     pos = positionArr[j];
-                    newBoard.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(useBitmasking, colorMatching, rand, tileSetID, pos);
+                    newBoard.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling_Tetris(useBitmasking, colorMatching, rand, tileSetID, pos);
 
                 }
 
@@ -353,7 +353,7 @@ namespace WangTile
                 // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
                 // }
 
-                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
+                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
                 var newLine = string.Format("{0},{1}", i, totalMismatch);
                 mismatchCSV.AppendLine(newLine);  
 
@@ -366,7 +366,7 @@ namespace WangTile
                 i++;
             }
 
-            newBoard.RemoveTilesWithMismatches(true, colorMatching);
+            newBoard.RemoveTilesWithMismatches_Tetris(true, colorMatching);
 
             // Save CSV
             File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
@@ -376,13 +376,13 @@ namespace WangTile
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
             
-             // Timer stop
+            // Timer stop
             sw.Stop();
             TimeSpan time = sw.Elapsed;
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
 
-        public void TetrisBlocks_V5_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
+        public void Tiled_V1_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
@@ -449,7 +449,7 @@ namespace WangTile
 
                 }
 
-                int totalMismatch = TetrisMismatchCalculator.GetBoardTotalMismatch(newBoard, useBitmasking,colorMatching);
+                int totalMismatch = MismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
                 var newLine = string.Format("{0},{1}", i, totalMismatch);
                 mismatchCSV.AppendLine(newLine);  
 
@@ -460,9 +460,10 @@ namespace WangTile
                     newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
                 }
                 i++;
+                Console.WriteLine($"Iteration={i}");
             }
 
-            // newBoard.RemoveTilesWithMismatches(true, colorMatching);
+            newBoard.RemoveTilesWithMismatches(true, colorMatching);
 
             // Save CSV
             File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
@@ -472,7 +473,11 @@ namespace WangTile
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
             
-             // Timer stop
+            // Combine tile images and save
+            string[] imgDirs = Utils.GenerateImageDirsFromTileSlots(newBoard.TileSlots);
+            SkiaSharpImageMerger.GenerateMapUsingGivenPictures(imgDirs, newBoard.Width, newBoard.Height, "data/" +outputName+"_Combined.png");
+
+            // Timer stop
             sw.Stop();
             TimeSpan time = sw.Elapsed;
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");

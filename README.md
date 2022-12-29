@@ -132,6 +132,8 @@ Sample Command
 ./bin/Debug/net6.0/wang-tiles -- tetris --version 3 --width 16 --height 16 --output-name "Tetris_V3_16x16" --color-matching 1 --iterations 500
 
 ./bin/Debug/net6.0/wang-tiles -- tetris --version 5 --width 32 --height 16 --output-name "Tetris_V5_16x32" --color-matching 1 --iterations 10000 --temperature 1000 --lIteration 50 --alpha 0.01
+
+./bin/Debug/net6.0/wang-tiles -- tiled --version 1 --width 16 --height 8 --output-name "Tiled_V1_8x16" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01
 ```
 ---
 For more information, run

@@ -187,16 +187,16 @@ namespace WangTile
 
             
             PixelColor[] colorSet = new PixelColor[length];
-            colorSet[0]=PixelColor.MakePixelColor(255,0,0, 255);
-            colorSet[1]=PixelColor.MakePixelColor(0,255,0, 255);
-            colorSet[2]=PixelColor.MakePixelColor(128,128,0, 255);
-            colorSet[3]=PixelColor.MakePixelColor(255,255,0, 255);
-            colorSet[4]=PixelColor.MakePixelColor(0,255,255, 255);
-            colorSet[5]=PixelColor.MakePixelColor(255,0,255, 255);
-            colorSet[6]=PixelColor.MakePixelColor(138,43,226, 255);
-            colorSet[7]=PixelColor.MakePixelColor(0,128,0, 255);
-            colorSet[8]=PixelColor.MakePixelColor(128,0,128, 255);
-            colorSet[9]=PixelColor.MakePixelColor(0,128,128, 255);
+            colorSet[0]=PixelColor.MakePixelColor(0,0,255,255);
+            colorSet[1]=PixelColor.MakePixelColor(255,255,0,255);
+            colorSet[2]=PixelColor.MakePixelColor(255,255,204, 255);
+            colorSet[3]=PixelColor.MakePixelColor(0,255,255, 255);
+            colorSet[4]=PixelColor.MakePixelColor(128,0,0, 255);
+            colorSet[5]=PixelColor.MakePixelColor(0,128,0, 255);
+            colorSet[6]=PixelColor.MakePixelColor(0,0,128, 255);
+            colorSet[7]=PixelColor.MakePixelColor(128,128,0, 255);
+            colorSet[8]=PixelColor.MakePixelColor(0,128,128, 255);
+            colorSet[9]=PixelColor.MakePixelColor(255,0,255,255);
             
             // different vertical colors in all indexes
             int j = 0;
