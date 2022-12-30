@@ -64,14 +64,6 @@ namespace WangTile{
                 //get a surface so we can draw an image
                 using (var tempSurface = SKSurface.Create(new SKImageInfo(imgWidth, imgHeight)))
                 {
-                    // For grid lines
-                    SKPaint thinLinePaint = new SKPaint
-                    {
-                        Style = SKPaintStyle.StrokeAndFill,
-                        Color = SKColors.Black,
-                        StrokeWidth = 3
-                    };
-
                     //get the drawing canvas of the surface
                     var canvas = tempSurface.Canvas;
 
@@ -82,7 +74,6 @@ namespace WangTile{
                     int row = 0;
                     int col = 0;
 
-                    int verticalGridLinesDrawn = 0;
                     foreach (SKBitmap image in images)
                     {
                         canvas.DrawBitmap(image, SKRect.Create(row, col, image.Width, image.Height));
@@ -91,26 +82,34 @@ namespace WangTile{
                         if (row>=((width-1)*image.Width)){
                             col+=(int)(image.Height);
                             row=0;
-
-                            // Draw horizontal grid line
-                            SKPoint p1 = new SKPoint(0, col);
-                            SKPoint p2 = new SKPoint(width*image.Width,col);
-                            canvas.DrawLine(p1, p2, thinLinePaint);
                         } else {
                             row+=(int)(image.Width);
-
-                            if (col==((height-1)*image.Height) && verticalGridLinesDrawn<width){
-                                // Draw vertical grid line
-                                SKPoint p1 = new SKPoint(row, 0);
-                                SKPoint p2 = new SKPoint(row,height*image.Height);
-                                canvas.DrawLine(p1, p2, thinLinePaint);
-                                verticalGridLinesDrawn++;
-
-                                Console.WriteLine($"p2={row},{height*image.Height}");
-                            }
                         }
                     }
 
+                    // For grid lines
+                    SKPaint thinLinePaint = new SKPaint
+                    {
+                        Style = SKPaintStyle.Fill,
+                        Color = SKColors.Black,
+                        StrokeWidth = 3,
+                        PathEffect = SKPathEffect.CreateDash(new float[2]{10f,10f}, 20)
+                    };
+                    
+                    // Draw vertical grids
+                    for (int i=0;i<width;i++){
+                        SKPoint p1 = new SKPoint(i*images[0].Width, 0);
+                        SKPoint p2 = new SKPoint(i*images[0].Width,height*images[0].Height);
+                        canvas.DrawLine(p1, p2, thinLinePaint);
+                    }
+
+                    // Draw hhorizontal grids
+                    for (int i=0;i<height;i++){
+                        SKPoint p1 = new SKPoint(0, i*images[0].Height);
+                        SKPoint p2 = new SKPoint(width*images[0].Width,i*images[0].Height);
+                        canvas.DrawLine(p1, p2, thinLinePaint);
+                    }
+                    
                     // return the surface as a manageable image
                     finalImage = tempSurface.Snapshot();
                 }

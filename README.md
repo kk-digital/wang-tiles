@@ -118,12 +118,15 @@ Usage:
   wang-tiles tetris [options]
 
 Options:
-  --version <version>                (int) The version of Weighted Probability Algo to run (1).
+  --version <version>                (int) The version of Tetris Algo to run (1,2,3,4).
   --width <width>                    (int) The width of the board to be made.
   --height <height>                  (int) The height of the board to be made.
   --output-name <output-name>        (string) The filename of the resulting picture (default directory is ./data).
   --color-matching <color-matching>  (int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching).
   --iterations <iterations>          (int) The number of iterations to do for the algo.
+  --temperature <temperature>        (float) The initial temperature to be used.
+  --lIteration <lIteration>          (int) For updating temperature every Lth iteration.
+  --alpha <alpha>                    (float) The alpha value for updating the temperature.
   -?, -h, --help                     Show help and usage information
 ```
 Sample Command
@@ -131,8 +134,30 @@ Sample Command
 ./bin/Debug/net6.0/wang-tiles -- tetris --version 1 --width 16 --height 16 --output-name "Tetris_V1_16x16" --color-matching 1
 ./bin/Debug/net6.0/wang-tiles -- tetris --version 3 --width 16 --height 16 --output-name "Tetris_V3_16x16" --color-matching 1 --iterations 500
 
-./bin/Debug/net6.0/wang-tiles -- tetris --version 5 --width 32 --height 16 --output-name "Tetris_V5_16x32" --color-matching 1 --iterations 10000 --temperature 1000 --lIteration 50 --alpha 0.01
+./bin/Debug/net6.0/wang-tiles -- tetris --version 4 --width 16 --height 16 --output-name "Tetris_V4_16x16" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01
+```
 
+#### wang-tiles tiled
+---
+Usage for ```wang-tiles tiled```
+```
+Usage:
+  wang-tiles tiled [options]
+
+Options:
+  --version <version>                (int) The version of Tiled Algo to run (1).
+  --width <width>                    (int) The width of the board to be made.
+  --height <height>                  (int) The height of the board to be made.
+  --output-name <output-name>        (string) The filename of the resulting picture (default directory is ./data).
+  --color-matching <color-matching>  (int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching).
+  --iterations <iterations>          (int) The number of iterations to do for the algo.
+  --temperature <temperature>        (float) The initial temperature to be used.
+  --lIteration <lIteration>          (int) For updating temperature every Lth iteration.
+  --alpha <alpha>                    (float) The alpha value for updating the temperature.
+  -?, -h, --help                     Show help and usage information
+```
+Sample Command
+```
 ./bin/Debug/net6.0/wang-tiles -- tiled --version 1 --width 16 --height 8 --output-name "Tiled_V1_8x16" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01
 ```
 ---

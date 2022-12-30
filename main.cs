@@ -179,7 +179,7 @@ class MainClass
         {
             new Option<int>(
                 name:"--version",
-                description:"(int) The version of Weighted Probability Algo to run (1)."),
+                description:"(int) The version of Tetris Algo to run (1,2,3,4)."),
             new Option<int>(
                 name: "--width",
                 description:"(int) The width of the board to be made."),
@@ -229,7 +229,7 @@ class MainClass
         {
             new Option<int>(
                 name:"--version",
-                description:"(int) The version of Weighted Probability Algo to run (1)."),
+                description:"(int) The version of Tiled Algo to run (1)."),
             new Option<int>(
                 name: "--width",
                 description:"(int) The width of the board to be made."),

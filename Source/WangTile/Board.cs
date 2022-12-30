@@ -135,7 +135,6 @@ namespace WangTile
                 if (numberOfMismatch>0){
                     wasThereMismatch = true;
                     this.RemoveTile(pos.col,pos.row);
-                    // Console.WriteLine($"Col={pos.col},Row={pos.row}, mismatches={numberOfMismatch}");
                 }
 
                 pos = GetNextTileSlot(pos.col,pos.row);
@@ -149,7 +148,6 @@ namespace WangTile
                     pos.col=0;
                     pos.row=0;
                 }
-
             }
         }
 
@@ -170,7 +168,6 @@ namespace WangTile
                 if (numberOfMismatch>0){
                     wasThereMismatch = true;
                     this.RemoveTile(pos.col,pos.row);
-                    // Console.WriteLine($"Col={pos.col},Row={pos.row}, mismatches={numberOfMismatch}");
                 }
 
                 pos = GetNextTileSlot(pos.col,pos.row);
@@ -184,7 +181,6 @@ namespace WangTile
                     pos.col=0;
                     pos.row=0;
                 }
-
             }
         }
 

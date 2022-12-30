@@ -26,8 +26,14 @@ namespace WangTile
         public static string[] GenerateImageDirsFromTileSlots(BoardTileSlot[] tileSlots){
             string[] imgDir = new string[tileSlots.Length];
             for (int i=0; i<tileSlots.Length;i++){
-                // +1 since img filename starts at 1 while tileID starts at 0
-                imgDir[i]=string.Format("./data/mapTileSet/{0}.png", tileSlots[i].TileID+1);
+                if (tileSlots[i].TileID==null){
+                    imgDir[i]=string.Format("./data/mapTileSet/blank.png");
+                    
+                } else {
+                    // +1 since img filename starts at 1 while tileID starts at 0
+                    imgDir[i]=string.Format("./data/mapTileSet/{0}.png", tileSlots[i].TileID+1);
+                }
+                
             }
 
             return imgDir;
