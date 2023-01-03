@@ -127,4 +127,78 @@ namespace WangTile{
             }
         }
     }
+
+    public static class SkiaSharpImage {
+        static int tileWidth = 32;
+        static int tileHeight = 32;
+
+        public static void TestGetTile(){
+            string imgSrc = @"kcg-tiled/tilesets/Colors_Vertical.png";
+            int tileIndex = 413;
+            SKImage tileImg = GetTileImageFromTileSetImage(imgSrc, tileIndex);
+
+            //save the new image
+            using (SKData encoded = tileImg.Encode(SKEncodedImageFormat.Png, 100))
+            using (Stream outFile = File.OpenWrite("data/testGetTile.png"))
+            {
+                encoded.SaveTo(outFile);
+            }
+        }
+
+        public static SKImage GetTileImageFromTileSetImage(string imageSource, int tileIndex){
+            SKImage finalImage = null;
+
+            var image = SKImage.FromEncodedData(imageSource);
+            var bm = SKBitmap.FromImage(image);
+
+            (int col,int row) pos= GetTilePosition(bm.Width, tileIndex, tileWidth, tileHeight);
+            (int col, int row) secondPos=(pos.col+tileHeight, pos.row+tileWidth);
+
+            //get a surface so we can draw an image
+            using (var tempSurface = SKSurface.Create(new SKImageInfo(tileWidth, tileHeight)))
+            {
+               //get the drawing canvas of the surface
+                var canvas = tempSurface.Canvas;
+
+                //set background color
+                canvas.Clear(SKColors.Transparent);
+
+            
+                SKRect dest = new SKRect(0, 0, tileWidth, tileHeight);
+                SKRect source = new SKRect(pos.row,pos.col,
+                                       secondPos.row,secondPos.col);
+
+                canvas.DrawBitmap(bm, source, dest);
+                finalImage = tempSurface.Snapshot();
+            }
+
+           return finalImage;
+        }
+
+
+        static (int col, int row) GetTilePosition(int imageWidth, int index, int tileWidth, int tileHeight){
+            int Col=0;
+            int Row=0;
+
+            // Make sure imageWidth%tileWidth is zero.
+            int imageModTileWidth = imageWidth%tileWidth;
+            if (imageModTileWidth > 0){
+                imageWidth= imageWidth-imageModTileWidth;
+            }
+
+            int indexPos=index*tileWidth;
+            int indexCol=(indexPos/imageWidth);
+            int indexRow= indexPos-(imageWidth*indexCol);
+
+            for (int i=0; i<indexCol;i++){
+                Col+=tileHeight;
+            }
+
+            for (int i=0; i< indexRow/tileWidth;i++){
+                Row+=tileWidth;
+            }
+
+            return (col:Col,row:Row);
+        }
+    }
 }
