@@ -2,84 +2,234 @@ using System.Text.Json;
 
 namespace WangTile
 {
-    public class WangTileJSON
+    public struct TileJSON
     {
-        public string CornerColorNW { get; set; }
-        public string CornerColorNE { get; set; }
-        public string CornerColorSE { get; set; }
-        public string CornerColorSW { get; set; }
-
-        public string EdgeColorNorth { get; set; }
-        public string EdgeColorSouth { get; set; }
-
-        public string EdgeColorWest { get; set; }
-        public string EdgeColorEast { get; set; }
-
-        public bool BitmaskAllCorners { get; set; }
-        public bool BitmaskNorthEdge { get; set; }
-        public bool BitmaskEastEdge { get; set; }
-        public bool BitmaskSouthEdge { get; set; }
-        public bool BitmaskWestEdge { get; set; }
-
-        public static void TestJSON(){
-
-            // Serialize test
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            WangTileJSON[] wangArray1 = new WangTileJSON[0];
-
-            var wangTileJSON = new WangTileJSON {
-                CornerColorNW="AA",
-                CornerColorNE="AB"
-            };
-
-            wangArray1 = wangArray1.Append(wangTileJSON).ToArray();
-            string jsonString1 = JsonSerializer.Serialize<WangTileJSON[]>(wangArray1,options);
-            Console.WriteLine(jsonString1);
-
-            // Deserialize test
-            string fileName = "./data/json/test.json";
-            string jsonString = File.ReadAllText(fileName);
-            WangTileJSON[] wangArray = JsonSerializer.Deserialize<WangTileJSON[]>(jsonString)!;
-            Console.WriteLine($"WangTile[0] CornerColorNW={wangArray[0].CornerColorNW}, type=={wangArray[0].CornerColorNW.GetType()}");
-            Console.WriteLine($"WangTile[0] CornerColorNE={wangArray[0].CornerColorNE}");
-            Console.WriteLine($"WangTile[0] CornerColorSE={wangArray[0].CornerColorSE}");
-            Console.WriteLine($"WangTile[0] CornerColorSW={wangArray[0].CornerColorSW}");
-
-            Console.WriteLine($"WangTile[0] EdgeColorNorth={wangArray[0].EdgeColorNorth}");
-            Console.WriteLine($"WangTile[0] EdgeColorEast={wangArray[0].EdgeColorEast}");
-            Console.WriteLine($"WangTile[0] EdgeColorSouth={wangArray[0].EdgeColorSouth}");
-            Console.WriteLine($"WangTile[0] EdgeColorWest={wangArray[0].EdgeColorWest}");
-
-            Console.WriteLine($"WangTile[0] BitmaskAllCorners={wangArray[0].BitmaskAllCorners}");
-            Console.WriteLine($"WangTile[0] BitmaskNorthEdge={wangArray[0].BitmaskNorthEdge}");
-            Console.WriteLine($"WangTile[0] BitmaskEastEdge={wangArray[0].BitmaskEastEdge}");
-            Console.WriteLine($"WangTile[0] BitmaskSouthEdge={wangArray[0].BitmaskSouthEdge}");
-            Console.WriteLine($"WangTile[0] BitmaskWestEdge={wangArray[0].BitmaskWestEdge}");
-
-
-            Console.WriteLine($"WangTile[1] CornerColorNW={wangArray[1].CornerColorNW}");
-            Console.WriteLine($"WangTile[1] CornerColorNE={wangArray[1].CornerColorNE}");
-            Console.WriteLine($"WangTile[1] CornerColorSE={wangArray[1].CornerColorSE}");
-            Console.WriteLine($"WangTile[1] CornerColorSW={wangArray[1].CornerColorSW}");
-
-            Console.WriteLine($"WangTile[1] EdgeColorNorth={wangArray[1].EdgeColorNorth}");
-            Console.WriteLine($"WangTile[1] EdgeColorEast={wangArray[1].EdgeColorEast}");
-            Console.WriteLine($"WangTile[1] EdgeColorSouth={wangArray[1].EdgeColorSouth}");
-            Console.WriteLine($"WangTile[1] EdgeColorWest={wangArray[1].EdgeColorWest}");
-
-            Console.WriteLine($"WangTile[1] BitmaskAllCorners={wangArray[1].BitmaskAllCorners}");
-            Console.WriteLine($"WangTile[1] BitmaskNorthEdge={wangArray[1].BitmaskNorthEdge}");
-            Console.WriteLine($"WangTile[1] BitmaskEastEdge={wangArray[1].BitmaskEastEdge}");
-            Console.WriteLine($"WangTile[1] BitmaskSouthEdge={wangArray[1].BitmaskSouthEdge}");
-            Console.WriteLine($"WangTile[1] BitmaskWestEdge={wangArray[1].BitmaskWestEdge}");
-
-            var cornerColorNW = new CornerColor();
-            Enum.TryParse(wangArray[0].CornerColorNW, out cornerColorNW);
-            WangTile wangTile = new WangTile(cornerColorNW,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
-            Console.WriteLine($"wangTil CornerColorNW={wangTile.CornerColorNW}, type={wangTile.CornerColorNW.GetType()}");
-            
-        }
+       public TileLayerJSON[] Layers { get; set; }
+       public TileSetJSON[] TileSets { get; set; }
     }
 
-   
+    public struct TileLayerJSON
+    {
+       public TileChunksJSON[] Chunks { get; set; }
+    }
+
+    public struct TileChunksJSON
+    {
+       public int[] Data { get; set; }
+       public int Height { get; set; }
+       public int Width { get; set; }
+       public int X { get; set; }
+       public int Y { get; set; }
+    }
+
+    public struct TileSetJSON
+    { 
+        public int FirstGID { get; set; }
+        public string Source { get; set; }
+    }
+
+    public struct ColorTileSetJSON 
+    {
+        public string Image { get; set; }
+    }
+
+    public class WangTileJSON
+    {
+        public static void TestTiledJSON(){
+            TileJSON tile =  DeserializeTileJSON("./kcg-tiled/tilesets/Map_Tiles_V1.tmj");
+            Console.WriteLine($"tile array len= {tile.Layers.Length}");
+            Console.WriteLine($"tile array[0] chunks len= {tile.Layers[0].Chunks.Length}");
+
+            Console.WriteLine("tile tilesets");
+            foreach (TileSetJSON tileset in tile.TileSets){
+            Console.WriteLine($"{tileset.Source}");
+            }
+
+            TileSetJSON tileSet=TileSetGenerator.GetTileSetInfo(3663, tile.TileSets);
+
+            Console.WriteLine($"TileSet GID={tileSet.FirstGID}, source={tileSet.Source}");
+            CheckCornerMarkers(tile.Layers[0].Chunks[0]);
+
+            // Get north color
+            int northColor = GetNorthColorFromTileChunks(tile.Layers[0].Chunks[0]);
+            // Get east color
+            int eastColor = GetEastColorFromTileChunks(tile.Layers[0].Chunks[0]);
+            // Get south color
+            int southColor = GetSouthColorFromTileChunks(tile.Layers[0].Chunks[0]);
+            // Get west color
+            int westColor = GetWestColorFromTileChunks(tile.Layers[0].Chunks[0]);
+            
+        }
+
+        public static TileJSON DeserializeTileJSON(string jsonDirectory){
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            string jsonString = File.ReadAllText(jsonDirectory);
+            TileJSON tile = JsonSerializer.Deserialize<TileJSON>(jsonString, options);
+
+            return tile;
+        }
+
+        public static ColorTileSetJSON DeserializeColorTileSetJSON(string jsonDirectory){
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            string jsonString = File.ReadAllText(jsonDirectory);
+            ColorTileSetJSON colorTileSet = JsonSerializer.Deserialize<ColorTileSetJSON>(jsonString, options);
+
+            return colorTileSet;
+        }
+
+        public static int GetNorthColorFromTileChunks(TileChunksJSON tileChunk){        
+            // North edge
+            for (int i=1;i<17;i++){
+                int indexNorth = Utils.GetBoardSlotIndex(tileChunk.Width, 0, i);
+                if (tileChunk.Data[indexNorth]!=0) {
+                    return tileChunk.Data[indexNorth];
+                }
+            }
+
+            return 0;
+        }
+
+        public static int GetEastColorFromTileChunks(TileChunksJSON tileChunk){        
+            // East edge
+            for (int i=1;i<17;i++){
+                int indexEast = Utils.GetBoardSlotIndex(tileChunk.Width, i, 17);
+                if (tileChunk.Data[indexEast]!=0) {
+                    return tileChunk.Data[indexEast];
+                }
+            }
+
+            return 0;
+        }
+
+        public static int GetSouthColorFromTileChunks(TileChunksJSON tileChunk){        
+            // South edge
+            for (int i=1;i<17;i++){
+                int indexSouth = Utils.GetBoardSlotIndex(tileChunk.Width, 17, i);
+                if (tileChunk.Data[indexSouth]!=0) {
+                    return tileChunk.Data[indexSouth];
+                }
+            }
+
+            return 0;
+        }
+
+        public static int GetWestColorFromTileChunks(TileChunksJSON tileChunk){        
+            // West edge
+            for (int i=1;i<17;i++){
+                int indexWest = Utils.GetBoardSlotIndex(tileChunk.Width, i, 0);
+                if (tileChunk.Data[indexWest]!=0) {
+                    return tileChunk.Data[indexWest];
+                }
+            }
+
+            return 0;
+        }
+
+        public static void CheckCornerMarkers(TileChunksJSON tileChunk){
+            int correctHeight = 18;
+            int correctWidth = 18;
+            // Check tile Width and Height
+            if (tileChunk.Width!=correctWidth || tileChunk.Height!=correctHeight){
+                Console.WriteLine($"Got height={tileChunk.Height} and width={tileChunk.Width}, should be height={correctHeight}, width={correctWidth}");
+            }
+            
+            // Check corner markers
+            int cornerMarker=0;
+            int[] tileData = tileChunk.Data;
+            
+            // first tileData is the NW corner marker
+            cornerMarker = tileData[0];
+
+            // the other corner markers
+            int indexNE = Utils.GetBoardSlotIndex(tileChunk.Width, 0, 17);
+            int indexSE = Utils.GetBoardSlotIndex(tileChunk.Width, 17, 17);
+            int indexSW = Utils.GetBoardSlotIndex(tileChunk.Width, 17, 0);
+
+            if(tileData[indexNE]!=cornerMarker || tileData[indexSE]!=cornerMarker || tileData[indexSW]!=cornerMarker){
+                Console.WriteLine($"{cornerMarker}, {tileData[indexNE]}, {tileData[indexSE]}, {tileData[indexSW]}");
+
+                Console.WriteLine("One of the corners are of different corner marker");
+            }
+
+            // Check if edge colors are the same, no two edge colors in one edge            
+            // North edge
+            int northEdgeColor=0;
+            for (int i=1;i<17;i++){
+                int indexNorth = Utils.GetBoardSlotIndex(tileChunk.Width, 0, i);
+                if (tileData[indexNorth]!=0) {
+                    if (northEdgeColor==0){
+                        // Assign color 
+                        northEdgeColor=tileData[indexNorth];
+                    } else {
+                        // Compare color
+                        if (northEdgeColor!=tileData[indexNorth]){
+                            Console.WriteLine("North Edge have more than one colors");
+                        }
+                    }
+                }
+            }
+
+            // East edge
+            int eastEdgeColor=0;
+            for (int i=1;i<17;i++){
+                int indexEast = Utils.GetBoardSlotIndex(tileChunk.Width, i, 17);
+                if (tileData[indexEast]!=0) {
+                    if (eastEdgeColor==0){
+                        // Assign color 
+                        eastEdgeColor=tileData[indexEast];
+                    } else {
+                        // Compare color
+                        if (eastEdgeColor!=tileData[indexEast]){
+                            Console.WriteLine("East Edge have more than one colors");
+                        }
+                    }
+                }
+            }
+
+            // South edge
+            int southEdgeColor=0;
+            for (int i=1;i<17;i++){
+                int indexSouth = Utils.GetBoardSlotIndex(tileChunk.Width, 17, i);
+                if (tileData[indexSouth]!=0) {
+                    if (southEdgeColor==0){
+                        // Assign color 
+                        southEdgeColor=tileData[indexSouth];
+                    } else {
+                        // Compare color
+                        if (southEdgeColor!=tileData[indexSouth]){
+                            Console.WriteLine("South Edge have more than one colors");
+                        }
+                    }
+                }
+            }
+
+            // West edge
+            int westEdgeColor=0;
+            for (int i=1;i<17;i++){
+                int indexWest = Utils.GetBoardSlotIndex(tileChunk.Width, i, 0);
+                if (tileData[indexWest]!=0) {
+                    if (westEdgeColor==0){
+                        // Assign color 
+                        westEdgeColor=tileData[indexWest];
+                    } else {
+                        // Compare color
+                        if (westEdgeColor!=tileData[indexWest]){
+                            Console.WriteLine("West Edge have more than one colors");
+                        }
+                    }
+                }
+            }
+          
+        }
+
+
+    }
 }

@@ -179,7 +179,7 @@ class MainClass
         {
             new Option<int>(
                 name:"--version",
-                description:"(int) The version of Weighted Probability Algo to run (1)."),
+                description:"(int) The version of Tetris Algo to run (1,2,3,4)."),
             new Option<int>(
                 name: "--width",
                 description:"(int) The width of the board to be made."),
@@ -225,11 +225,53 @@ class MainClass
             }
         });
 
+        var tiledCommand = new Command("tiled")
+        {
+            new Option<int>(
+                name:"--version",
+                description:"(int) The version of Tiled Algo to run (1)."),
+            new Option<int>(
+                name: "--width",
+                description:"(int) The width of the board to be made."),
+            new Option<int>(
+                name:"--height",
+                description:"(int) The height of the board to be made."),
+            new Option<string>(
+                name:"--output-name",
+                description:"(string) The filename of the resulting picture (default directory is ./data)."),
+            new Option<int>(
+                name:"--color-matching",
+                description:"(int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching)."),
+            new Option<int>(
+                name:"--iterations",
+                description:"(int) The number of iterations to do for the algo."),
+            new Option<float>(
+                name:"--temperature",
+                description:"(float) The initial temperature to be used."),
+            new Option<int>(
+                name:"--lIteration",
+                description:"(int) For updating temperature every Lth iteration."),
+            new Option<float>(
+                name:"--alpha",
+                description:"(float) The alpha value for updating the temperature."),
+        };
+
+        tiledCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float>((version,width,height,outputName, colorMatching, iterations, temperature, lIteration, alpha) =>
+        {
+            WangTile.Generator newGeneratedBoard= new WangTile.Generator();
+            switch (version){
+                case 1:
+                    newGeneratedBoard.Tiled_V1_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
+                    break;
+            }
+        });
+
         root.AddCommand(placementAlgoCommand);
         root.AddCommand(schoningsAlgoCommand);
         root.AddCommand(weightedProbabilityCommand);
         root.AddCommand(testAlgoCommand);
         root.AddCommand(tetrisCommand);
+        root.AddCommand(tiledCommand);
 
         root.Invoke(args);
     }

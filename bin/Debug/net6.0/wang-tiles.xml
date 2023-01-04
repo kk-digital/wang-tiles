@@ -1,0 +1,536 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>wang-tiles</name>
+    </assembly>
+    <members>
+        <member name="F:BigGustave.Adam7.PassToScanlineGridIndex">
+            <summary>
+            For a given pass number (1 indexed) the scanline indexes of the lines included in that pass in the 8x8 grid.
+            </summary>
+        </member>
+        <member name="T:BigGustave.Adler32Checksum">
+            <summary>
+            Used to calculate the Adler-32 checksum used for ZLIB data in accordance with 
+            RFC 1950: ZLIB Compressed Data Format Specification.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Adler32Checksum.Calculate(System.Collections.Generic.IEnumerable{System.Byte},System.Int32)">
+            <summary>
+            Calculate the Adler-32 checksum for some data.
+            </summary>
+        </member>
+        <member name="T:BigGustave.ChunkHeader">
+            <summary>
+            The header for a data chunk in a PNG file.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ChunkHeader.Position">
+            <summary>
+            The position/start of the chunk header within the stream.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ChunkHeader.Length">
+            <summary>
+            The length of the chunk in bytes.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ChunkHeader.Name">
+            <summary>
+            The name of the chunk, uppercase first letter means the chunk is critical (vs. ancillary).
+            </summary>
+        </member>
+        <member name="P:BigGustave.ChunkHeader.IsCritical">
+            <summary>
+            Whether the chunk is critical (must be read by all readers) or ancillary (may be ignored).
+            </summary>
+        </member>
+        <member name="P:BigGustave.ChunkHeader.IsPublic">
+            <summary>
+            A public chunk is one that is defined in the International Standard or is registered in the list of public chunk types maintained by the Registration Authority. 
+            Applications can also define private (unregistered) chunk types for their own purposes.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ChunkHeader.IsSafeToCopy">
+            <summary>
+            Whether the (if unrecognized) chunk is safe to copy.
+            </summary>
+        </member>
+        <member name="M:BigGustave.ChunkHeader.#ctor(System.Int64,System.Int32,System.String)">
+            <summary>
+            Create a new <see cref="T:BigGustave.ChunkHeader"/>.
+            </summary>
+        </member>
+        <member name="M:BigGustave.ChunkHeader.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:BigGustave.ColorType">
+            <summary>
+            Describes the interpretation of the image data.
+            </summary>
+        </member>
+        <member name="F:BigGustave.ColorType.None">
+            <summary>
+            Grayscale.
+            </summary>
+        </member>
+        <member name="F:BigGustave.ColorType.PaletteUsed">
+            <summary>
+            Colors are stored in a palette rather than directly in the data.
+            </summary>
+        </member>
+        <member name="F:BigGustave.ColorType.ColorUsed">
+            <summary>
+            The image uses color.
+            </summary>
+        </member>
+        <member name="F:BigGustave.ColorType.AlphaChannelUsed">
+            <summary>
+            The image has an alpha channel.
+            </summary>
+        </member>
+        <member name="T:BigGustave.CompressionMethod">
+            <summary>
+            The method used to compress the image data.
+            </summary>
+        </member>
+        <member name="F:BigGustave.CompressionMethod.DeflateWithSlidingWindow">
+            <summary>
+            Deflate/inflate compression with a sliding window of at most 32768 bytes.
+            </summary>
+        </member>
+        <member name="T:BigGustave.Crc32">
+            <summary>
+            32-bit Cyclic Redundancy Code used by the PNG for checking the data is intact.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Crc32.Calculate(System.Byte[])">
+            <summary>
+            Calculate the CRC32 for data.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Crc32.Calculate(System.Collections.Generic.List{System.Byte})">
+            <summary>
+            Calculate the CRC32 for data.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Crc32.Calculate(System.Byte[],System.Byte[])">
+            <summary>
+            Calculate the combined CRC32 for data.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Decoder.GetPaethValue(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Computes a simple linear function of the three neighboring pixels (left, above, upper left),
+            then chooses as predictor the neighboring pixel closest to the computed value.
+            </summary>
+        </member>
+        <member name="T:BigGustave.FilterMethod">
+            <summary>
+            Indicates the pre-processing method applied to the image data before compression.
+            </summary>
+        </member>
+        <member name="F:BigGustave.FilterMethod.AdaptiveFiltering">
+            <summary>
+            Adaptive filtering with five basic filter types.
+            </summary>
+        </member>
+        <member name="F:BigGustave.FilterType.None">
+            <summary>
+            The raw byte is unaltered.
+            </summary>
+        </member>
+        <member name="F:BigGustave.FilterType.Sub">
+            <summary>
+            The byte to the left.
+            </summary>
+        </member>
+        <member name="F:BigGustave.FilterType.Up">
+            <summary>
+            The byte above.
+            </summary>
+        </member>
+        <member name="F:BigGustave.FilterType.Average">
+            <summary>
+            The mean of bytes left and above, rounded down.
+            </summary>
+        </member>
+        <member name="F:BigGustave.FilterType.Paeth">
+            <summary>
+            Byte to the left, above or top-left based on Paeth's algorithm.
+            </summary>
+        </member>
+        <member name="T:BigGustave.IChunkVisitor">
+            <summary>
+            Enables execution of custom logic whenever a chunk is read.
+            </summary>
+        </member>
+        <member name="M:BigGustave.IChunkVisitor.Visit(System.IO.Stream,BigGustave.ImageHeader,BigGustave.ChunkHeader,System.Byte[],System.Byte[])">
+            <summary>
+            Called by the PNG reader after a chunk is read.
+            </summary>
+        </member>
+        <member name="T:BigGustave.ImageHeader">
+            <summary>
+            The high level information about the image.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ImageHeader.Width">
+            <summary>
+            The width of the image in pixels.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ImageHeader.Height">
+            <summary>
+            The height of the image in pixels.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ImageHeader.BitDepth">
+            <summary>
+            The bit depth of the image.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ImageHeader.ColorType">
+            <summary>
+            The color type of the image.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ImageHeader.CompressionMethod">
+            <summary>
+            The compression method used for the image.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ImageHeader.FilterMethod">
+            <summary>
+            The filter method used for the image.
+            </summary>
+        </member>
+        <member name="P:BigGustave.ImageHeader.InterlaceMethod">
+            <summary>
+            The interlace method used by the image..
+            </summary>
+        </member>
+        <member name="M:BigGustave.ImageHeader.#ctor(System.Int32,System.Int32,System.Byte,BigGustave.ColorType,BigGustave.CompressionMethod,BigGustave.FilterMethod,BigGustave.InterlaceMethod)">
+            <summary>
+            Create a new <see cref="T:BigGustave.ImageHeader"/>.
+            </summary>
+        </member>
+        <member name="M:BigGustave.ImageHeader.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:BigGustave.InterlaceMethod">
+            <summary>
+            Indicates the transmission order of the image data.
+            </summary>
+        </member>
+        <member name="F:BigGustave.InterlaceMethod.None">
+            <summary>
+            No interlace.
+            </summary>
+        </member>
+        <member name="F:BigGustave.InterlaceMethod.Adam7">
+            <summary>
+            Adam7 interlace.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Palette.#ctor(System.Byte[])">
+            <summary>
+            Creates a palette object. Input palette data length from PLTE chunk must be a multiple of 3.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Palette.SetAlphaValues(System.Byte[])">
+            <summary>
+            Adds transparency values from tRNS chunk.
+            </summary>
+        </member>
+        <member name="T:BigGustave.Pixel">
+            <summary>
+            A pixel in a <see cref="T:BigGustave.Png"/> image.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Pixel.R">
+            <summary>
+            The red value for the pixel.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Pixel.G">
+            <summary>
+            The green value for the pixel.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Pixel.B">
+            <summary>
+            The blue value for the pixel.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Pixel.A">
+            <summary>
+            The alpha transparency value for the pixel.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Pixel.IsGrayscale">
+            <summary>
+            Whether the pixel is grayscale (if <see langword="true"/> <see cref="P:BigGustave.Pixel.R"/>, <see cref="P:BigGustave.Pixel.G"/> and <see cref="P:BigGustave.Pixel.B"/> will all have the same value).
+            </summary>
+        </member>
+        <member name="M:BigGustave.Pixel.#ctor(System.Byte,System.Byte,System.Byte,System.Byte,System.Boolean)">
+            <summary>
+            Create a new <see cref="T:BigGustave.Pixel"/>.
+            </summary>
+            <param name="r">The red value for the pixel.</param>
+            <param name="g">The green value for the pixel.</param>
+            <param name="b">The blue value for the pixel.</param>
+            <param name="a">The alpha transparency value for the pixel.</param>
+            <param name="isGrayscale">Whether the pixel is grayscale.</param>
+        </member>
+        <member name="M:BigGustave.Pixel.#ctor(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Create a new <see cref="T:BigGustave.Pixel"/> which has <see cref="P:BigGustave.Pixel.IsGrayscale"/> false and is fully opaque.
+            </summary>
+            <param name="r">The red value for the pixel.</param>
+            <param name="g">The green value for the pixel.</param>
+            <param name="b">The blue value for the pixel.</param>
+        </member>
+        <member name="M:BigGustave.Pixel.#ctor(System.Byte)">
+            <summary>
+            Create a new grayscale <see cref="T:BigGustave.Pixel"/>.
+            </summary>
+            <param name="grayscale">The grayscale value.</param>
+        </member>
+        <member name="M:BigGustave.Pixel.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:BigGustave.Pixel.Equals(BigGustave.Pixel)">
+            <summary>
+            Whether the pixel values are equal.
+            </summary>
+            <param name="other">The other pixel.</param>
+            <returns><see langword="true"/> if all pixel values are equal otherwise <see langword="false"/>.</returns>
+        </member>
+        <member name="M:BigGustave.Pixel.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:BigGustave.Pixel.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:BigGustave.Png">
+            <summary>
+            A PNG image. Call <see cref="M:BigGustave.Png.Open(System.Byte[],BigGustave.IChunkVisitor)"/> to open from file or bytes.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Png.Header">
+            <summary>
+            The header data from the PNG image.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Png.Width">
+            <summary>
+            The width of the image in pixels.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Png.Height">
+            <summary>
+            The height of the image in pixels.
+            </summary>
+        </member>
+        <member name="P:BigGustave.Png.HasAlphaChannel">
+            <summary>
+            Whether the image has an alpha (transparency) layer.
+            </summary>
+        </member>
+        <member name="M:BigGustave.Png.GetPixel(System.Int32,System.Int32)">
+            <summary>
+            Get the pixel at the given column and row (x, y).
+            </summary>
+            <remarks>
+            Pixel values are generated on demand from the underlying data to prevent holding many items in memory at once, so consumers
+            should cache values if they're going to be looped over many time.
+            </remarks>
+            <param name="x">The x coordinate (column).</param>
+            <param name="y">The y coordinate (row).</param>
+            <returns>The pixel at the coordinate.</returns>
+        </member>
+        <member name="M:BigGustave.Png.Open(System.IO.Stream,BigGustave.IChunkVisitor)">
+            <summary>
+            Read the PNG image from the stream.
+            </summary>
+            <param name="stream">The stream containing PNG data to be read.</param>
+            <param name="chunkVisitor">Optional: A visitor which is called whenever a chunk is read by the library.</param>
+            <returns>The <see cref="T:BigGustave.Png"/> data from the stream.</returns>
+        </member>
+        <member name="M:BigGustave.Png.Open(System.IO.Stream,BigGustave.PngOpenerSettings)">
+            <summary>
+            Read the PNG image from the stream.
+            </summary>
+            <param name="stream">The stream containing PNG data to be read.</param>
+            <param name="settings">Settings to apply when opening the PNG.</param>
+            <returns>The <see cref="T:BigGustave.Png"/> data from the stream.</returns>
+        </member>
+        <member name="M:BigGustave.Png.Open(System.Byte[],BigGustave.IChunkVisitor)">
+            <summary>
+            Read the PNG image from the bytes.
+            </summary>
+            <param name="bytes">The bytes of the PNG data to be read.</param>
+            <param name="chunkVisitor">Optional: A visitor which is called whenever a chunk is read by the library.</param>
+            <returns>The <see cref="T:BigGustave.Png"/> data from the bytes.</returns>
+        </member>
+        <member name="M:BigGustave.Png.Open(System.Byte[],BigGustave.PngOpenerSettings)">
+            <summary>
+            Read the PNG image from the bytes.
+            </summary>
+            <param name="bytes">The bytes of the PNG data to be read.</param>
+            <param name="settings">Settings to apply when opening the PNG.</param>
+            <returns>The <see cref="T:BigGustave.Png"/> data from the bytes.</returns>
+        </member>
+        <member name="M:BigGustave.Png.Open(System.String,BigGustave.IChunkVisitor)">
+            <summary>
+            Read the PNG from the file path.
+            </summary>
+            <param name="filePath">The path to the PNG file to open.</param>
+            <param name="chunkVisitor">Optional: A visitor which is called whenever a chunk is read by the library.</param>
+            <remarks>This will open the file to obtain a <see cref="T:System.IO.FileStream"/> so will lock the file during reading.</remarks>
+            <returns>The <see cref="T:BigGustave.Png"/> data from the file.</returns>
+        </member>
+        <member name="M:BigGustave.Png.Open(System.String,BigGustave.PngOpenerSettings)">
+            <summary>
+            Read the PNG from the file path.
+            </summary>
+            <param name="filePath">The path to the PNG file to open.</param>
+            <param name="settings">Settings to apply when opening the PNG.</param>
+            <remarks>This will open the file to obtain a <see cref="T:System.IO.FileStream"/> so will lock the file during reading.</remarks>
+            <returns>The <see cref="T:BigGustave.Png"/> data from the file.</returns>
+        </member>
+        <member name="T:BigGustave.PngBuilder">
+            <summary>
+            Used to construct PNG images. Call <see cref="M:BigGustave.PngBuilder.Create(System.Int32,System.Int32,System.Boolean)"/> to make a new builder.
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.Create(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Create a builder for a PNG with the given width and size.
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.FromPng(BigGustave.Png)">
+            <summary>
+            Create a builder from a <see cref="T:BigGustave.Png"/>.
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.FromPngBytes(System.Byte[])">
+            <summary>
+            Create a builder from the bytes of the specified PNG image.
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.FromBgra32Pixels(System.Byte[],System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Create a builder from the bytes in the BGRA32 pixel format.
+            https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.pixelformats.bgra32
+            </summary>
+            <param name="data">The pixels in BGRA32 format.</param>
+            <param name="width">The width in pixels.</param>
+            <param name="height">The height in pixels.</param>
+            <param name="useAlphaChannel">Whether to include an alpha channel in the output.</param>
+        </member>
+        <member name="M:BigGustave.PngBuilder.FromBgra32Pixels(System.IO.Stream,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Create a builder from the bytes in the BGRA32 pixel format.
+            https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.pixelformats.bgra32
+            </summary>
+            <param name="data">The pixels in BGRA32 format.</param>
+            <param name="width">The width in pixels.</param>
+            <param name="height">The height in pixels.</param>
+            <param name="useAlphaChannel">Whether to include an alpha channel in the output.</param>
+        </member>
+        <member name="M:BigGustave.PngBuilder.SetPixel(System.Byte,System.Byte,System.Byte,System.Int32,System.Int32)">
+            <summary>
+            Sets the RGB pixel value for the given column (x) and row (y).
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.SetPixel(BigGustave.Pixel,System.Int32,System.Int32)">
+            <summary>
+            Set the pixel value for the given column (x) and row (y).
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.StoreText(System.String,System.String)">
+            <summary>
+            Allows you to store arbitrary text data in the "iTXt" international textual data
+            chunks of the generated PNG image.
+            </summary>
+            <param name="keyword">
+            A keyword identifying the text data between 1-79 characters in length.
+            Must not start with, end with or contain consecutive whitespace characters.
+            Only characters in the range 32 - 126 and 161 - 255 are permitted.
+            </param>
+            <param name="text">
+            The text data to store. Encoded as UTF-8 that may not contain zero (0) bytes but can be zero-length.
+            </param>
+        </member>
+        <member name="M:BigGustave.PngBuilder.Save(BigGustave.PngBuilder.SaveOptions)">
+            <summary>
+            Get the bytes of the PNG file for this builder.
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.Save(System.IO.Stream,BigGustave.PngBuilder.SaveOptions)">
+            <summary>
+            Write the PNG file bytes to the provided stream.
+            </summary>
+        </member>
+        <member name="M:BigGustave.PngBuilder.AttemptCompressionOfRawData(System.Byte[],BigGustave.PngBuilder.SaveOptions)">
+            <summary>
+            Attempt to improve compressability of the raw data by using adaptive filtering.
+            </summary>
+        </member>
+        <member name="T:BigGustave.PngBuilder.SaveOptions">
+            <summary>
+            Options for configuring generation of PNGs from a <see cref="T:BigGustave.PngBuilder"/>.
+            </summary>
+        </member>
+        <member name="P:BigGustave.PngBuilder.SaveOptions.AttemptCompression">
+            <summary>
+            Whether the library should try to reduce the resulting image size.
+            This process does not affect the original image data (it is lossless) but may 
+            result in longer save times.
+            </summary>
+        </member>
+        <member name="P:BigGustave.PngBuilder.SaveOptions.MaxDegreeOfParallelism">
+            <summary>
+            The number of parallel tasks allowed during compression.
+            </summary>
+        </member>
+        <member name="T:BigGustave.PngOpenerSettings">
+            <summary>
+            Settings to use when opening a PNG using <see cref="M:BigGustave.Png.Open(System.IO.Stream,BigGustave.PngOpenerSettings)"/>
+            </summary>
+        </member>
+        <member name="P:BigGustave.PngOpenerSettings.ChunkVisitor">
+            <summary>
+            The code to execute whenever a chunk is read. Can be <see langword="null"/>.
+            </summary>
+        </member>
+        <member name="P:BigGustave.PngOpenerSettings.DisallowTrailingData">
+            <summary>
+            Whether to throw if the image contains data after the image end marker.
+            <see langword="false"/> by default.
+            </summary>
+        </member>
+        <member name="T:BigGustave.RawPngData">
+            <summary>
+            Provides convenience methods for indexing into a raw byte array to extract pixel values.
+            </summary>
+        </member>
+        <member name="M:BigGustave.RawPngData.#ctor(System.Byte[],System.Int32,BigGustave.Palette,BigGustave.ImageHeader)">
+            <summary>
+            Create a new <see cref="T:BigGustave.RawPngData"/>.
+            </summary>
+            <param name="data">The decoded pixel data as bytes.</param>
+            <param name="bytesPerPixel">The number of bytes in each pixel.</param>
+            <param name="palette">The palette for the image.</param>
+            <param name="imageHeader">The image header.</param>
+        </member>
+        <member name="T:CornerWangTile.GeneratorOptions">
+            <Summary>
+             GeneratorOptions struct is a struct for the needed
+             options for our generator algorithms.
+            </Summary>
+        </member>
+    </members>
+</doc>

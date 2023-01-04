@@ -118,7 +118,7 @@ namespace WangTile
             }
         }
 
-        public void RemoveTilesWithMismatches(bool useBitmasking, ColorMatching colorMatching){
+        public void RemoveTilesWithMismatches_Tetris(bool useBitmasking, ColorMatching colorMatching){
             (int col, int row) pos = (0,0);
     
             bool wasThereMismatch = false;
@@ -135,7 +135,6 @@ namespace WangTile
                 if (numberOfMismatch>0){
                     wasThereMismatch = true;
                     this.RemoveTile(pos.col,pos.row);
-                    // Console.WriteLine($"Col={pos.col},Row={pos.row}, mismatches={numberOfMismatch}");
                 }
 
                 pos = GetNextTileSlot(pos.col,pos.row);
@@ -149,7 +148,39 @@ namespace WangTile
                     pos.col=0;
                     pos.row=0;
                 }
+            }
+        }
 
+        public void RemoveTilesWithMismatches(bool useBitmasking, ColorMatching colorMatching){
+            (int col, int row) pos = (0,0);
+    
+            bool wasThereMismatch = false;
+            while (true){
+                int numberOfMismatch = 0;
+                WangTile tile = this.getTile(pos.col,pos.row);
+                (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+
+                
+                numberOfMismatch=MismatchCalculator.CountMismatchOnCorners_ForRemoval(cColors,tile.TileBitMask);
+                numberOfMismatch+=MismatchCalculator.CountMismatchVertical_ForRemoval(vColors,tile.TileBitMask);
+                numberOfMismatch+=MismatchCalculator.CountMismatchHorizontal_ForRemoval(hColors,tile.TileBitMask);
+
+                if (numberOfMismatch>0){
+                    wasThereMismatch = true;
+                    this.RemoveTile(pos.col,pos.row);
+                }
+
+                pos = GetNextTileSlot(pos.col,pos.row);
+                
+                if (pos.col==this.Height){
+                    if (!wasThereMismatch){
+                        break;
+                    }
+                    wasThereMismatch=false;
+
+                    pos.col=0;
+                    pos.row=0;
+                }
             }
         }
 
@@ -384,7 +415,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(col,row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             // empty tile
@@ -405,7 +436,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -423,7 +454,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
         
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -443,7 +474,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -461,7 +492,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -481,7 +512,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -499,7 +530,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -519,7 +550,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -537,7 +568,7 @@ namespace WangTile
 
             // out of bounds tile
             if (!isValidPosition(coord.col,coord.row)){
-                return new WangTile(CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,CornerColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard,VerticalColor.WildCard,HorizontalColor.WildCard);
+                return new WangTile(CornerColor.Border,CornerColor.Border,CornerColor.Border,CornerColor.Border,VerticalColor.Border,HorizontalColor.Border,VerticalColor.Border,HorizontalColor.Border);
             }
 
             return new WangTile(CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,CornerColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor,VerticalColor.NoColor,HorizontalColor.NoColor);
@@ -698,7 +729,7 @@ namespace WangTile
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////// Simulated Annealing Methods /////////////////////////////////////
-        public void ReplaceTileUsingSimulatedAnnealing(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+        public void ReplaceTileUsingSimulatedAnnealing_Tetris(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
             int currentMismatch = 0;
 
             WangTile tile = this.getTile(pos.col,pos.row);
@@ -723,7 +754,32 @@ namespace WangTile
             } 
         }
 
-        public void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+        public void ReplaceTileUsingSimulatedAnnealing(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+            int currentMismatch = 0;
+
+            WangTile tile = this.getTile(pos.col,pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+
+            
+            currentMismatch = MismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
+            currentMismatch += MismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
+            currentMismatch += MismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
+
+            if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
+                int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+                TileProbability[] tileProbabilities = this.GetTileProbability_SimulatedAnnealing(tileMismatchesStruct, currentMismatch);
+                TileProbability[] tileNormalizedProbabilities =  this.GetNormalizedProbabilityVector(tileProbabilities);
+                TileProbability[] tileCumulativeProbabilities = this.GetCumulativeProbabilityVector(tileNormalizedProbabilities);
+
+                // int tileID = this.ChooseRandomTileIDBasedOnProbability(tileProbabilities,random);
+                int tileID = this.ChooseTileIndexFromCumulativeProbabilityVector(tileCumulativeProbabilities, random);
+                
+                this.PlaceTile(tileSetID, tileID, pos.col, pos.row);
+            } 
+        }
+
+        public void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling_Tetris(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
             int currentMismatch = 0;
 
             WangTile tile = this.getTile(pos.col,pos.row);
@@ -733,6 +789,37 @@ namespace WangTile
             currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
             currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
             currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
+    
+
+            if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){
+                int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+                TileProbability[] tileProbabilities = this.GetTileProbability_SimulatedAnnealing(tileMismatchesStruct, currentMismatch);
+                TileProbability[] tileProbabilitiesPermutationShuffle = Utils.PermutationShuffleTileProbabilities(tileProbabilities,random);
+
+                int tileID = 0;
+                float randFloat = (float)random.NextDouble();
+                for (int i=0;i<tileProbabilitiesPermutationShuffle.Length;i++){
+                    if (tileProbabilitiesPermutationShuffle[i].Probability>randFloat){
+                        tileID = tileProbabilitiesPermutationShuffle[i].TileID;
+                        break;
+                    }
+                }
+ 
+                this.PlaceTile(tileSetID, tileID, pos.col, pos.row);
+            } 
+        }
+
+        public void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+            int currentMismatch = 0;
+
+            WangTile tile = this.getTile(pos.col,pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+
+            
+            currentMismatch = MismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
+            currentMismatch += MismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
+            currentMismatch += MismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
     
 
             if (currentMismatch>0 || (isValidPosition(pos.col,pos.row) && !isTileAlreadyExist(pos.col,pos.row))){

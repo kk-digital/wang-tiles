@@ -14,9 +14,9 @@ namespace WangTile
         }
 
         /* Methods of WangTileSet */
-        public int CreateTile(ColorMap colorMap, CornerColor cornerColorNW, CornerColor cornerColorNE, CornerColor cornerColorSE, CornerColor cornerColorSW, VerticalColor edgeColorN, HorizontalColor edgeColorE, VerticalColor edgeColorS, HorizontalColor edgeColorW)
+        public int CreateTile(ColorMap colorMap, CornerColor cornerColorNW, CornerColor cornerColorNE, CornerColor cornerColorSE, CornerColor cornerColorSW, VerticalColor edgeColorN, HorizontalColor edgeColorE, VerticalColor edgeColorS, HorizontalColor edgeColorW, int[] tileData = null)
         {
-            WangTile newTile = new WangTile(cornerColorNW, cornerColorNE, cornerColorSE, cornerColorSW, edgeColorN, edgeColorE,edgeColorS, edgeColorW); 
+            WangTile newTile = new WangTile(cornerColorNW, cornerColorNE, cornerColorSE, cornerColorSW, edgeColorN, edgeColorE,edgeColorS, edgeColorW, tileData); 
 
             if (this.Tiles==null){
                 this.Tiles=new WangTile[1];

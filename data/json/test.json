@@ -1,0 +1,32 @@
+[
+    {
+        "CornerColorNW":"A",
+        "CornerColorNE":"B",
+        "CornerColorSE":"C",
+        "CornerColorSW":"D",
+        "EdgeColorNorth":"A",
+        "EdgeColorSouth":"B",
+        "EdgeColorWest":"A",
+        "EdgeColorEast":"B",
+        "BitmaskAllCorners":true,
+        "BitmaskNorthEdge":true,
+        "BitmaskEastEdge":true,
+        "BitmaskSouthEdge":true,
+        "BitmaskWestEdge":true
+    },
+    {
+        "CornerColorNW":"E",
+        "CornerColorNE":"F",
+        "CornerColorSE":"G",
+        "CornerColorSW":"H",
+        "EdgeColorNorth":"C",
+        "EdgeColorSouth":"D",
+        "EdgeColorWest":"C",
+        "EdgeColorEast":"D",
+        "BitmaskAllCorners":true,
+        "BitmaskNorthEdge":true,
+        "BitmaskEastEdge":true,
+        "BitmaskSouthEdge":true,
+        "BitmaskWestEdge":true
+    }
+]

@@ -9,6 +9,13 @@ namespace WangTile
         public int VerticalColorCount=0;
         public int HorizontalColorCount=0;
 
+        public Dictionary<int, CornerColor> CornerColorsJSONMap;
+        public Dictionary<int, VerticalColor> VerticalColorsJSONMap;
+        public Dictionary<int, HorizontalColor> HorizontalColorsJSONMap;
+
+        public int CornerColorJSONCount=0;
+        public int VerticalColorJSONCount=0;
+        public int HorizontalColorJSONCount=0;
 
         public int GetCornerColorCount()
         {
@@ -56,8 +63,63 @@ namespace WangTile
             return HorizontalPixelColors[index];
         }
 
+        public CornerColor RetrieveCornerColorForJSON(int cornerColorInt){
+            // if corner color already exists
+            if (this.CornerColorsJSONMap.ContainsKey(cornerColorInt)){
+                // return value
+                return this.CornerColorsJSONMap[cornerColorInt];
+            } else {
+                // then does not exist, add it
+                // the index to be used is +2 since first two indexes are reserved
+                this.CornerColorsJSONMap[cornerColorInt]=(CornerColor)this.CornerColorCount+2;
+
+                // Increment count for the new color
+                this.CornerColorCount++;
+            }
+
+            return this.CornerColorsJSONMap[cornerColorInt];
+        }
+
+        public VerticalColor RetrieveVerticalColorForJSON(int verticalColorInt){
+            // if vertical color already exists
+            if (this.VerticalColorsJSONMap.ContainsKey(verticalColorInt)){
+                // return value
+                return this.VerticalColorsJSONMap[verticalColorInt];
+            } else {
+                // then does not exist, add it
+                // the index to be used is +2 since first two indexes are reserved
+                this.VerticalColorsJSONMap[verticalColorInt]=(VerticalColor)this.VerticalColorCount+2;
+
+                // Increment count for the new color
+                this.VerticalColorCount++;
+            }
+
+            return this.VerticalColorsJSONMap[verticalColorInt];
+        }
+
+        public HorizontalColor RetrieveHorizontalColorForJSON(int horizontalColorInt){
+            // if horizontal color already exists
+            if (this.HorizontalColorsJSONMap.ContainsKey(horizontalColorInt)){
+                // return value
+                return this.HorizontalColorsJSONMap[horizontalColorInt];
+            } else {
+                // then does not exist, add it
+                // the index to be used is +2 since first two indexes are reserved
+                this.HorizontalColorsJSONMap[horizontalColorInt]=(HorizontalColor)this.HorizontalColorCount+2;
+
+                // Increment count for the new color
+                this.HorizontalColorCount++;
+            }
+
+            return this.HorizontalColorsJSONMap[horizontalColorInt];
+        }
+
         public ColorMap()
         {
+            this.CornerColorsJSONMap = new Dictionary < int, CornerColor > ();
+            this.VerticalColorsJSONMap = new Dictionary < int, VerticalColor > ();
+            this.HorizontalColorsJSONMap = new Dictionary < int, HorizontalColor > ();
+
             int length=119;
             CornerPixelColors = new PixelColor[length];
             VerticalPixelColors = new PixelColor[length];
@@ -125,16 +187,16 @@ namespace WangTile
 
             
             PixelColor[] colorSet = new PixelColor[length];
-            colorSet[0]=PixelColor.MakePixelColor(255,0,0, 255);
-            colorSet[1]=PixelColor.MakePixelColor(0,255,0, 255);
-            colorSet[2]=PixelColor.MakePixelColor(128,128,0, 255);
-            colorSet[3]=PixelColor.MakePixelColor(255,255,0, 255);
-            colorSet[4]=PixelColor.MakePixelColor(0,255,255, 255);
-            colorSet[5]=PixelColor.MakePixelColor(255,0,255, 255);
-            colorSet[6]=PixelColor.MakePixelColor(138,43,226, 255);
-            colorSet[7]=PixelColor.MakePixelColor(0,128,0, 255);
-            colorSet[8]=PixelColor.MakePixelColor(128,0,128, 255);
-            colorSet[9]=PixelColor.MakePixelColor(0,128,128, 255);
+            colorSet[0]=PixelColor.MakePixelColor(0,0,255,255);
+            colorSet[1]=PixelColor.MakePixelColor(255,255,0,255);
+            colorSet[2]=PixelColor.MakePixelColor(255,255,204, 255);
+            colorSet[3]=PixelColor.MakePixelColor(0,255,255, 255);
+            colorSet[4]=PixelColor.MakePixelColor(128,0,0, 255);
+            colorSet[5]=PixelColor.MakePixelColor(0,128,0, 255);
+            colorSet[6]=PixelColor.MakePixelColor(0,0,128, 255);
+            colorSet[7]=PixelColor.MakePixelColor(128,128,0, 255);
+            colorSet[8]=PixelColor.MakePixelColor(0,128,128, 255);
+            colorSet[9]=PixelColor.MakePixelColor(255,0,255,255);
             
             // different vertical colors in all indexes
             int j = 0;
