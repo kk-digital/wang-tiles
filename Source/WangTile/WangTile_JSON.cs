@@ -5,6 +5,7 @@ namespace WangTile
     public struct TileJSON
     {
        public TileLayerJSON[] Layers { get; set; }
+       public TileSetJSON[] TileSets { get; set; }
     }
 
     public struct TileLayerJSON
@@ -21,13 +22,32 @@ namespace WangTile
        public int Y { get; set; }
     }
 
+    public struct TileSetJSON
+    { 
+        public int FirstGID { get; set; }
+        public string Source { get; set; }
+    }
+
+    public struct ColorTileSetJSON 
+    {
+        public string Image { get; set; }
+    }
+
     public class WangTileJSON
     {
         public static void TestTiledJSON(){
-            TileJSON tile =  DeserializeJSON("./data/json/Map_Tiles_V1.tmj");
+            TileJSON tile =  DeserializeTileJSON("./kcg-tiled/tilesets/Map_Tiles_V1.tmj");
             Console.WriteLine($"tile array len= {tile.Layers.Length}");
             Console.WriteLine($"tile array[0] chunks len= {tile.Layers[0].Chunks.Length}");
 
+            Console.WriteLine("tile tilesets");
+            foreach (TileSetJSON tileset in tile.TileSets){
+            Console.WriteLine($"{tileset.Source}");
+            }
+
+            TileSetJSON tileSet=Utils.GetTileSetInfo(3663, tile.TileSets);
+
+            Console.WriteLine($"TileSet GID={tileSet.FirstGID}, source={tileSet.Source}");
             CheckCornerMarkers(tile.Layers[0].Chunks[0]);
 
             // Get north color
@@ -41,7 +61,7 @@ namespace WangTile
             
         }
 
-        public static TileJSON DeserializeJSON(string jsonDirectory){
+        public static TileJSON DeserializeTileJSON(string jsonDirectory){
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
@@ -51,6 +71,18 @@ namespace WangTile
             TileJSON tile = JsonSerializer.Deserialize<TileJSON>(jsonString, options);
 
             return tile;
+        }
+
+        public static ColorTileSetJSON DeserializeColorTileSetJSON(string jsonDirectory){
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            string jsonString = File.ReadAllText(jsonDirectory);
+            ColorTileSetJSON colorTileSet = JsonSerializer.Deserialize<ColorTileSetJSON>(jsonString, options);
+
+            return colorTileSet;
         }
 
         public static int GetNorthColorFromTileChunks(TileChunksJSON tileChunk){        

@@ -19,8 +19,11 @@ namespace WangTile
 
         public int TileBitMask;
 
+        /* Only used for Tiled tileset */
+        public int[]? TileData;
+
         /* Constructor for WangTile */
-        public WangTile(CornerColor cornerColorNW, CornerColor cornerColorNE, CornerColor cornerColorSE, CornerColor cornerColorSW, VerticalColor edgeColorN, HorizontalColor edgeColorE, VerticalColor edgeColorS, HorizontalColor edgeColorW)
+        public WangTile(CornerColor cornerColorNW, CornerColor cornerColorNE, CornerColor cornerColorSE, CornerColor cornerColorSW, VerticalColor edgeColorN, HorizontalColor edgeColorE, VerticalColor edgeColorS, HorizontalColor edgeColorW, int[] tileData = null)
         {
             this.CornerColorNW = cornerColorNW;
             this.CornerColorNE = cornerColorNE;
@@ -33,6 +36,8 @@ namespace WangTile
             this.EdgeColorWest=edgeColorW;
 
             this.TileBitMask=0;
+
+            this.TileData=tileData;
         }
 
         /* Methods for WangTile */

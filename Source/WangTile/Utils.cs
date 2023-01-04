@@ -1,3 +1,5 @@
+using SkiaSharp;
+
 namespace WangTile
 {
     public static class Utils
@@ -535,13 +537,13 @@ namespace WangTile
             return tileSet;
         }
 
-        public static WangTileSet GenerateTileSetFromJSON(ColorMap colorMap, string jsonDirectory)
+        public static WangTileSet GenerateTileSetFromJSON(ColorMap colorMap, Dictionary<int, SKImage> imageMap, Dictionary<int, SKImage> tileImageMap, string jsonDirectory, string jsonName)
         {
-            WangTileSet tileSet= new WangTileSet();
+            WangTileSet wangTileSet= new WangTileSet();
             int tileID=0;
 
-            TileJSON tile = WangTileJSON.DeserializeJSON(jsonDirectory);
-
+            TileJSON tile = WangTileJSON.DeserializeTileJSON(jsonDirectory+"/"+jsonName);
+            
             for (int i=0;i<tile.Layers[0].Chunks.Length;i++){
                 TileChunksJSON tileLayerChunk = tile.Layers[0].Chunks[i];
                 WangTileJSON.CheckCornerMarkers(tileLayerChunk);
@@ -560,13 +562,84 @@ namespace WangTile
                 VerticalColor southColor = colorMap.RetrieveVerticalColorForJSON(southColorJSON);
                 HorizontalColor westColor = colorMap.RetrieveHorizontalColorForJSON(westColorJSON);
 
+                // Get inner 16x16 data only since outer layer is only used to determine the color.
+                int[] tileData = GetInner16x16(tileLayerChunk.Data);
+
                 // Add tiles to tileset
                 // CornerColor is temporary
-                tileID=tileSet.CreateTile(colorMap,CornerColor.A,CornerColor.A,CornerColor.A,CornerColor.A,northColor,eastColor,southColor,westColor);
-                tileSet.Tiles[tileID].MaskAllCorners();
+                tileID=wangTileSet.CreateTile(colorMap,CornerColor.A,CornerColor.A,CornerColor.A,CornerColor.A,northColor,eastColor,southColor,westColor, tileData);
+                wangTileSet.Tiles[tileID].MaskAllCorners();
+
+                // Update image map from tileset data
+                UpdateImageMap(imageMap, tileData, tile.TileSets, jsonDirectory);
+                
+                // Add tile image to the tileImageMap
+                tileImageMap[tileID] = SkiaSharpImageMerger.CreateTileImage(imageMap, tileData);
             }
 
-            return tileSet;
-        }  
+            return wangTileSet;
+        }
+
+        public static TileSetJSON GetTileSetInfo(int tileID, TileSetJSON[] tileSets){
+            if (tileSets.Length==1){
+                return tileSets[0];
+            }
+
+            for (int i = 1;i<tileSets.Length;i++){
+                if (tileID>=tileSets[i-1].FirstGID && tileID<tileSets[i].FirstGID){
+                    return tileSets[i-1];
+                }
+            }
+
+            return tileSets[tileSets.Length-1];
+        }
+
+        public static string ChangeFileExtension(ReadOnlySpan<char> path, ReadOnlySpan<char> extension)
+        {
+            var lastPeriod = path.LastIndexOf('.');
+            return string.Concat(path[..lastPeriod], extension);
+        }
+
+        public static void UpdateImageMap(Dictionary<int, SKImage> imageMap, int[] tileData, TileSetJSON[] tileSets, string jsonDirectory){
+            foreach (int ID in tileData){
+                if (!imageMap.ContainsKey(ID)){
+                    TileSetJSON tileSet = GetTileSetInfo(ID, tileSets);
+                    string tileSetSource = ChangeFileExtension(tileSet.Source, ".tsj");
+                    ColorTileSetJSON colorTileSet = WangTileJSON.DeserializeColorTileSetJSON(jsonDirectory+"/"+tileSetSource);
+                    string imageSource = colorTileSet.Image;
+                    SKImage tileImage = SkiaSharpImage.GetTileImageFromTileSetImage(jsonDirectory+"/"+imageSource, ID-tileSet.FirstGID);
+                    imageMap[ID]=tileImage;
+                }
+            }
+        }
+
+        public static int[] GetInner16x16(int[] tileData){
+            int width = 18;
+            int height = 18;
+
+            int newWidth = 16;
+            int newHeight = 16;
+            int[] newTileData = new int[newWidth*newHeight];
+
+            int i=0;
+            for (int col=0;col<height;col++){
+                if (col==0 || col==height-1){
+                    continue;
+                }
+
+                for(int row=0;row<width;row++){
+                    if (row==0 || row==width-1){
+                        continue;
+                    }
+
+                    int index = GetBoardSlotIndex(width, col, row);
+                    newTileData[i]= tileData[index];
+                    i++;
+                }
+            }
+
+            return newTileData;
+        }
+
     }
 }

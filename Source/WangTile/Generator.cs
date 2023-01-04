@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using SkiaSharp;
 
 namespace WangTile
 {
@@ -382,7 +383,19 @@ namespace WangTile
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
-            WangTileSet tileSet = Utils.GenerateTileSetFromJSON(colorMap, "./data/json/Map_Tiles_V1.tmj");
+            // Image Map for tile IDs in tile data
+            Dictionary<int, SKImage> imageMap = new Dictionary<int, SKImage>();
+            Dictionary<int, SKImage> tileImageMap = new Dictionary<int, SKImage>();
+            
+            // Create blank color image
+            if (!imageMap.ContainsKey(0)){
+                // ID 0 is blank
+                imageMap[0] = SkiaSharpImage.CreateBlankImage();
+            }
+
+            string jsonDir = "./kcg-tiled/tilesets";
+            string jsonMapFileName = "Map_Tiles_V1.tmj";
+            WangTileSet tileSet = Utils.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, jsonDir, jsonMapFileName);
             newBoard.AddTileSet(tileSet);
 
             int tileSetID = 0;
@@ -464,9 +477,8 @@ namespace WangTile
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
             
-            // Combine tile images and save
-            string[] imgDirs = Utils.GenerateImageDirsFromTileSlots(newBoard.TileSlots);
-            SkiaSharpImageMerger.GenerateMapUsingGivenPictures(imgDirs, newBoard.Width, newBoard.Height, "data/" +outputName+"_Combined.png");
+            // Generate map image and save
+            SkiaSharpImageMerger.GenerateMapAndSave(tileImageMap, newBoard.TileSlots, newBoard.Width, newBoard.Height, "data/" +outputName+"_Generated.png");
 
             // Timer stop
             sw.Stop();
