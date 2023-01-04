@@ -3,7 +3,7 @@ using System.IO;
 using SkiaSharp;
 
 namespace WangTile{
-    public static class SkiaSharpImageMerger
+    public static class SkiaSharpImageGenerator
     {
         public static void GenerateMapAndSave(Dictionary<int,SKImage> tileImageMap, BoardTileSlot[] tileSlots, int width, int height, string output){
             SKImage image = GenerateMapImage(tileImageMap, tileSlots, width, height);

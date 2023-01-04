@@ -13,7 +13,7 @@ namespace WangTile
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
-            WangTileSet tileSet = Utils.GenerateTetrisTileSet(colorMap);
+            WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
 
             // Select random tile to place on first slot
@@ -104,7 +104,7 @@ namespace WangTile
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
-            WangTileSet tileSet = Utils.GenerateTetrisTileSet(colorMap);
+            WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
 
             int tileSetID = 0;
@@ -186,7 +186,7 @@ namespace WangTile
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
-            WangTileSet tileSet = Utils.GenerateTetrisTileSet(colorMap);
+            WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
 
             int tileSetID = 0;
@@ -284,7 +284,7 @@ namespace WangTile
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
-            WangTileSet tileSet = Utils.GenerateTetrisTileSet(colorMap);
+            WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
 
             int tileSetID = 0;
@@ -376,10 +376,9 @@ namespace WangTile
         {
             Stopwatch sw = Stopwatch.StartNew();
 
-            string[] mismatchStr = new string[iterations];
-            string[] temperatureStr = new string[iterations];
+            // string[] mismatchStr = new string[iterations];
+            // string[] temperatureStr = new string[iterations];
             
-
             Board newBoard = new Board(height,width);
             ColorMap colorMap = new ColorMap();
 
@@ -395,7 +394,7 @@ namespace WangTile
 
             string jsonDir = "./kcg-tiled/tilesets";
             string jsonMapFileName = "Map_Tiles_V1.tmj";
-            WangTileSet tileSet = Utils.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, jsonDir, jsonMapFileName);
+            WangTileSet tileSet = TileSetGenerator.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, jsonDir, jsonMapFileName);
             newBoard.AddTileSet(tileSet);
 
             int tileSetID = 0;
@@ -407,19 +406,16 @@ namespace WangTile
 
             // place the random tile on the board 
             (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
-            newBoard.PlaceTile(0,tileIndex,pos.col,pos.row);
-           
-            int i=0;
+            newBoard.PlaceTile(tileSetID,tileIndex,pos.col,pos.row);
 
+            // Fill in board with tiles
             TetrisBlockIterate_V2(newBoard, colorMatching, rand, pos);
-            // Picture newPic2 = new Picture();
-            // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
-            // Thread.Sleep(5);
 
             // initial temperature
             newBoard.Temperature=temperature;
             // Decrease temperature every L iteration
             int L = lIteration;
+            int i=0;
             while (i<iterations){
                 // Generate array with N indexes
                 // permute and shuffle them
@@ -447,9 +443,9 @@ namespace WangTile
                     newBoard.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(useBitmasking, colorMatching, rand, tileSetID, pos);
                 }
 
-                int totalMismatch = MismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
-                mismatchStr[i]= string.Format("{0},{1}", i, totalMismatch);
-                temperatureStr[i]=string.Format("{0},{1}", i, newBoard.Temperature);
+                // int totalMismatch = MismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
+                // mismatchStr[i]= string.Format("{0},{1}", i, totalMismatch);
+                // temperatureStr[i]=string.Format("{0},{1}", i, newBoard.Temperature);
 
                 if (i%L==0){
                     newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
@@ -461,24 +457,24 @@ namespace WangTile
             newBoard.RemoveTilesWithMismatches(true, colorMatching);
 
             // Save CSV
-            var mismatchCSV = new StringBuilder();
-            var temperatureCSV = new StringBuilder();
-            foreach (string line in mismatchStr){
-                mismatchCSV.AppendLine(line);  
-            }
-            foreach (string line in temperatureStr){
-                temperatureCSV.AppendLine(line);  
-            }
+            // var mismatchCSV = new StringBuilder();
+            // var temperatureCSV = new StringBuilder();
+            // foreach (string line in mismatchStr){
+            //     mismatchCSV.AppendLine(line);  
+            // }
+            // foreach (string line in temperatureStr){
+            //     temperatureCSV.AppendLine(line);  
+            // }
 
-            File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
-            File.WriteAllText("./data/Tetris_16x16_Temperature.csv", temperatureCSV.ToString());
+            // File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
+            // File.WriteAllText("./data/Tetris_16x16_Temperature.csv", temperatureCSV.ToString());
 
             // Generate and Save PNG
             Picture newPic = new Picture();
             newPic.SavePNG(newBoard, colorMap, outputName+".png");
             
             // Generate map image and save
-            SkiaSharpImageMerger.GenerateMapAndSave(tileImageMap, newBoard.TileSlots, newBoard.Width, newBoard.Height, "data/" +outputName+"_Generated.png");
+            SkiaSharpImageGenerator.GenerateMapAndSave(tileImageMap, newBoard.TileSlots, newBoard.Width, newBoard.Height, "data/" +outputName+"_Generated.png");
 
             // Timer stop
             sw.Stop();

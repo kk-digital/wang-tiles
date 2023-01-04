@@ -45,7 +45,7 @@ namespace WangTile
             Console.WriteLine($"{tileset.Source}");
             }
 
-            TileSetJSON tileSet=Utils.GetTileSetInfo(3663, tile.TileSets);
+            TileSetJSON tileSet=TileSetGenerator.GetTileSetInfo(3663, tile.TileSets);
 
             Console.WriteLine($"TileSet GID={tileSet.FirstGID}, source={tileSet.Source}");
             CheckCornerMarkers(tile.Layers[0].Chunks[0]);
