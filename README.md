@@ -137,6 +137,30 @@ Sample Command
 ./bin/Debug/net6.0/wang-tiles -- tetris --version 4 --width 16 --height 16 --output-name "Tetris_V4_16x16" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01
 ```
 
+#### wang-tiles hemingway
+---
+Usage for ```wang-tiles hemingway```
+```
+Usage:
+  wang-tiles hemingway [options]
+
+Options:
+  --version <version>                (int) The version of Tiled Algo to run (1).
+  --width <width>                    (int) The width of the board to be made.
+  --height <height>                  (int) The height of the board to be made.
+  --output-name <output-name>        (string) The filename of the resulting picture (default directory is ./data).
+  --color-matching <color-matching>  (int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching).
+  --iterations <iterations>          (int) The number of iterations to do for the algo.
+  --temperature <temperature>        (float) The initial temperature to be used.
+  --lIteration <lIteration>          (int) For updating temperature every Lth iteration.
+  --alpha <alpha>                    (float) The alpha value for updating the temperature.
+  -?, -h, --help                     Show help and usage information
+```
+Sample Command
+```
+./bin/Debug/net6.0/wang-tiles -- hemingway --version 1 --width 8 --height 8 --output-name "Hemingway_V1_8x8" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01 
+```
+
 #### wang-tiles tiled
 ---
 Usage for ```wang-tiles tiled```

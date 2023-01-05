@@ -445,6 +445,64 @@ namespace WangTile
             return tileSet;
         }
 
+        public static WangTileSet GenerateHemingwayTileSet(ColorMap colorMap)
+        {
+            WangTileSet tileSet = new WangTileSet();
+            int tileID=0;
+            // Hemingway Block 1
+            // [ ]  _ [0]
+            // [ ]    [1]
+            // 
+            // Tile 0 of Hemingway Block 1
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.A,CornerColor.B,CornerColor.C,CornerColor.D,VerticalColor.N,HorizontalColor.J,VerticalColor.D,HorizontalColor.M);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+            // Tile 1 of Tetris Block 1
+            tileID=tileSet.CreateTile(colorMap,CornerColor.D,CornerColor.C,CornerColor.E,CornerColor.F,VerticalColor.D,HorizontalColor.P,VerticalColor.O,HorizontalColor.I);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+            // Hemingway Block 2
+            // [ ][ ] - [0][1]
+            // 
+            // Tile 0 of Hemingway Block 2
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.G,CornerColor.I,CornerColor.J,CornerColor.H,VerticalColor.K,HorizontalColor.A,VerticalColor.E,HorizontalColor.J);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+            // Tile 1 of Tetris Block 1
+            tileID=tileSet.CreateTile(colorMap,CornerColor.I,CornerColor.K,CornerColor.L,CornerColor.J,VerticalColor.H,HorizontalColor.I,VerticalColor.G,HorizontalColor.A);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+            // Hemingway Block 3
+            // [ ]  _ [0]
+            // [ ]    [1]
+            // 
+            // Tile 0 of Hemingway Block 3
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.M,CornerColor.N,CornerColor.O,CornerColor.P,VerticalColor.E,HorizontalColor.F,VerticalColor.C,HorizontalColor.P);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+            // Tile 1 of Tetris Block 1
+            tileID=tileSet.CreateTile(colorMap,CornerColor.P,CornerColor.O,CornerColor.Q,CornerColor.R,VerticalColor.C,HorizontalColor.M,VerticalColor.H,HorizontalColor.L);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+            // Hemingway Block 4
+            // [ ][ ] - [0][1]
+            // 
+            // Tile 0 of Hemingway Block 4
+            // Add tiles to tileset
+            tileID=tileSet.CreateTile(colorMap,CornerColor.S,CornerColor.U,CornerColor.V,CornerColor.T,VerticalColor.G,HorizontalColor.B,VerticalColor.N,HorizontalColor.F);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+            // Tile 1 of Tetris Block 1
+            tileID=tileSet.CreateTile(colorMap,CornerColor.U,CornerColor.W,CornerColor.X,CornerColor.V,VerticalColor.O,HorizontalColor.L,VerticalColor.K,HorizontalColor.B);
+            tileSet.Tiles[tileID].MaskAllCorners();
+
+
+            return tileSet;
+        }
+
         public static WangTileSet GenerateTileSetFromJSON(ColorMap colorMap, Dictionary<int, SKImage> imageMap, Dictionary<int, SKImage> tileImageMap, string jsonDirectory, string jsonName)
         {
             WangTileSet wangTileSet= new WangTileSet();
@@ -470,7 +528,7 @@ namespace WangTile
                 VerticalColor southColor = colorMap.RetrieveVerticalColorForJSON(southColorJSON);
                 HorizontalColor westColor = colorMap.RetrieveHorizontalColorForJSON(westColorJSON);
 
-                // Get inner 16x16 data only since outer layer is only used to determine the color.
+                // Get inner 16x16 data only since outer layer is only used to determine the colors.
                 int[] tileData = Utils.GetInner16x16(tileLayerChunk.Data);
 
                 // Add tiles to tileset
@@ -505,12 +563,17 @@ namespace WangTile
         public static void UpdateImageMap(Dictionary<int, SKImage> imageMap, int[] tileData, TileSetJSON[] tileSets, string jsonDirectory){
             foreach (int ID in tileData){
                 if (!imageMap.ContainsKey(ID)){
-                    TileSetJSON tileSet = GetTileSetInfo(ID, tileSets);
-                    string tileSetSource = Utils.ChangeFileExtension(tileSet.Source, ".tsj");
-                    ColorTileSetJSON colorTileSet = WangTileJSON.DeserializeColorTileSetJSON(jsonDirectory+"/"+tileSetSource);
-                    string imageSource = colorTileSet.Image;
-                    SKImage tileImage = SkiaSharpImage.GetTileImageFromTileSetImage(jsonDirectory+"/"+imageSource, ID-tileSet.FirstGID);
-                    imageMap[ID]=tileImage;
+                    if (ID == 0){
+                        // ID 0 is blank
+                        imageMap[0] = SkiaSharpImage.CreateBlankImage();
+                    } else {
+                        TileSetJSON tileSet = GetTileSetInfo(ID, tileSets);
+                        string tileSetSource = Utils.ChangeFileExtension(tileSet.Source, ".tsj");
+                        ColorTileSetJSON colorTileSet = WangTileJSON.DeserializeColorTileSetJSON(jsonDirectory+"/"+tileSetSource);
+                        string imageSource = colorTileSet.Image;
+                        SKImage tileImage = SkiaSharpImage.GetTileImageFromTileSetImage(jsonDirectory+"/"+imageSource, ID-tileSet.FirstGID);
+                        imageMap[ID]=tileImage;
+                    }   
                 }
             }
         }
