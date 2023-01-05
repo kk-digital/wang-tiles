@@ -11,7 +11,7 @@ namespace WangTile
             Stopwatch sw = Stopwatch.StartNew();
 
             Board newBoard = new Board(height,width);
-            ColorMap colorMap = new ColorMap();
+            ColorMap colorMap = new ColorMap(Utils.GetTetrisColors());
 
             WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
@@ -102,7 +102,7 @@ namespace WangTile
  
 
             Board newBoard = new Board(height,width);
-            ColorMap colorMap = new ColorMap();
+            ColorMap colorMap = new ColorMap(Utils.GetTetrisColors());
 
             WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
@@ -184,7 +184,7 @@ namespace WangTile
             var temperatureCSV = new StringBuilder();
 
             Board newBoard = new Board(height,width);
-            ColorMap colorMap = new ColorMap();
+            ColorMap colorMap = new ColorMap(Utils.GetTetrisColors());
 
             WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
@@ -236,7 +236,7 @@ namespace WangTile
 
                 for (int j=0;j<newBoard.TileSlots.Length;j++){
                     pos = positionArr[j];
-                    newBoard.ReplaceTileUsingSimulatedAnnealing_Tetris(useBitmasking, colorMatching, rand, tileSetID, pos);
+                    SimulatedAnnealing.ReplaceTileUsingSimulatedAnnealing_Tetris(newBoard, useBitmasking, colorMatching, rand, tileSetID, pos);
 
                 }
 
@@ -252,7 +252,7 @@ namespace WangTile
                 temperatureCSV.AppendLine(newLine);  
 
                 if (i%L==0){
-                    newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
+                    newBoard.Temperature=SimulatedAnnealing.UpdateTemperature(newBoard, rand, alpha);
                 }
                 i++;
             }
@@ -282,7 +282,7 @@ namespace WangTile
             var temperatureCSV = new StringBuilder();
 
             Board newBoard = new Board(height,width);
-            ColorMap colorMap = new ColorMap();
+            ColorMap colorMap = new ColorMap(Utils.GetTetrisColors());
 
             WangTileSet tileSet = TileSetGenerator.GenerateTetrisTileSet(colorMap);
             newBoard.AddTileSet(tileSet);
@@ -334,7 +334,7 @@ namespace WangTile
 
                 for (int j=0;j<newBoard.TileSlots.Length;j++){
                     pos = positionArr[j];
-                    newBoard.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling_Tetris(useBitmasking, colorMatching, rand, tileSetID, pos);
+                    SimulatedAnnealing.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling_Tetris(newBoard, useBitmasking, colorMatching, rand, tileSetID, pos);
 
                 }
 
@@ -350,7 +350,7 @@ namespace WangTile
                 temperatureCSV.AppendLine(newLine);  
 
                 if (i%L==0){
-                    newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
+                    newBoard.Temperature=SimulatedAnnealing.UpdateTemperature(newBoard, rand, alpha);
                 }
 
                 i++;
@@ -371,6 +371,105 @@ namespace WangTile
             TimeSpan time = sw.Elapsed;
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
+        
+        public void Hemingway_V1_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+
+            string[] mismatchStr = new string[iterations];
+            string[] temperatureStr = new string[iterations];
+            
+            Board newBoard = new Board(height,width);
+            ColorMap colorMap = new ColorMap(Utils.GetHemingwayColors());
+
+            // Image Map for tile IDs in tile data
+            Dictionary<int, SKImage> imageMap = new Dictionary<int, SKImage>();
+            Dictionary<int, SKImage> tileImageMap = new Dictionary<int, SKImage>();
+
+            WangTileSet tileSet = TileSetGenerator.GenerateHemingwayTileSet(colorMap);
+            newBoard.AddTileSet(tileSet);
+
+            int tileSetID = 0;
+            bool useBitmasking = true;
+
+            // Select random tile to place on first slot
+            Random rand = new Random();
+            int tileIndex = rand.Next(0,newBoard.TileSet[tileSetID].Tiles.Length);
+
+            // place the random tile on the board 
+            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
+            newBoard.PlaceTile(tileSetID,tileIndex,pos.col,pos.row);
+
+            // Fill in board with tiles
+            TetrisBlockIterate_V2(newBoard, colorMatching, rand, pos);
+
+            // initial temperature
+            newBoard.Temperature=temperature;
+            // Decrease temperature every L iteration
+            int L = lIteration;
+            int i=0;
+            while (i<iterations){
+                // Generate array with N indexes
+                // permute and shuffle them
+                // each tile appears once in a random order
+                (int col, int row)[] positionArr = new (int col, int row)[newBoard.TileSlots.Length];
+                pos = (0,0);
+                for (int j=0; j<newBoard.TileSlots.Length;j++){
+                    tileIndex=Utils.GetBoardSlotIndex(newBoard.Width, pos.col, pos.row);
+                    positionArr[tileIndex].col=pos.col;
+                    positionArr[tileIndex].row=pos.row;
+
+                    pos = Utils.GetNextTileSlot(newBoard.Width, pos.col,pos.row);
+                }
+
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    int z = rand.Next(j,newBoard.TileSlots.Length);
+                    (int col, int row) tmp = positionArr[j];
+                    positionArr[j]=positionArr[z];
+                    positionArr[z]=tmp;
+                }
+                
+
+                for (int j=0;j<newBoard.TileSlots.Length;j++){
+                    pos = positionArr[j];
+                    SimulatedAnnealing.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(newBoard, useBitmasking, colorMatching, rand, tileSetID, pos);
+                }
+
+                int totalMismatch = MismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
+                mismatchStr[i]= string.Format("{0},{1}", i, totalMismatch);
+                temperatureStr[i]=string.Format("{0},{1}", i, newBoard.Temperature);
+
+                if (i%L==0){
+                    newBoard.Temperature=SimulatedAnnealing.UpdateTemperature(newBoard, rand, alpha);
+                }
+                i++;
+            }
+            Console.WriteLine($"Finished iterations...");
+
+            newBoard.RemoveTilesWithMismatches(true, colorMatching);
+
+            // Save CSV
+            var mismatchCSV = new StringBuilder();
+            var temperatureCSV = new StringBuilder();
+            foreach (string line in mismatchStr){
+                mismatchCSV.AppendLine(line);  
+            }
+            foreach (string line in temperatureStr){
+                temperatureCSV.AppendLine(line);  
+            }
+
+            File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
+            File.WriteAllText("./data/Tetris_16x16_Temperature.csv", temperatureCSV.ToString());
+
+            // Generate and Save PNG
+            Picture newPic = new Picture();
+            newPic.SavePNG(newBoard, colorMap, outputName+".png");
+
+            // Timer stop
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+            Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
+        }
 
         public void Tiled_V1_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
         {
@@ -380,17 +479,11 @@ namespace WangTile
             // string[] temperatureStr = new string[iterations];
             
             Board newBoard = new Board(height,width);
-            ColorMap colorMap = new ColorMap();
+            ColorMap colorMap = new ColorMap(Utils.GetTetrisColors());
 
             // Image Map for tile IDs in tile data
             Dictionary<int, SKImage> imageMap = new Dictionary<int, SKImage>();
             Dictionary<int, SKImage> tileImageMap = new Dictionary<int, SKImage>();
-            
-            // Create blank color image
-            if (!imageMap.ContainsKey(0)){
-                // ID 0 is blank
-                imageMap[0] = SkiaSharpImage.CreateBlankImage();
-            }
 
             string jsonDir = "./kcg-tiled/tilesets";
             string jsonMapFileName = "Map_Tiles_V1.tmj";
@@ -440,7 +533,7 @@ namespace WangTile
 
                 for (int j=0;j<newBoard.TileSlots.Length;j++){
                     pos = positionArr[j];
-                    newBoard.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(useBitmasking, colorMatching, rand, tileSetID, pos);
+                    SimulatedAnnealing.ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(newBoard, useBitmasking, colorMatching, rand, tileSetID, pos);
                 }
 
                 // int totalMismatch = MismatchCalculator.GetBoardTotalMismatch(newBoard, tileSetID, useBitmasking,colorMatching);
@@ -448,7 +541,7 @@ namespace WangTile
                 // temperatureStr[i]=string.Format("{0},{1}", i, newBoard.Temperature);
 
                 if (i%L==0){
-                    newBoard.Temperature=newBoard.UpdateTemperature(rand, alpha);
+                    newBoard.Temperature=SimulatedAnnealing.UpdateTemperature(newBoard, rand, alpha);
                 }
                 i++;
             }
