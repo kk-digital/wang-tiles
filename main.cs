@@ -254,14 +254,20 @@ class MainClass
             new Option<float>(
                 name:"--alpha",
                 description:"(float) The alpha value for updating the temperature."),
+            new Option<string>(
+                name:"--map-json-directory",
+                description:"(string) The directory of the map json."),
+            new Option<string>(
+                name:"--map-json-filename",
+                description:"(string) The filename of the map json."),
         };
 
-        tiledCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float>((version,width,height,outputName, colorMatching, iterations, temperature, lIteration, alpha) =>
+        tiledCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float, string, string>((version,width,height,outputName, colorMatching, iterations, temperature, lIteration, alpha, mapJsonDirectory, mapJsonFilename) =>
         {
             WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
                 case 1:
-                    newGeneratedBoard.Tiled_V1_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
+                    newGeneratedBoard.Tiled_V1_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha, mapJsonDirectory, mapJsonFilename);
                     break;
             }
         });

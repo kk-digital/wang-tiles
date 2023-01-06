@@ -178,11 +178,13 @@ Options:
   --temperature <temperature>        (float) The initial temperature to be used.
   --lIteration <lIteration>          (int) For updating temperature every Lth iteration.
   --alpha <alpha>                    (float) The alpha value for updating the temperature.
+  --map-json-directory <map-json-directory>  (string) The directory of the map json.
+  --map-json-filename <map-json-filename>    (string) The filename of the map json.
   -?, -h, --help                     Show help and usage information
 ```
 Sample Command
 ```
-./bin/Debug/net6.0/wang-tiles -- tiled --version 1 --width 16 --height 8 --output-name "Tiled_V1_8x16" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01
+./bin/Debug/net6.0/wang-tiles -- tiled --version 1 --width 16 --height 8 --output-name "Tiled_V1_8x16" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01 --map-json-directory "./kcg-tiled/tilesets" --map-json-filename "Map_Tiles_V1.tmj" 
 ```
 ---
 For more information, run

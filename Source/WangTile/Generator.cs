@@ -471,7 +471,7 @@ namespace WangTile
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
 
-        public void Tiled_V1_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
+        public void Tiled_V1_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha, string mapJsonDirectory, string mapJsonFilename)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
@@ -485,9 +485,7 @@ namespace WangTile
             Dictionary<int, SKImage> imageMap = new Dictionary<int, SKImage>();
             Dictionary<int, SKImage> tileImageMap = new Dictionary<int, SKImage>();
 
-            string jsonDir = "./kcg-tiled/tilesets";
-            string jsonMapFileName = "Map_Tiles_V1.tmj";
-            WangTileSet tileSet = TileSetGenerator.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, jsonDir, jsonMapFileName);
+            WangTileSet tileSet = TileSetGenerator.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, mapJsonDirectory, mapJsonFilename);
             newBoard.AddTileSet(tileSet);
 
             int tileSetID = 0;
