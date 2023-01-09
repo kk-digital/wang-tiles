@@ -567,6 +567,9 @@ namespace WangTile
             // Generate map image and save
             SkiaSharpImageGenerator.GenerateMapAndSave(tileImageMap, newBoard.TileSlots, newBoard.Width, newBoard.Height, "data/" +outputName+"_Generated.png");
 
+            // Print Tile Frequency Info
+            Utils.PrintTileSlotsInfo(newBoard.TileSet, newBoard.TileSlots);
+
             // Timer stop
             sw.Stop();
             TimeSpan time = sw.Elapsed;

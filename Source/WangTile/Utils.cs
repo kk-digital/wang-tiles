@@ -337,5 +337,37 @@ namespace WangTile
             return (cornerPixelColors:CornerPixelColors, verticalPixelColors:VerticalPixelColors, horizontalPixelColors:HorizontalPixelColors);
         }
 
+        public static void PrintTileSlotsInfo(WangTileSet[]? tileSets, BoardTileSlot[] tileSlots){
+            Dictionary<int,int> tileFrequency = new Dictionary<int, int>();
+            
+            // Use tileset 0 for now
+            int tileSetID = 0;
+            foreach (WangTile tile in tileSets[tileSetID].Tiles){
+                tileFrequency[tile.TileID]=0;
+            }
+
+            for (int i=0;i<tileSlots.Length;i++){
+                if (tileSlots[i].TileID==null){
+                    continue;
+                }
+
+                int tileID = (int)tileSlots[i].TileID;
+                if (tileFrequency.ContainsKey(tileID)){
+                    int frequency = tileFrequency[tileID];
+                    frequency++;
+                    tileFrequency[tileID]= frequency;
+                }else{
+                    tileFrequency[tileID]=1;
+                }
+            }
+            
+            Console.WriteLine($"Number Of Tiles in Tileset {tileSetID}: {tileSets[tileSetID].Tiles.Length}");
+            Console.WriteLine($"Tile Frequency");
+            foreach (var tile in tileFrequency){
+                Console.WriteLine($"TileID={tile.Key}, Frequency={tile.Value}");
+            }
+            
+        }
+
     }
 }
