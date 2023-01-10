@@ -1,22 +1,50 @@
 namespace WangTile{
+
+    public class TiledSimulatedAnnealingBoardConfig {
+        public int Width;
+        public int Height;
+        public string OutputName;
+        public ColorMatching ColorMatching; 
+        public int Iterations; 
+        public float Temperature;
+        public int LIteration;
+        public float Alpha;
+        public string MapJsonDirectory;
+        public string MapJsonFilename;
+        public bool SaveImage;
+
+        public TiledSimulatedAnnealingBoardConfig(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha, string mapJsonDirectory, string mapJsonFilename, bool saveImage = true) {
+            this.Width=width;
+            this.Height=height;
+            this.OutputName=outputName;
+            this.ColorMatching=colorMatching; 
+            this.Iterations=iterations; 
+            this.Temperature=temperature;
+            this.LIteration=lIteration;
+            this.Alpha=alpha;
+            this.MapJsonDirectory=mapJsonDirectory;
+            this.MapJsonFilename=mapJsonFilename;
+            this.SaveImage=saveImage;
+        }
+    }
     public static class SimulatedAnnealing
     {
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////// Simulated Annealing Methods /////////////////////////////////////
-        public static void ReplaceTileUsingSimulatedAnnealing_Tetris(Board board, bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+        public static void ReplaceTileUsingSimulatedAnnealing_Tetris(Board board, bool useBitmasking, Random random, int tileSetID, (int col, int row) pos){
             int currentMismatch = 0;
 
             WangTile tile = board.GetTile(pos.col,pos.row);
             (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = board.GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
 
             
-            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
+            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,board.ColorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,board.ColorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,board.ColorMatching);
 
             if (currentMismatch>0 || (Utils.IsValidPosition(board.Height, board.Width, pos.col,pos.row) && !board.IsTileAlreadyExist(pos.col,pos.row))){
-                int[] tileMismatches = board.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+                int[] tileMismatches = board.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, board.ColorMatching);
                 TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
                 TileProbability[] tileProbabilities = GetTileProbability_SimulatedAnnealing(board, tileMismatchesStruct, currentMismatch);
                 TileProbability[] tileNormalizedProbabilities = WeightedProbability.GetNormalizedProbabilityVector(tileProbabilities);
@@ -54,23 +82,23 @@ namespace WangTile{
             } 
         }
 
-        public static void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling_Tetris(Board board, bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+        public static void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling_Tetris(Board board, bool useBitmasking, Random random, int tileSetID, (int col, int row) pos){
             int currentMismatch = 0;
 
-            WangTile tile = board.GetTile(pos.col,pos.row);
-            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = board.GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+            WangTile tile = board.GetTile(pos.col, pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = board.GetTileAdjacentColorValues(useBitmasking, pos.col, pos.row);
 
             
-            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
-            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
+            currentMismatch = TetrisMismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors, tile.TileBitMask, board.ColorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchVertical_ForPlacement(vColors, tile.TileBitMask, board.ColorMatching);
+            currentMismatch += TetrisMismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors, tile.TileBitMask, board.ColorMatching);
     
 
-            if (currentMismatch>0 || (Utils.IsValidPosition(board.Height, board.Width, pos.col,pos.row) && !board.IsTileAlreadyExist(pos.col,pos.row))){
-                int[] tileMismatches = board.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+            if (currentMismatch>0 || (Utils.IsValidPosition(board.Height, board.Width, pos.col, pos.row) && !board.IsTileAlreadyExist(pos.col, pos.row))){
+                int[] tileMismatches = board.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, board.ColorMatching);
                 TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
                 TileProbability[] tileProbabilities = GetTileProbability_SimulatedAnnealing(board, tileMismatchesStruct, currentMismatch);
-                TileProbability[] tileProbabilitiesPermutationShuffle = Utils.PermutationShuffleTileProbabilities(tileProbabilities,random);
+                TileProbability[] tileProbabilitiesPermutationShuffle = Utils.PermutationShuffleTileProbabilities(tileProbabilities, random);
 
                 int tileID = 0;
                 float randFloat = (float)random.NextDouble();
@@ -85,23 +113,23 @@ namespace WangTile{
             } 
         }
 
-        public static void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(Board board, bool useBitmasking, ColorMatching colorMatching, Random random, int tileSetID, (int col, int row) pos){
+        public static void ReplaceTileUsingSimulatedAnnealing_SequentialRejectionSampling(Board board, bool useBitmasking, Random random, int tileSetID, (int col, int row) pos){
             int currentMismatch = 0;
 
-            WangTile tile = board.GetTile(pos.col,pos.row);
-            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = board.GetTileAdjacentColorValues(useBitmasking,pos.col,pos.row);
+            WangTile tile = board.GetTile(pos.col, pos.row);
+            (CornerColor[] cColors, HorizontalColor[] hColors, VerticalColor[] vColors) = board.GetTileAdjacentColorValues(useBitmasking, pos.col, pos.row);
 
             
-            currentMismatch = MismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors,tile.TileBitMask,colorMatching);
-            currentMismatch += MismatchCalculator.CountMismatchVertical_ForPlacement(vColors,tile.TileBitMask,colorMatching);
-            currentMismatch += MismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors,tile.TileBitMask,colorMatching);
+            currentMismatch = MismatchCalculator.CountMismatchOnCorners_ForPlacement(cColors, tile.TileBitMask, board.ColorMatching);
+            currentMismatch += MismatchCalculator.CountMismatchVertical_ForPlacement(vColors, tile.TileBitMask, board.ColorMatching);
+            currentMismatch += MismatchCalculator.CountMismatchHorizontal_ForPlacement(hColors, tile.TileBitMask, board.ColorMatching);
     
 
-            if (currentMismatch>0 || (Utils.IsValidPosition(board.Height, board.Width, pos.col,pos.row) && !board.IsTileAlreadyExist(pos.col,pos.row))){
-                int[] tileMismatches = board.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, colorMatching);
+            if (currentMismatch>0 || (Utils.IsValidPosition(board.Height, board.Width, pos.col, pos.row) && !board.IsTileAlreadyExist(pos.col, pos.row))){
+                int[] tileMismatches = board.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, board.ColorMatching);
                 TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
                 TileProbability[] tileProbabilities = GetTileProbability_SimulatedAnnealing(board, tileMismatchesStruct, currentMismatch);
-                TileProbability[] tileProbabilitiesPermutationShuffle = Utils.PermutationShuffleTileProbabilities(tileProbabilities,random);
+                TileProbability[] tileProbabilitiesPermutationShuffle = Utils.PermutationShuffleTileProbabilities(tileProbabilities, random);
 
                 int tileID = 0;
                 float randFloat = (float)random.NextDouble();

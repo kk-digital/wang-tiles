@@ -3,7 +3,7 @@ namespace WangTile
     public static class TetrisMismatchCalculator
     {
 
-        public static int GetBoardTotalMismatch(Board board, int tileSetID, bool useBitmasking, ColorMatching colorMatching){
+        public static int GetBoardTotalMismatch(Board board, int tileSetID, bool useBitmasking){
             int col = board.Height;
             int row = board.Width;
             int totalMismatches=0;

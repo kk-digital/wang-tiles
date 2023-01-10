@@ -337,7 +337,7 @@ namespace WangTile
             return (cornerPixelColors:CornerPixelColors, verticalPixelColors:VerticalPixelColors, horizontalPixelColors:HorizontalPixelColors);
         }
 
-        public static void PrintTileSlotsInfo(WangTileSet[]? tileSets, BoardTileSlot[] tileSlots){
+        public static Dictionary<int,int> GetTileFrequency(WangTileSet[]? tileSets, BoardTileSlot[] tileSlots){
             Dictionary<int,int> tileFrequency = new Dictionary<int, int>();
             
             // Use tileset 0 for now
@@ -360,6 +360,14 @@ namespace WangTile
                     tileFrequency[tileID]=1;
                 }
             }
+
+            return tileFrequency;
+        }
+        public static void PrintTileSlotsInfo(WangTileSet[]? tileSets, BoardTileSlot[] tileSlots){
+            Dictionary<int,int> tileFrequency = GetTileFrequency(tileSets, tileSlots);
+            
+            // Use tileset 0 for now
+            int tileSetID = 0;
             
             Console.WriteLine($"Number Of Tiles in Tileset {tileSetID}: {tileSets[tileSetID].Tiles.Length}");
             Console.WriteLine($"Tile Frequency");

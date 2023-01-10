@@ -3,7 +3,7 @@ namespace WangTile
     public static class MismatchCalculator
     {
 
-        public static int GetBoardTotalMismatch(Board board, int tileSetID, bool useBitmasking, ColorMatching colorMatching){
+        public static int GetBoardTotalMismatch(Board board, int tileSetID = 0, bool useBitmasking = true){
             int col = board.Height;
             int row = board.Width;
             int totalMismatches=0;

@@ -38,12 +38,16 @@ namespace WangTile
         // For simulated annealing
         public float Temperature;
 
+        // For tile color matching rule
+        public ColorMatching ColorMatching;
+
         // Constructor
-        public Board(int height, int width)
+        public Board(int height, int width, ColorMatching colorMatching)
         {
             TileSlots = new BoardTileSlot[height*width];
-            Height = height;
-            Width = width;
+            this.Height = height;
+            this.Width = width;
+            this.ColorMatching = colorMatching;
         }
 
         // Methods
