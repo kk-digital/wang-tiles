@@ -225,6 +225,47 @@ class MainClass
             }
         });
 
+        var hemingwayCommand = new Command("hemingway")
+        {
+            new Option<int>(
+                name:"--version",
+                description:"(int) The version of Tiled Algo to run (1)."),
+            new Option<int>(
+                name: "--width",
+                description:"(int) The width of the board to be made."),
+            new Option<int>(
+                name:"--height",
+                description:"(int) The height of the board to be made."),
+            new Option<string>(
+                name:"--output-name",
+                description:"(string) The filename of the resulting picture (default directory is ./data)."),
+            new Option<int>(
+                name:"--color-matching",
+                description:"(int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching)."),
+            new Option<int>(
+                name:"--iterations",
+                description:"(int) The number of iterations to do for the algo."),
+            new Option<float>(
+                name:"--temperature",
+                description:"(float) The initial temperature to be used."),
+            new Option<int>(
+                name:"--lIteration",
+                description:"(int) For updating temperature every Lth iteration."),
+            new Option<float>(
+                name:"--alpha",
+                description:"(float) The alpha value for updating the temperature."),
+        };
+
+        hemingwayCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float>((version,width,height,outputName, colorMatching, iterations, temperature, lIteration, alpha) =>
+        {
+            WangTile.Generator newGeneratedBoard= new WangTile.Generator();
+            switch (version){
+                case 1:
+                    newGeneratedBoard.Hemingway_V1_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
+                    break;
+            }
+        });
+
         var tiledCommand = new Command("tiled")
         {
             new Option<int>(
@@ -268,11 +309,16 @@ class MainClass
             switch (version){
                 case 1:
                     newGeneratedBoard.Tiled_V1_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha, mapJsonDirectory, mapJsonFilename);
+                    // GeneticAlgorithm.GeneticAlgorithm newGA = new GeneticAlgorithm.GeneticAlgorithm();
+
+                    // GeneticAlgorithm.FitnessHelper fitnessHelper = new GeneticAlgorithm.FitnessHelper("10011");
+                    // string res = newGA.Run(fitnessHelper.Fitness,5,0.5,0.05,100);
+                    // Console.WriteLine($"res={res}");
                     break;
             }
         });
 
-        var hemingwayCommand = new Command("hemingway")
+        var tiledGeneticAlgoCommand = new Command("tiled-genetic-algo")
         {
             new Option<int>(
                 name:"--version",
@@ -290,25 +336,61 @@ class MainClass
                 name:"--color-matching",
                 description:"(int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching)."),
             new Option<int>(
-                name:"--iterations",
+                name:"--iterations-sa",
                 description:"(int) The number of iterations to do for the algo."),
             new Option<float>(
                 name:"--temperature",
                 description:"(float) The initial temperature to be used."),
             new Option<int>(
-                name:"--lIteration",
+                name:"--lIteration-sa",
                 description:"(int) For updating temperature every Lth iteration."),
             new Option<float>(
                 name:"--alpha",
                 description:"(float) The alpha value for updating the temperature."),
+            new Option<string>(
+                name:"--map-json-directory",
+                description:"(string) The directory of the map json."),
+            new Option<string>(
+                name:"--map-json-filename",
+                description:"(string) The filename of the map json."),
+
+            new Option<double>(
+                name:"--crossover-probability",
+                description:"(string) The crossover probability for GA."),
+            new Option<double>(
+                name:"--mutation-probability",
+                description:"(string) The mutation probability for GA."),
+            new Option<int>(
+                name:"--population-size",
+                description:"(string) The population size for GA"),
+            new Option<int>(
+                name:"--generations",
+                description:"(string) The number of iterations/generations for GA"),
         };
 
-        hemingwayCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float>((version,width,height,outputName, colorMatching, iterations, temperature, lIteration, alpha) =>
+        tiledGeneticAlgoCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float, string, string, double, double, int, int>((version,width,height,outputName, colorMatching, iterationsSA, temperature, lIterationSA, alpha, mapJsonDirectory, mapJsonFilename, crossoverProbability, mutationProbability, populationSize, generations) =>
         {
-            WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
-                case 1:
-                    newGeneratedBoard.Hemingway_V1_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha);
+                case 1:               
+                    TiledSimulatedAnnealingBoardConfig boardConfig = new TiledSimulatedAnnealingBoardConfig(width,height,outputName, (ColorMatching)colorMatching, iterationsSA, temperature, lIterationSA, alpha, mapJsonDirectory, mapJsonFilename);   
+
+                    // Example tileset length is 32
+                    // All must have 1
+                    int tileSetLength = 32;
+                    Dictionary <int,int> tileFrequencyGoal = new Dictionary<int,int>();
+                    for (int i=0; i<tileSetLength;i++){
+                        tileFrequencyGoal[i]=1;
+                    }
+
+                    // GeneticAlgorithm.FitnessHelper fitnessHelper = new GeneticAlgorithm.FitnessHelper(tileFrequencyGoal);
+                    // GeneticAlgorithm.TiledGeneticAlgorithm newTiledGeneticAlgo = new GeneticAlgorithm.TiledGeneticAlgorithm();
+
+                    // WangTile.Board finalBoard = newTiledGeneticAlgo.Run(boardConfig, fitnessHelper.Fitness,crossoverProbability, mutationProbability, populationSize, generations);
+                    Console.WriteLine($"iterationsSA = {iterationsSA}");
+                    Console.WriteLine($"LiterationsSA = {lIterationSA}");
+                    Console.WriteLine($"iterationsGA = {generations}");
+
+
                     break;
             }
         });
@@ -318,8 +400,9 @@ class MainClass
         root.AddCommand(weightedProbabilityCommand);
         root.AddCommand(testAlgoCommand);
         root.AddCommand(tetrisCommand);
-        root.AddCommand(tiledCommand);
         root.AddCommand(hemingwayCommand);
+        root.AddCommand(tiledCommand);
+        root.AddCommand(tiledGeneticAlgoCommand);
 
         root.Invoke(args);
     }

@@ -186,6 +186,36 @@ Sample Command
 ```
 ./bin/Debug/net6.0/wang-tiles -- tiled --version 1 --width 16 --height 8 --output-name "Tiled_V1_8x16" --color-matching 1 --iterations 50000 --temperature 1000 --lIteration 50 --alpha 0.01 --map-json-directory "./kcg-tiled/tilesets" --map-json-filename "Map_Tiles_V1.tmj" 
 ```
+
+#### wang-tiles tiled-genetic-algo
+---
+Usage for ```wang-tiles tiled-genetic-algo```
+```
+Usage:
+  wang-tiles tiled-genetic-algo [options]
+
+Options:
+  --version <version>                              (int) The version of Tiled Algo to run (1).
+  --width <width>                                  (int) The width of the board to be made.
+  --height <height>                                (int) The height of the board to be made.
+  --output-name <output-name>                      (string) The filename of the resulting picture (default directory is ./data).
+  --color-matching <color-matching>                (int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching).
+  --iterations-sa <iterations-sa>                  (int) The number of iterations to do for the algo.
+  --temperature <temperature>                      (float) The initial temperature to be used.
+  --lIteration-sa <lIteration-sa>                  (int) For updating temperature every Lth iteration.
+  --alpha <alpha>                                  (float) The alpha value for updating the temperature.
+  --map-json-directory <map-json-directory>        (string) The directory of the map json.
+  --map-json-filename <map-json-filename>          (string) The filename of the map json.
+  --crossover-probability <crossover-probability>  (string) The crossover probability for GA.
+  --mutation-probability <mutation-probability>    (string) The mutation probability for GA.
+  --population-size <population-size>              (string) The population size for GA
+  --generations <generations-ga>                  (string) The number of iterations/generations for GA
+  -?, -h, --help                                   Show help and usage information
+```
+Sample Command
+```
+./bin/Debug/net6.0/wang-tiles -- tiled-genetic-algo --version 1 --width 8 --height 8 --output-name "Tiled_V1_8x8" --color-matching 1 --iterations-sa 50000 --temperature 1000 --lIteration-sa 50 --alpha 0.01 --map-json-directory "./kcg-tiled/tilesets" --map-json-filename "Map_Tiles_V1.tmj" --crossover-probability 0.5 --mutation-probability 0.05 --population-size 100 --generations 1000
+```
 ---
 For more information, run
 
@@ -200,3 +230,9 @@ For more information, run
 ```./bin/Debug/net6.0/wang-tiles -- test-algo -h```
 
 ```./bin/Debug/net6.0/wang-tiles -- tetris -h```
+
+```./bin/Debug/net6.0/wang-tiles -- wang-tiles hemingway -h```
+
+```./bin/Debug/net6.0/wang-tiles -- wang-tiles tiled -h```
+
+```./bin/Debug/net6.0/wang-tiles -- wang-tiles tiled-genetic-algo -h```
