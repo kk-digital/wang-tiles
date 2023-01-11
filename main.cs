@@ -308,12 +308,8 @@ class MainClass
             WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
                 case 1:
-                    newGeneratedBoard.Tiled_V1_Simulated_Annealing_UsingJSONTiles(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha, mapJsonDirectory, mapJsonFilename);
-                    // GeneticAlgorithm.GeneticAlgorithm newGA = new GeneticAlgorithm.GeneticAlgorithm();
-
-                    // GeneticAlgorithm.FitnessHelper fitnessHelper = new GeneticAlgorithm.FitnessHelper("10011");
-                    // string res = newGA.Run(fitnessHelper.Fitness,5,0.5,0.05,100);
-                    // Console.WriteLine($"res={res}");
+                    TiledSimulatedAnnealingBoardConfig tiledBoardConfig = new TiledSimulatedAnnealingBoardConfig(width,height,outputName, (ColorMatching)colorMatching, iterations, temperature, lIteration, alpha, mapJsonDirectory, mapJsonFilename); 
+                    newGeneratedBoard.Tiled_V1_Simulated_Annealing_UsingJSONTiles(tiledBoardConfig);
                     break;
             }
         });
@@ -335,18 +331,6 @@ class MainClass
             new Option<int>(
                 name:"--color-matching",
                 description:"(int) The color matching option to be used(0 - CurrentBitmasking, 1 - SymmetricalMatching)."),
-            new Option<int>(
-                name:"--iterations-sa",
-                description:"(int) The number of iterations to do for the algo."),
-            new Option<float>(
-                name:"--temperature",
-                description:"(float) The initial temperature to be used."),
-            new Option<int>(
-                name:"--lIteration-sa",
-                description:"(int) For updating temperature every Lth iteration."),
-            new Option<float>(
-                name:"--alpha",
-                description:"(float) The alpha value for updating the temperature."),
             new Option<string>(
                 name:"--map-json-directory",
                 description:"(string) The directory of the map json."),
@@ -368,28 +352,15 @@ class MainClass
                 description:"(string) The number of iterations/generations for GA"),
         };
 
-        tiledGeneticAlgoCommand.Handler = CommandHandler.Create<int,int,int,string, int, int, float, int, float, string, string, double, double, int, int>((version,width,height,outputName, colorMatching, iterationsSA, temperature, lIterationSA, alpha, mapJsonDirectory, mapJsonFilename, crossoverProbability, mutationProbability, populationSize, generations) =>
+        tiledGeneticAlgoCommand.Handler = CommandHandler.Create<int,int,int,string, int, string, string, double, double, int, int>((version,width,height,outputName, colorMatching, mapJsonDirectory, mapJsonFilename, crossoverProbability, mutationProbability, populationSize, generations) =>
         {
+            WangTile.Generator newGeneratedBoard= new WangTile.Generator();
             switch (version){
                 case 1:               
-                    TiledSimulatedAnnealingBoardConfig boardConfig = new TiledSimulatedAnnealingBoardConfig(width,height,outputName, (ColorMatching)colorMatching, iterationsSA, temperature, lIterationSA, alpha, mapJsonDirectory, mapJsonFilename);   
-
-                    // Example tileset length is 32
-                    // All must have 1
-                    int tileSetLength = 32;
-                    Dictionary <int,int> tileFrequencyGoal = new Dictionary<int,int>();
-                    for (int i=0; i<tileSetLength;i++){
-                        tileFrequencyGoal[i]=1;
-                    }
-
-                    // GeneticAlgorithm.FitnessHelper fitnessHelper = new GeneticAlgorithm.FitnessHelper(tileFrequencyGoal);
-                    // GeneticAlgorithm.TiledGeneticAlgorithm newTiledGeneticAlgo = new GeneticAlgorithm.TiledGeneticAlgorithm();
-
-                    // WangTile.Board finalBoard = newTiledGeneticAlgo.Run(boardConfig, fitnessHelper.Fitness,crossoverProbability, mutationProbability, populationSize, generations);
-                    Console.WriteLine($"iterationsSA = {iterationsSA}");
-                    Console.WriteLine($"LiterationsSA = {lIterationSA}");
-                    Console.WriteLine($"iterationsGA = {generations}");
-
+                    bool saveImage = true;
+                    BoardConfig boardConfig = new BoardConfig(width,height,outputName, (ColorMatching)colorMatching, mapJsonDirectory, mapJsonFilename, saveImage);   
+                    GeneticAlgorithmConfig geneticAlgoConfig = new GeneticAlgorithmConfig(crossoverProbability, mutationProbability, populationSize, generations);
+                    newGeneratedBoard.Tiled_V1_Genetic_Algorithm_UsingJSONTiles(boardConfig, geneticAlgoConfig);
 
                     break;
             }

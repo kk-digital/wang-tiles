@@ -75,6 +75,34 @@ namespace WangTile
             this.TileSlots[index].TileID=null;
         }
 
+        public void FillBoardTileSlots( Random rand){
+            int tileSetID = 0;
+
+            // Select random tile to place on first slot
+            int tileIndex = rand.Next(0,this.TileSet[tileSetID].Tiles.Length);
+            // place the random tile on the board 
+            (int col, int row) pos = Utils.GetRandomPosition(this.Width, this.Height, rand);
+            this.PlaceTile(tileSetID, tileIndex, pos.col, pos.row);
+
+            while (true){
+                // place tiles to random position with atleast 1 adjacent edge side
+                pos = this.FindEmptySlotWithAdjacentTilesOnEdges(rand);
+                if (pos.col == this.Height && pos.row == this.Width){
+                        // No empty tile slots
+                        break;
+                }
+  
+
+                int[] tileMismatches = this.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, this.ColorMatching);
+                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
+
+                TileMismatch[] lowestTileMismatches = this.GetTilesWithLowestMismatches(tileMismatchesStruct);
+                int lowestMismatchTileID = lowestTileMismatches[rand.Next(0, lowestTileMismatches.Length)].TileID;
+            
+                this.PlaceTile(tileSetID, lowestMismatchTileID, pos.col, pos.row);
+            }
+        }
+
         public int[] GetTileMismatchArray(int tileSetID,int col, int row, bool useBitmasking, ColorMatching colorMatching){
             WangTile[] tiles = this.TileSet[tileSetID].Tiles;
             int[] tilesMismatches= new int[tiles.Length];

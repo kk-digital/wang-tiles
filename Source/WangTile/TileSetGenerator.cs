@@ -512,6 +512,8 @@ namespace WangTile
             
             for (int i=0;i<tile.Layers[0].Chunks.Length;i++){
                 TileChunksJSON tileLayerChunk = tile.Layers[0].Chunks[i];
+
+                // Console.WriteLine($"Tile Chunk {i}");
                 WangTileJSON.CheckCornerMarkers(tileLayerChunk);
 
                 // Get north color

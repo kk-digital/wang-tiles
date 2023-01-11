@@ -110,17 +110,11 @@ namespace WangTile
             int tileSetID = 0;
             bool useBitmasking = true;
 
-            // Select random tile to place on first slot
             Random rand = new Random();
-            int tileIndex = rand.Next(0, newBoard.TileSet[tileSetID].Tiles.Length);
-
-            // place the random tile on the board 
-            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width, newBoard.Height, rand);
-            newBoard.PlaceTile(0,tileIndex, pos.col, pos.row);
 
             int i=0;
 
-            TetrisBlockIterate_V2(newBoard, rand, pos);
+            newBoard.FillBoardTileSlots(rand);
             // Picture newPic2 = new Picture();
             //     newPic2.SavePNG(newBoard, colorMap, outputName+".png");
             //     Thread.Sleep(5);
@@ -153,27 +147,7 @@ namespace WangTile
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
 
-         void TetrisBlockIterate_V2(Board newBoard, Random rand, (int col, int row) pos){
-            int tileSetID = 0;
-
-            while (true){
-                // place tiles to random position with atleast 1 adjacent edge side
-                pos = newBoard.FindEmptySlotWithAdjacentTilesOnEdges(rand);
-                if (pos.col == newBoard.Height && pos.row == newBoard.Width){
-                        // No empty tile slots
-                        break;
-                }
-  
-
-                int[] tileMismatches = newBoard.GetTileMismatchArray(tileSetID, pos.col, pos.row, true, newBoard.ColorMatching);
-                TileMismatch[] tileMismatchesStruct = Utils.SortTileMismatches(tileMismatches);
-
-                TileMismatch[] lowestTileMismatches = newBoard.GetTilesWithLowestMismatches(tileMismatchesStruct);
-                int lowestMismatchTileID = lowestTileMismatches[rand.Next(0, lowestTileMismatches.Length)].TileID;
-            
-                newBoard.PlaceTile(tileSetID, lowestMismatchTileID, pos.col, pos.row);
-            }
-        }
+        
 
           public void TetrisBlocks_V3_Simulated_Annealing(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha)
         {
@@ -192,17 +166,13 @@ namespace WangTile
             int tileSetID = 0;
             bool useBitmasking = true;
 
-            // Select random tile to place on first slot
             Random rand = new Random();
-            int tileIndex = rand.Next(0,newBoard.TileSet[tileSetID].Tiles.Length);
-
-            // place the random tile on the board 
-            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width, newBoard.Height, rand);
-            newBoard.PlaceTile(0,tileIndex, pos.col, pos.row);
+            (int col, int row) pos = (0,0);
+            int tileIndex = 0;
            
             int i=0;
 
-            TetrisBlockIterate_V2(newBoard, rand, pos);
+            newBoard.FillBoardTileSlots(rand);
             // Picture newPic2 = new Picture();
             // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
             // Thread.Sleep(5);
@@ -290,17 +260,13 @@ namespace WangTile
             int tileSetID = 0;
             bool useBitmasking = true;
 
-            // Select random tile to place on first slot
             Random rand = new Random();
-            int tileIndex = rand.Next(0,newBoard.TileSet[tileSetID].Tiles.Length);
-
-            // place the random tile on the board 
-            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width, newBoard.Height, rand);
-            newBoard.PlaceTile(0,tileIndex, pos.col, pos.row);
+            (int col, int row) pos = (0,0);
+            int tileIndex = 0;
            
             int i=0;
 
-            TetrisBlockIterate_V2(newBoard, rand, pos);
+            newBoard.FillBoardTileSlots(rand);
             // Picture newPic2 = new Picture();
             // newPic2.SavePNG(newBoard, colorMap, outputName+".png");
             // Thread.Sleep(5);
@@ -392,16 +358,12 @@ namespace WangTile
             int tileSetID = 0;
             bool useBitmasking = true;
 
-            // Select random tile to place on first slot
             Random rand = new Random();
-            int tileIndex = rand.Next(0,newBoard.TileSet[tileSetID].Tiles.Length);
-
-            // place the random tile on the board 
-            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width,newBoard.Height, rand);
-            newBoard.PlaceTile(tileSetID,tileIndex,pos.col,pos.row);
+            (int col, int row) pos = (0,0);
+            int tileIndex = 0;
 
             // Fill in board with tiles
-            TetrisBlockIterate_V2(newBoard, rand, pos);
+            newBoard.FillBoardTileSlots(rand);
 
             // initial temperature
             newBoard.Temperature=temperature;
@@ -474,43 +436,39 @@ namespace WangTile
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
         }
 
-        public Board Tiled_V1_Simulated_Annealing_UsingJSONTiles(int width, int height, string outputName, ColorMatching colorMatching, int iterations, float temperature, int lIteration, float alpha, string mapJsonDirectory, string mapJsonFilename, bool saveImage = true)
+        public Board Tiled_V1_Simulated_Annealing_UsingJSONTiles(TiledSimulatedAnnealingBoardConfig tiledBoardConfig)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
             // string[] mismatchStr = new string[iterations];
             // string[] temperatureStr = new string[iterations];
             
-            Board newBoard = new Board(height, width, colorMatching);
+            Board newBoard = new Board(tiledBoardConfig.Height, tiledBoardConfig.Width, tiledBoardConfig.ColorMatching);
             ColorMap colorMap = new ColorMap(Utils.GetTetrisColors());
 
             // Image Map for tile IDs in tile data
             Dictionary<int, SKImage> imageMap = new Dictionary<int, SKImage>();
             Dictionary<int, SKImage> tileImageMap = new Dictionary<int, SKImage>();
 
-            WangTileSet tileSet = TileSetGenerator.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, mapJsonDirectory, mapJsonFilename);
+            WangTileSet tileSet = TileSetGenerator.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, tiledBoardConfig.MapJsonDirectory, tiledBoardConfig.MapJsonFilename);
             newBoard.AddTileSet(tileSet);
 
             int tileSetID = 0;
             bool useBitmasking = true;
 
-            // Select random tile to place on first slot
             Random rand = new Random();
-            int tileIndex = rand.Next(0,newBoard.TileSet[tileSetID].Tiles.Length);
-
-            // place the random tile on the board 
-            (int col, int row) pos = Utils.GetRandomPosition(newBoard.Width, newBoard.Height, rand);
-            newBoard.PlaceTile(tileSetID, tileIndex, pos.col, pos.row);
+            (int col, int row) pos = (0,0);
+            int tileIndex = 0;
 
             // Fill in board with tiles
-            TetrisBlockIterate_V2(newBoard, rand, pos);
+            newBoard.FillBoardTileSlots(rand);
 
             // initial temperature
-            newBoard.Temperature = temperature;
+            newBoard.Temperature = tiledBoardConfig.Temperature;
             // Decrease temperature every L iteration
-            int L = lIteration;
+            int L = tiledBoardConfig.LIteration;
             int i=0;
-            while (i<iterations){
+            while (i<tiledBoardConfig.Iterations){
                 // Generate array with N indexes
                 // permute and shuffle them
                 // each tile appears once in a random order
@@ -542,7 +500,7 @@ namespace WangTile
                 // temperatureStr[i]=string.Format("{0},{1}", i, newBoard.Temperature);
 
                 if (i%L==0){
-                    newBoard.Temperature=SimulatedAnnealing.UpdateTemperature(newBoard, rand, alpha);
+                    newBoard.Temperature=SimulatedAnnealing.UpdateTemperature(newBoard, rand, tiledBoardConfig.Alpha);
                 }
                 i++;
             }
@@ -563,13 +521,13 @@ namespace WangTile
             // File.WriteAllText("./data/Tetris_16x16_Mismatches.csv", mismatchCSV.ToString());
             // File.WriteAllText("./data/Tetris_16x16_Temperature.csv", temperatureCSV.ToString());
 
-            if (saveImage){
+            if (tiledBoardConfig.SaveImage){
                 // Generate and Save PNG
                 Picture newPic = new Picture();
-                newPic.SavePNG(newBoard, colorMap, outputName+".png");
+                newPic.SavePNG(newBoard, colorMap, tiledBoardConfig.OutputName+".png");
                 
                 // Generate map image and save
-                SkiaSharpImageGenerator.GenerateMapAndSave(tileImageMap, newBoard.TileSlots, newBoard.Width, newBoard.Height, "data/" +outputName+"_Generated.png");
+                SkiaSharpImageGenerator.GenerateMapAndSave(tileImageMap, newBoard.TileSlots, newBoard.Width, newBoard.Height, "data/" + tiledBoardConfig.OutputName+"_Generated.png");
 
                 // Print Tile Frequency Info
                 Utils.PrintTileSlotsInfo(newBoard.TileSet, newBoard.TileSlots);
@@ -581,6 +539,46 @@ namespace WangTile
             Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
 
             return newBoard;
+        }
+
+        public Board Tiled_V1_Genetic_Algorithm_UsingJSONTiles(BoardConfig boardConfig, GeneticAlgorithmConfig geneticAlgoConfig)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            
+            ColorMap colorMap = new ColorMap(Utils.GetTetrisColors());
+
+            // Image Map for tile IDs in tile data
+            Dictionary<int, SKImage> imageMap = new Dictionary<int, SKImage>();
+            Dictionary<int, SKImage> tileImageMap = new Dictionary<int, SKImage>();
+
+            WangTileSet tileSet = TileSetGenerator.GenerateTileSetFromJSON(colorMap, imageMap, tileImageMap, boardConfig.MapJsonDirectory, boardConfig.MapJsonFilename);
+
+            // Run GA
+            FitnessHelper fitnessHelper = new FitnessHelper();
+            SelectionHelper selectionHelper = new SelectionHelper();
+            TiledGeneticAlgorithm GA = new TiledGeneticAlgorithm();
+            Board finalBoard = GA.Run(boardConfig, geneticAlgoConfig, tileSet, fitnessHelper.BoardEnergyFitness, selectionHelper.TournamentSelection);
+
+            finalBoard.RemoveTilesWithMismatches(true, finalBoard.ColorMatching);
+
+            if (boardConfig.SaveImage){
+                // Generate and Save PNG
+                Picture newPic = new Picture();
+                newPic.SavePNG(finalBoard, colorMap, boardConfig.OutputName+".png");
+                
+                // Generate map image and save
+                SkiaSharpImageGenerator.GenerateMapAndSave(tileImageMap, finalBoard.TileSlots, finalBoard.Width, finalBoard.Height, "data/" + boardConfig.OutputName+"_Generated.png");
+
+                // Print Tile Frequency Info
+                Utils.PrintTileSlotsInfo(finalBoard.TileSet, finalBoard.TileSlots);
+            }
+            
+            // Timer stop
+            sw.Stop();
+            TimeSpan time = sw.Elapsed;
+            Console.WriteLine("Time elapsed is "+ time + "(HH:MM:SS)");
+
+            return finalBoard;
         }
     }
 }
